@@ -1,0 +1,10 @@
+{
+    "description":"Used to import a texture from multiple diffeent sources",
+    "title":"Example Tool",
+    "hidden":false,
+    "button":{
+        "enabled":true,
+        "toggle":true,
+        "icon":"icon.png"
+    }
+}

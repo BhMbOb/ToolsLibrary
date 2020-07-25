@@ -1,0 +1,10 @@
+{
+    "description":"This is the description",    // Tool description, shown in tooltip if button is enabled
+    "title":"Example Tool", // Override for the tool name, if not specified it will be guessed from the tools name
+    "hidden":false,         // Is this tool hidden from the menu?
+    "button":{
+        "enabled":true,     // Should this tool be added as a hotbar button?
+        "toggle":true,      // Should this tool be toggled on and off when pressed?
+        "icon":"icon.png"   // Path for the icon, first searches in the tools resources, then programs resources, then tools_library resources
+    }
+}
