@@ -7,6 +7,7 @@
 		},
 
 
+		/*
 		{
 			"name":"Software - Houdini",
 			"path": "..\\programs\\houdini"
@@ -31,13 +32,15 @@
 			"name":"Software - Substance Designer",
 			"path": "..\\programs\\designer"
 		}
+		*/
 	],
 
 	"settings": {
 		"files.exclude": {
-			"**/**.pycache": true,
-			".vscode/": true,
-			"**/.empty": true
+			//".vscode/": true,
+			"**/__pycache__": true,
+			"**/.empty": true,
+			"**/**.pycache": true
 		}
 	},
 

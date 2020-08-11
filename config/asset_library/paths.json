@@ -1,0 +1,13 @@
+{
+    "assets":{
+        "Common":"X:\\Assets\\Common",
+        "Environment":"X:\\Assets\\Environment",
+        "Characters":"X:\\Assets\\Characters"
+    },
+    "shelves":[
+        "X:\\Shelves"
+    ],
+    "shaders":[
+        "X:\\Shaders"
+    ]
+}
