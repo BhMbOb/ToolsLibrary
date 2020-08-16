@@ -3,6 +3,8 @@ import sys
 import winreg
 import json
 
+from tools_library import *
+
 
 def path():
     '''Returns the stored tools library root path as stored in the registry'''
@@ -16,14 +18,18 @@ def path():
 
 
 def getConfig(name):
-    '''Returns a config file from its path'''
-    output = os.path.join(path(), "config", name)
-    if(os.path.exists(output)):
-        return output
+    '''Returns a config file from its path
+    
+    name    --  name of the config file to find, formatted "program:config/file/path.type" or ("config/file/path.type" for common)
+    '''
+    output = ""
+
+    if(len(name.split(":")) == 2):
+        output = os.path.join(path(), "programs", name.split(":")[0], "config", name.split(":")[1])
     else:
-        return None
+        output = os.path.join(path(), "config", name)
 
+    if(not os.path.exists(output)):
+        output = ""
 
-def getDefaultAssetLibrary():
-    '''TEMP: Returns the local location of the asset library'''
-    return "X:\\Assets"
+    return output
