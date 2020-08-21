@@ -6,7 +6,7 @@ import json
 import tools_library
 
 
-def getContentLibrary(identifier):
+def getContentLibrary(identifier, raw_string=False):
     """Returns the content library from a given identifier"""
     output = ""
     config = tools_library.getConfig("asset_library\\content_libraries.json")
@@ -17,6 +17,9 @@ def getContentLibrary(identifier):
         for i in json_data:
             if(i == identifier):
                 output = json_data[identifier]["path"]
+
+    if(not raw_string):
+        output = tools_library.finalizeString(output)
 
     return output
 

@@ -1,11 +1,15 @@
 {
+    "Tools_Library_Common":{
+        "path":"$(ToolsLibraryPath)\\Resources\\Asset_Library\\tools_library_common\\Content\\Common\\"
+    },
+    
     "Common":{
-        "path":"X:\\Content\\Common"
+        "path":"X:\\Content\\Common\\"
     },
     "Environment":{
-        "path":"X:\\Content\\Environment"
+        "path":"X:\\Content\\Environment\\"
     },
     "Characters":{
-        "path":"X:\\Content\\Characters"
+        "path":"X:\\Content\\Characters\\"
     }
 }

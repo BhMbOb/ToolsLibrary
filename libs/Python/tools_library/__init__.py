@@ -4,6 +4,7 @@ import winreg
 import json
 
 from tools_library import *
+from tools_library import string_parser
 
 
 def path():
@@ -33,3 +34,8 @@ def getConfig(name):
         output = ""
 
     return output
+
+
+def finalizeString(string_):
+    """Takes an input string with custom data identifiers (Ie, "$(ToolsLibraryPath)" ) and outputs the target string"""
+    return string_parser.parse(string_)
