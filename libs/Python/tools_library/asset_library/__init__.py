@@ -6,10 +6,10 @@ import json
 import tools_library
 
 
-def getAssetLibrary(identifier):
-    """Returns the asset library from a given identifier"""
+def getContentLibrary(identifier):
+    """Returns the content library from a given identifier"""
     output = ""
-    config = tools_library.getConfig("asset_library\\asset_libraries.json")
+    config = tools_library.getConfig("asset_library\\content_libraries.json")
 
     with open(config, "r") as j:
         json_data = json.load(j)
@@ -22,13 +22,13 @@ def getAssetLibrary(identifier):
 
 
 def actualPath(relative_path):
-    """Returns an absolute path from an asset library relative path (Ie, "Common:Path/To/File.abc") """
+    """Returns an absolute path from a content library relative path (Ie, "Common:Path/To/File.abc") """
     output = ""
 
-    asset_library_name = relative_path.split(":")[0] if (len(relative_path.split(":")) > 1) else "Common"
+    content_library_name = relative_path.split(":")[0] if (len(relative_path.split(":")) > 1) else "Common"
     path = relative_path.split(":")[1] if (len(relative_path.split(":")) > 1) else relative_path
 
     return os.path.join(
-        getAssetLibrary(asset_library_name),
+        getContentLibrary(content_library_name),
         path
     )

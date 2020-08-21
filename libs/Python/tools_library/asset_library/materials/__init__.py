@@ -41,13 +41,11 @@ class Texture(object):
     """Class containing data for a material based texture"""
     def __init__(self, path):
 
-        # if the asset_path is formatted "asset_library:path/to/the/asset.asset" then extract, else use "Common" by default
-        self.asset_library = path.split(":")[0] if (len(path.split(":")) > 1) else "Common"
+        # if the asset_path is formatted "content_library:path/to/the/asset.asset" then extract, else use "Common" by default
+        self.content_library = path.split(":")[0] if (len(path.split(":")) > 1) else "Common"
 
-        # if the asset_path is formatted "asset_library:path/to/the/asset.asset" then extract, else use asset_path
+        # if the asset_path is formatted "content_library:path/to/the/asset.asset" then extract, else use asset_path
         self.base_path = path.split(":")[1] if (len(path.split(":")) > 1) else path
-
-        #self.path = path
 
     def type(self):
         """Returns the material texture type if valid - None if not"""
@@ -70,7 +68,7 @@ class Texture(object):
 
     def path(self, relative=True):
         """"""
-        output = self.asset_library + ":" + self.base_path
+        output = self.content_library + ":" + self.base_path
 
         if(not relative):
             output = asset_library.actualPath(output)
@@ -129,10 +127,10 @@ class Material(object):
     """Class containing info on a material"""
     def __init__(self, material_name):
 
-        # if material_name is formatted "asset_library_name:material_name" then extract, else use "Common" by default"
-        self.asset_library = material_name.split(":")[0] if (len(material_name.split(":")) > 1) else "Common"
+        # if material_name is formatted "content_library_name:material_name" then extract, else use "Common" by default"
+        self.content_library = material_name.split(":")[0] if (len(material_name.split(":")) > 1) else "Common"
 
-        # if material_name is formatted "asset_library_name:material_name" then extract, else use material_name
+        # if material_name is formatted "content_library_name:material_name" then extract, else use material_name
         self.base_name = material_name.split(":")[1] if (len(material_name.split(":")) > 1) else material_name
 
     def _get_asset_file_path(self, relative=True):
@@ -154,7 +152,7 @@ class Material(object):
     def path(self, relative=True):
         """Returns the absolute path for this material folder"""
         output = os.path.join(
-            self.asset_library + ":Materials",
+            self.content_library + ":Materials",
             self.base_name
         )
 
@@ -180,17 +178,17 @@ class Material(object):
         """Returns all valid material textures from a given material name"""
         output = []
 
-        target_asset_library_path = os.path.join(
-            tools_library.asset_library.getAssetLibrary(self.asset_library),
+        target_content_library_path = os.path.join(
+            tools_library.asset_library.getContentLibrary(self.content_library),
             "Materials"
         )
 
-        material_folder = os.path.join(target_asset_library_path, self.base_name)
+        material_folder = os.path.join(target_content_library_path, self.base_name)
 
         if(os.path.exists(material_folder)):
             for i in os.listdir(material_folder):
                 if(self.base_name in i):
-                    tex = Texture(self.asset_library + ":Materials\\" + self.base_name + "\\" + i)
+                    tex = Texture(self.content_library + ":Materials\\" + self.base_name + "\\" + i)
                     if(tex.is_valid()):
                         output.append(i)
 
@@ -263,12 +261,12 @@ class Material(object):
         types = list_material_types()
 
 
-def list_materials(target_asset_library):
-    """Lists all valid material names found in a target asset library"""
+def list_materials(target_content_library):
+    """Lists all valid material names found in a target content library"""
     output = []
 
-    asset_library_path = asset_library.getAssetLibrary(target_asset_library)
-    material_dirs = os.listdir(os.path.join(asset_library_path, "Materials"))
+    content_library_path = asset_library.getContentLibrary(target_content_library)
+    material_dirs = os.listdir(os.path.join(content_library_path, "Materials"))
 
     for i in material_dirs:
         # we can be sure it's a folder if there's no "."
