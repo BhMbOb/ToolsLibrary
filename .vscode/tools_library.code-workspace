@@ -2,7 +2,7 @@
 	"folders": [
 
 		{
-			"name":"Common",
+			"name":"Tools Library",
 			"path": "..\\"
 		},
 
@@ -41,7 +41,10 @@
 			"**/__pycache__": true,
 			"**/.empty": true,
 			"**/**.pycache": true
-		}
+		},
+		"python.linting.pycodestyleArgs": [
+			"--max-line-length=1000"
+		]
 	},
 
 	"todo-tree.highlights.defaultHighlight": {}
