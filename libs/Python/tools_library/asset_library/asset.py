@@ -18,7 +18,7 @@ class Asset(object):
         output = self.content_library + ":" + self.base_path
 
         if(not relative):
-            output = asset_library.actualPath(output)
+            output = asset_library.content_library.absPath(output)
 
         return output
         
@@ -26,8 +26,6 @@ class Asset(object):
         output = None
 
         property_hierachy = property_name.split(".")
-
-        print(property_hierachy)
 
         with open(self.path(relative=False)) as j:
             json_data = json.load(j)

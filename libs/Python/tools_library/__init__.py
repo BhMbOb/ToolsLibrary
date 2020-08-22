@@ -20,7 +20,7 @@ def path():
 
 def getConfig(name):
     '''Returns a config file from its path
-    
+
     name    --  name of the config file to find, formatted "program:config/file/path.type" or ("config/file/path.type" for common)
     '''
     output = ""

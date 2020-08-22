@@ -71,7 +71,7 @@ class Texture(object):
         output = self.content_library + ":" + self.base_path
 
         if(not relative):
-            output = asset_library.actualPath(output)
+            output = asset_library.content_library.absPath(output)
 
         return output
 
@@ -142,10 +142,10 @@ class Material(object):
             "M_" + self.base_name + ".asset"
         )
 
-        if(os.path.isfile(asset_library.actualPath(asset_file_path))):
+        if(os.path.isfile(asset_library.content_library.absPath(asset_file_path))):
             output = asset_file_path
             if(not relative):
-                output = asset_library.actualPath(output)
+                output = asset_library.content_library.absPath(output)
 
         return output
 
@@ -157,7 +157,7 @@ class Material(object):
         )
 
         if(not relative):
-            output = asset_library.actualPath(output)
+            output = asset_library.content_library.absPath(output)
 
         return output
 
@@ -169,7 +169,7 @@ class Material(object):
         if(is_sbsar):
             source_sbs_path += "ar"
 
-        if(os.path.isfile(asset_library.actualPath(source_sbs_path))):
+        if(os.path.isfile(asset_library.content_library.absPath(source_sbs_path))):
             output = source_sbs_path
 
         return output
@@ -179,7 +179,7 @@ class Material(object):
         output = []
 
         target_content_library_path = os.path.join(
-            tools_library.asset_library.getContentLibrary(self.content_library),
+            tools_library.asset_library.content_library.getPath(self.content_library),
             "Materials"
         )
 
@@ -265,7 +265,7 @@ def list_materials(target_content_library):
     """Lists all valid material names found in a target content library"""
     output = []
 
-    content_library_path = asset_library.getContentLibrary(target_content_library)
+    content_library_path = asset_library.contelt_library.getPath(target_content_library)
     material_dirs = os.listdir(os.path.join(content_library_path, "Materials"))
 
     for i in material_dirs:

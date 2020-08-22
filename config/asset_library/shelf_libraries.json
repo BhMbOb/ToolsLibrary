@@ -1,5 +1,11 @@
 {
-    "Designer_Tools_Library":{
-        "X:\\Shelves\\Designer"
+    "Designer-Tools_Library_Common":{
+        "path":"$(ToolsLibraryPath)\\Resources\\Asset_Library\\tools_library_common\\Shelves\\Designer\\Common\\"
+    },
+    "Houdini-Tools_Library_Common":{
+        "path":"$(ToolsLibraryPath)\\Resources\\Asset_Library\\tools_library_common\\Shelves\\Houdini\\Common\\"
+    },
+    "Painter-Tools_Library_Common":{
+        "path":"$(ToolsLibraryPath)\\Resources\\Asset_Library\\tools_library_common\\Shelves\\Painter\\Common\\"
     }
 }
