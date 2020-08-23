@@ -1,9 +1,18 @@
+import os
 import winreg
 import json
+from win32com.shell import shell, shellcon
+import shutil
 
 import tools_library
 
-painter_reg_name = "Software\\Allegorithmic\\Substance Painter\\Shelf\\pathInfos"
+
+def copyStartup():
+    """copy the "libs/install/tools_library.py" to the users "documents/allegorithmic/substance painter/python/startup" """
+    shutil.copyfile(
+        tools_library.finalizeString("$(ToolsLibraryPath)programs\\painter\\libs\\initialize\\tools_library.py"),
+        tools_library.finalizeString("$(Documents)Allegorithmic\\Substance Painter\\python\\") + "startup\\tools_library.py"
+    )
 
 
 def addShelf(shelf_name, shelf_path, shelf_status):
@@ -13,6 +22,8 @@ def addShelf(shelf_name, shelf_path, shelf_status):
     shelf_path - absolute path to the shelf
     shelf_status - false = enabled, true = disabled
     """
+    painter_reg_name = "Software\\Allegorithmic\\Substance Painter\\Shelf\\pathInfos"
+
     shelf_name = shelf_name.lower()
     shelf_path = shelf_path.replace("\\", "/")
     shelf_path = shelf_path if (shelf_path[-1] != "/") else shelf_path[0:-1]
@@ -72,13 +83,19 @@ def addShelf(shelf_name, shelf_path, shelf_status):
     key.Close()
 
 
-with open(tools_library.getConfig("asset_library\\shelf_libraries.json")) as j:
-    json_data = json.load(j)
+def initializeShelves():
+    """Add all shelves stored in the shelf_libraries config"""
+    with open(tools_library.getConfig("asset_library\\shelf_libraries.json")) as j:
+        json_data = json.load(j)
 
-    for i in json_data:
-        if(json_data[i]["type"] == "Painter"):
-            shelf_name = json_data[i]["name"]
-            shelf_path = tools_library.finalizeString(json_data[i]["path"])
-            shelf_enabled = json_data[i]["enabled"]
+        for i in json_data:
+            if(json_data[i]["type"] == "Painter"):
+                shelf_name = json_data[i]["name"]
+                shelf_path = tools_library.finalizeString(json_data[i]["path"])
+                shelf_enabled = json_data[i]["enabled"]
 
-            addShelf(shelf_name, shelf_path, shelf_enabled)
+                addShelf(shelf_name, shelf_path, shelf_enabled)
+
+
+copyStartup()
+initializeShelves()

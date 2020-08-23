@@ -1,10 +1,17 @@
+import os
+import winreg
 import json
+from win32com.shell import shell, shellcon
 
 import tools_library
 
 
 def _parse__toolslibrarypath():
-    return tools_library.path()
+    return tools_library.path() + "\\"
+
+
+def _parse__userdocuments():
+    return shell.SHGetFolderPath(0, shellcon.CSIDL_PERSONAL, None, 0) + "\\"
 
 
 def parse(input_):

@@ -1,3 +1,4 @@
 {
-    "ToolsLibraryPath":"$(_parse__toolslibrarypath)"
+    "ToolsLibraryPath":"$(_parse__toolslibrarypath)",
+    "Documents":"$(_parse__userdocuments)"
 }

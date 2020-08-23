@@ -1,0 +1,1 @@
+print("example_startup_script.py was ran")
