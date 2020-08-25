@@ -22,6 +22,12 @@
         "name":"common",
         "type":"Painter",
         "enabled":true,
-        "path":"X:\\Shelves\\Painter"
+        "path":"X:\\Shelves\\Painter\\Common"
+    },
+    "Designer-Common":{
+        "name":"common",
+        "type":"Designer",
+        "enabled":true,
+        "path":"X:\\Shelves\\Designer\\Common"
     }
 }

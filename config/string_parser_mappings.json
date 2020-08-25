@@ -1,4 +1,5 @@
 {
     "ToolsLibraryPath":"$(_parse__toolslibrarypath)",
+    "LocalAppdata":"$(_parse__localappdata)",
     "Documents":"$(_parse__userdocuments)"
 }

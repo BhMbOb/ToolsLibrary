@@ -9,6 +9,9 @@ import tools_library
 def _parse__toolslibrarypath():
     return tools_library.path() + "\\"
 
+def _parse__localappdata():
+    return os.getenv("LOCALAPPDATA") + "\\"
+
 
 def _parse__userdocuments():
     return shell.SHGetFolderPath(0, shellcon.CSIDL_PERSONAL, None, 0) + "\\"
