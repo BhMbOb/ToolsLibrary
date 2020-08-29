@@ -1,0 +1,36 @@
+{
+    "Audio":[
+        
+    ],
+    "Data":[
+        "Fonts"
+    ],
+    "Effects":[
+        "Textures"
+    ],
+    "Geometry":[
+        "Foliage",
+        "Props",
+        "Standard",
+        "Structural",
+        "Structural\\Interior",
+        "Structural\\Exterior",
+        "Terrain",
+        "Vista"
+    ],
+    "Materials":[
+
+    ],
+    "Textures":[
+        "Icons",
+        "IES",
+        "HDRI",
+        "Masks",
+        "Masks\\Grunge",
+        "Masks\\Noise",
+        "Masks\\Patterns",
+        "Masks\\Shapes",
+        "Masks\\Water",
+        "UI"
+    ]
+}

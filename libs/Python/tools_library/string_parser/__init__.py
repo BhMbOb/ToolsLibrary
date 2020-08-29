@@ -9,8 +9,20 @@ import tools_library
 def _parse__toolslibrarypath():
     return tools_library.path() + "\\"
 
+
 def _parse__localappdata():
     return os.getenv("LOCALAPPDATA") + "\\"
+
+
+def _parse_unrealprojectpath():
+    output = ""
+    active_project_config_path = tools_library.getConfig("Unreal:active_project.json")
+
+    with open(active_project_config_path) as j:
+        json_data = json.load(j)
+        output = json_data["path"]
+
+    return output
 
 
 def _parse__userdocuments():
@@ -22,7 +34,7 @@ def parse(input_):
     output = input_
 
     string_parser_mappings_path = tools_library.getConfig("string_parser_mappings.json")
-    
+
     with open(string_parser_mappings_path) as j:
         json_data = json.load(j)
 

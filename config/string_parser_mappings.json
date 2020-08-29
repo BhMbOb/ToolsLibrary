@@ -1,5 +1,6 @@
 {
     "ToolsLibraryPath":"$(_parse__toolslibrarypath)",
     "LocalAppdata":"$(_parse__localappdata)",
-    "Documents":"$(_parse__userdocuments)"
+    "Documents":"$(_parse__userdocuments)",
+    "UnrealProjectPath":"$(_parse_unrealprojectpath)"
 }
