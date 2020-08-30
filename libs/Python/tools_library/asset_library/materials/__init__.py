@@ -265,7 +265,7 @@ def list_materials(target_content_library):
     """Lists all valid material names found in a target content library"""
     output = []
 
-    content_library_path = asset_library.contelt_library.getPath(target_content_library)
+    content_library_path = asset_library.content_library.getPath(target_content_library)
     material_dirs = os.listdir(os.path.join(content_library_path, "Materials"))
 
     for i in material_dirs:

@@ -85,16 +85,13 @@ def addShelf(shelf_name, shelf_path, shelf_status):
 
 def initializeShelves():
     """Add all shelves stored in the shelf_libraries config"""
-    with open(tools_library.getConfig("asset_library\\shelf_libraries.json")) as j:
-        json_data = json.load(j)
-
-        for i in json_data:
-            if(json_data[i]["type"] == "Painter"):
-                shelf_name = json_data[i]["name"]
-                shelf_path = tools_library.finalizeString(json_data[i]["path"])
-                shelf_enabled = json_data[i]["enabled"]
-
-                addShelf(shelf_name, shelf_path, shelf_enabled)
+    shelves_path = tools_library.finalizeString("$(AssetLibraryPath)Shelves\\Painter")
+    for i in os.listdir(shelves_path):
+        shelf_path = os.path.join(shelves_path, i)
+        if(os.path.isdir(shelf_path)):
+            shelf_name = "tl_" + i
+            
+            addShelf(shelf_name, shelf_path, "true")
 
 
 copyStartup()

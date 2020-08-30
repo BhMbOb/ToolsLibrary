@@ -11,7 +11,30 @@ all_sbsprj = {}
 
 
 # loop over all designer asset libraries and create a .sbsprj file
-with open(tools_library.getConfig("asset_library\\shelf_libraries.json")) as j:
+shelves_path = tools_library.finalizeString("$(AssetLibraryPath)Shelves\\Designer")
+for i in os.listdir(shelves_path):
+    shelf_path = os.path.join(shelves_path, i)
+    if(os.path.isdir(shelf_path)):
+        shelf_name = "tl_" + i
+        
+        config_file_path = os.path.join(shelf_path, "config", shelf_name + ".sbsprj")
+
+        if(not os.path.isdir(os.path.dirname(config_file_path))):
+            os.makedirs(os.path.dirname(config_file_path))
+
+        fin = open(default_sbsprj_path)
+        fout = open(config_file_path, "wt")
+        for line in fin:
+            line = line.replace("$(SHELF_PATH)", shelf_path)
+            line = line.replace("\\\\", "/")
+            line = line.replace("\\", "/")
+            fout.write(line)
+        fin.close()
+        fout.close()
+
+        all_sbsprj[shelf_name] = shelf_path       
+
+'''with open(tools_library.getConfig("asset_library\\shelf_libraries.json")) as j:
     json_data = json.load(j)
 
     for i in json_data:
@@ -34,7 +57,7 @@ with open(tools_library.getConfig("asset_library\\shelf_libraries.json")) as j:
             fin.close()
             fout.close()
 
-            all_sbsprj[shelf_name] = shelf_path
+            all_sbsprj[shelf_name] = shelf_path'''
 
 
 # loop over all designer asset libraries and add them to the designer parent xml

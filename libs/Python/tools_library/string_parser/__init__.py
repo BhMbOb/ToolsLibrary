@@ -25,6 +25,17 @@ def _parse_unrealprojectpath():
     return output
 
 
+def _parse_assetlibrarypath():
+    output = ""
+    active_project_config_path = tools_library.getConfig("asset_library\\active_project.json")
+
+    with open(active_project_config_path) as j:
+        json_data = json.load(j)
+        output = json_data["path"]
+
+    return output
+
+
 def _parse__userdocuments():
     return shell.SHGetFolderPath(0, shellcon.CSIDL_PERSONAL, None, 0) + "\\"
 
