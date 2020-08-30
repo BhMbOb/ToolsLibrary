@@ -1,0 +1,16 @@
+{
+    "shader":"Common:Surface\\Surface\\Surface_Opaque.shader",
+
+    "parent":"Common:Materials\\Example_Parent.material",
+
+    "parameters":{
+        "example_float":1.0,
+        "example_bool":false,
+        "example_vector3":[0.0, 0.0, 0.0],
+        "example_texture":"Common:Materials\\Wall_Brick_Standard\\T_Wall_Brick_Standard_01_a_D.tga"
+    },
+
+    "parameters:instance_01":{
+        "example_float":1.0
+    }
+}

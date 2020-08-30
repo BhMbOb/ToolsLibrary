@@ -5,34 +5,6 @@
 			"name":"Tools Library",
 			"path": "..\\"
 		},
-
-
-		/*
-		{
-			"name":"Software - Houdini",
-			"path": "..\\programs\\houdini"
-		},
-		{
-			"name":"Software - 3DS Max",
-			"path": "..\\programs\\max"
-		},
-		{
-			"name":"Software - Substance Painter",
-			"path": "..\\programs\\painter"
-		},
-		{
-			"name":"Software - Unreal Engine 4",
-			"path": "..\\programs\\unreal"
-		},
-		{
-			"name":"Software - Blender",
-			"path": "..\\programs\\blender"
-		},
-		{
-			"name":"Software - Substance Designer",
-			"path": "..\\programs\\designer"
-		}
-		*/
 	],
 
 	"settings": {
@@ -42,10 +14,14 @@
 			"**/.empty": true,
 			"**/**.pycache": true
 		},
+		"files.associations": {
+			"*.material":"json"
+		},
 		"python.linting.pycodestyleArgs": [
 			"--max-line-length=1000"
 		]
 	},
 
-	"todo-tree.highlights.defaultHighlight": {}
+	"todo-tree.highlights.defaultHighlight": {},
+	"files.associations": {}
 }

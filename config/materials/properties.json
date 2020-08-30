@@ -24,29 +24,5 @@
             "identifier":"normals",
             "rgb":"normal"
         }
-    },
-
-    "material_types":{
-        "object_opaque":{
-            "texture_types":[
-                "D",
-                "S",
-                "N"
-            ]
-        },
-        "object_alpha":{
-            "texture_types":[
-                "DA",
-                "S",
-                "N"
-            ]
-        },
-        "object_masked":{
-            "texture_types":[
-                "DA",
-                "S",
-                "N"
-            ]
-        }
     }
 }

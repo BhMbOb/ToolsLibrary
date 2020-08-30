@@ -7,21 +7,6 @@ import tools_library
 from tools_library import asset_library
 
 
-def list_material_types():
-    """Returns the names of all valid material types as defined in "config/materials/properties.json" """
-    output = []
-
-    materials_json = tools_library.getConfig("materials\\properties.json")
-
-    with open(materials_json, "r") as j:
-        json_data = json.load(j)
-
-        for i in range(len(json_data["material_types"])):
-            output.append(list(json_data["material_types"])[i])
-
-    return output
-
-
 def list_texture_types():
     """Returns the names of all valid texture types as defined in "config/materials/properties.json" """
     output = []
@@ -253,12 +238,6 @@ class Material(object):
                     output.append(found_texture)
 
         return output
-
-    def _get_type(self):
-        """Attempts to find a matching material type from the final textures
-        TODO:
-        """
-        types = list_material_types()
 
 
 def list_materials(target_content_library):
