@@ -2,6 +2,8 @@
     "ToolsLibraryPath":"$(_parse__toolslibrarypath)",
     "LocalAppdata":"$(_parse__localappdata)",
     "Documents":"$(_parse__userdocuments)",
-    "UnrealProjectPath":"$(_parse_unrealprojectpath)",
-    "AssetLibraryPath":"$(_parse_assetlibrarypath)"
+    "UnrealProjectPath":"$(_parse__unrealprojectpath)",
+    "AssetLibraryPath":"$(_parse__assetlibrarypath)",
+    "FolderPath":"$(_parse__folderpath)",
+    "FolderName":"$(_parse__foldername)"
 }

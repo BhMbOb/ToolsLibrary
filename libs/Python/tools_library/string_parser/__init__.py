@@ -6,15 +6,18 @@ from win32com.shell import shell, shellcon
 import tools_library
 
 
-def _parse__toolslibrarypath():
+def _parse__toolslibrarypath(params):
+    """Returns the path to the tools library root folder"""
     return tools_library.path() + "\\"
 
 
-def _parse__localappdata():
+def _parse__localappdata(params):
+    """Returns the users "appdata\\local" folder"""
     return os.getenv("LOCALAPPDATA") + "\\"
 
 
-def _parse_unrealprojectpath():
+def _parse__unrealprojectpath(params):
+    """Returns the path to the currently active unreal project"""
     output = ""
     active_project_config_path = tools_library.getConfig("Unreal:active_project.json")
 
@@ -25,7 +28,8 @@ def _parse_unrealprojectpath():
     return output
 
 
-def _parse_assetlibrarypath():
+def _parse__assetlibrarypath(params):
+    """Returns the path to the currently active asset library project"""
     output = ""
     active_project_config_path = tools_library.getConfig("asset_library\\active_project.json")
 
@@ -36,13 +40,31 @@ def _parse_assetlibrarypath():
     return output
 
 
-def _parse__userdocuments():
+def _parse__userdocuments(params):
+    """Returns the path to the current users documents"""
     return shell.SHGetFolderPath(0, shellcon.CSIDL_PERSONAL, None, 0) + "\\"
 
 
-def parse(input_):
+def _parse__folderpath(params):
+    """Returns the path to the file_context's parent folder - relative to its asset_library"""
+    if(params["file_context"]):
+        return (os.path.dirname(params["file_context"]) + "\\")
+    return "$(RelativeFolderPath)"
+
+
+def _parse__foldername(params):
+    if(params["file_context"]):
+        return os.path.basename(os.path.dirname(params["file_context"]))
+    return "$(FolderName)"
+
+
+def parse(input_, file_context=None):
     """Read an input string and parse in the values stored in "config\\string_parser_mappings.json" - run the defined function if required"""
     output = input_
+
+    params = {
+        "file_context": file_context
+    }
 
     string_parser_mappings_path = tools_library.getConfig("string_parser_mappings.json")
 
@@ -56,7 +78,7 @@ def parse(input_):
             # a target value of $(some_text) defines a function - so run it to get the final value
             if("$(" in replace_target):
                 replace_target = replace_target[2:-1]
-                replace_target = eval(replace_target + "()")
+                replace_target = eval(replace_target + "(params)")
 
             if(replace_value in output):
                 output = output.replace(replace_value, replace_target)

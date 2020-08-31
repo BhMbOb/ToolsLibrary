@@ -36,6 +36,4 @@ def getConfig(name):
     return output
 
 
-def finalizeString(string_):
-    """Takes an input string with custom data identifiers (Ie, "$(ToolsLibraryPath)" ) and outputs the target string"""
-    return string_parser.parse(string_)
+finalizeString = string_parser.parse
