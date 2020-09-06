@@ -5,5 +5,6 @@
     "UnrealProjectPath":"$(_parse__unrealprojectpath)",
     "AssetLibraryPath":"$(_parse__assetlibrarypath)",
     "FolderPath":"$(_parse__folderpath)",
-    "FolderName":"$(_parse__foldername)"
+    "FolderName":"$(_parse__foldername)",
+    "UnrealProjectName":"$(_parse__unrealprojectname)"
 }

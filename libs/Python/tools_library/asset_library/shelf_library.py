@@ -3,21 +3,31 @@ import json
 
 import tools_library
 
+def getNames(context):
+    """Returns the names of all available shelf libraries
+    
+    context - the program context to search for (Ie, "unreal")
+    """
+    output = []
+    shelf_root = "$(AssetLibraryPath)Shelves\\" + context + "\\"
+    shelf_root = tools_library.finalizeString(shelf_root)
+    for i in os.listdir(shelf_root):
+        if(os.path.isdir(os.path.join(shelf_root, i))):
+            output.append(i)
+    return output
 
-def getPath(identifier, raw_string=False):
+
+def getPath(shelf_name, program_name, raw_string=False):
     """Returns the shelf library path from a given identifier"""
     output = ""
-    config = tools_library.getConfig("asset_library\\shelf_libraries.json")
-
-    with open(config, "r") as j:
-        json_data = json.load(j)
-
-        for i in json_data:
-            if(i == identifier):
-                output = json_data[identifier]["path"]
+    output = "$(AssetLibraryPath)Shelves\\" + program_name + "\\" + shelf_name + "\\"
+    output_abs = tools_library.finalizeString(output)
 
     if(not raw_string):
-        output = tools_library.finalizeString(output)
+        output = output_abs
+
+    if((not os.path.exists(output_abs))):
+        output = ""
 
     return output
 
