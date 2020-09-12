@@ -4,5 +4,5 @@
     TheKey = EvalKey.GetValue "path"
     EvalKey.Close()
 
-    python.ExecuteFile (TheKey + "\\programs\\max\\libs\\startup_scripts\\tools_library.py")
+    python.ExecuteFile (TheKey + "\\programs\\max\\libs\\startup\\tools_library.py")
 )
