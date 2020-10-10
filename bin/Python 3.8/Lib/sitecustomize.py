@@ -16,3 +16,4 @@ def path():
 
 
 sys.path.append(os.path.join(path(), "libs\\Python"))
+sys.path.append(os.path.join(path(), "libs\\External\\Python3.8"))

@@ -19,9 +19,23 @@
 		},
 		"python.linting.pycodestyleArgs": [
 			"--max-line-length=1000"
-		]
+		],
+		"python.pythonPath": "bin\\Python 3.8\\python.exe"
 	},
 
 	"todo-tree.highlights.defaultHighlight": {},
-	"files.associations": {}
+	"files.associations": {},
+
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name":"Remote Debug (3DS Max)",
+				"type":"python",
+				"request":"attach",
+				"host":"localhost",
+				"port":7720
+			}
+		]
+	}
 }

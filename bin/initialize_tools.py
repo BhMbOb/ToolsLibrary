@@ -29,7 +29,7 @@ except WindowsError:
 
 # Initialize all programs
 for i in os.listdir(root_folder + "\\programs"):
-    initialize_tool_script_path = os.path.join(root_folder, "programs", i, "bin\\initialize_tools.py")
+    initialize_tool_script_path = os.path.join(root_folder, "programs", i, "libs\\python\\install\\__init__.py")
 
     if(os.path.isfile(initialize_tool_script_path)):
         os.system("\"" + root_folder + "/bin/Python 3.8/python.exe\" " + initialize_tool_script_path)
