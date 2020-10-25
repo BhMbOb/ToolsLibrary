@@ -13,7 +13,7 @@ import glob
 import winreg
 
 
-root_folder = os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + "\\..")
+root_folder = os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + "\\..\\..\\..")
 
 # Add tools_library path to registry
 try:

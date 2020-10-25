@@ -8,10 +8,10 @@ from tools_library import asset_library
 
 
 def list_texture_types():
-    """Returns the names of all valid texture types as defined in "config/materials/properties.json" """
+    """Returns the names of all valid texture types as defined in "config/asset_library/file_types/texture/properties.json" """
     output = []
 
-    materials_json = tools_library.getConfig("materials\\properties.json")
+    materials_json = tools_library.getConfig("asset_library\\file_types\\texture\\properties.json")
 
     with open(materials_json, "r") as j:
         json_data = json.load(j)

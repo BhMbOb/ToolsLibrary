@@ -7,6 +7,13 @@
             "b":"height",
             "a":"metallic"
         },
+        "F":{
+            "identifier":"foliage_surface",
+            "r":"roughness",
+            "g":"ambient_occlusion",
+            "b":"height",
+            "a":"thickness"
+        },
         "D":{
             "identifier":"albedo",
             "rgb":"albedo"
