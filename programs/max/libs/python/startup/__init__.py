@@ -11,9 +11,12 @@ for i in range(99):
     # run maxscript files
     if(os.path.isdir(startup_folder_ms)):
         for file in os.listdir(startup_folder_ms):
+            print(os.path.join(startup_folder_ms, file))
             if(file.endswith(".ms")):
                 file_path = os.path.join(startup_folder_ms, file)
-                pymxs.runtime.fileIn(file_path)
+                with open(file_path) as file:
+                    file_lines = file.read()
+                    pymxs.runtime.execute(file_lines)
 
         print("Maxscript Startup " + str(i) + " initialized.")
 
@@ -23,6 +26,5 @@ for i in range(99):
             if(file.endswith(".py")):
                 file_path = os.path.join(startup_folder, file)
                 exec(open(file_path).read())
-
 
         print("Python Startup " + str(i) + " initialized.")

@@ -5,6 +5,10 @@
 			"name":"Tools Library",
 			"path": "..\\"
 		},
+		{
+			"name":"Unreal",
+			"path":"..\\programs\\unreal"
+		}
 	],
 
 	"settings": {

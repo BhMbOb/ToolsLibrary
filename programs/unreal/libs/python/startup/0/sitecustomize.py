@@ -1,13 +1,8 @@
-"""
-This file is copied to the unreal project directory and ran on startup
-It is in charge of running all sub-startup scripts
-"""
 import os
 import sys
 import _winreg as winreg
 import json
 
-this__file__ = __file__
 
 def path():
     '''Returns the stored tools library root path as stored in the registry'''
@@ -19,11 +14,6 @@ def path():
     except WindowsError:
         return ""
 
-
-def run_file(file_path):
-    __file__ = file_path
-    exec(open(file_path).read())
-    __file__ = this__file__
-
-
-run_file(path() + "\\programs\\unreal\\libs\\python\\startup\\__init__.py")
+sys.path.append(os.path.join(path(), "libs\\Python"))
+sys.path.append(os.path.join(path(), "libs\\External\\Python2.7"))
+sys.path.append(os.path.join(path(), "programs\\unreal\\Python"))

@@ -12,6 +12,7 @@ import stat
 import glob
 import winreg
 
+this__file__ = __file__
 
 root_folder = os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + "\\..\\..\\..")
 
@@ -31,5 +32,15 @@ except WindowsError:
 for i in os.listdir(root_folder + "\\programs"):
     initialize_tool_script_path = os.path.join(root_folder, "programs", i, "libs\\python\\install\\__init__.py")
 
-    if(os.path.isfile(initialize_tool_script_path)):
-        os.system("\"" + root_folder + "/bin/Python 3.8/python.exe\" " + initialize_tool_script_path)
+    install_scripts_dir = os.path.join(root_folder, "programs", i, "libs\\python\\install") + "\\"
+
+    for subfolder_index in range(99):
+        install_scripts_current_dir = install_scripts_dir + str(subfolder_index)
+
+        if(os.path.isdir(install_scripts_current_dir)):
+            for file in os.listdir(install_scripts_current_dir):
+                current_script_path = install_scripts_current_dir + "\\" + file
+                __file__ = current_script_path
+                print("Ran Script: " + current_script_path)
+                exec(open(current_script_path).read())
+                __file__ = this__file__
