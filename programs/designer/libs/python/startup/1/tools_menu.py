@@ -11,10 +11,11 @@ designer_path = tools_library.path() + "programs\\designer"
 designer_tools_path = "D:\\Data\\projects\\Development\\ToolsLibrary\\programs\\designer\\tools\\"
 
 
-def load_script_from_path(path, q_action):
+def load_script_from_path(path):
     """Loads a python script from the input path"""
     path_ = os.path.join(designer_tools_path, path)
     globals_ = {"__file__": path_}
+    print(path_)
     exec(open(path_).read(), globals_)
 
 
@@ -54,10 +55,12 @@ def initialize_tools_library_menu(sd_ui_mgr):
                 q_menu_parent = q_tools_menu
 
             if(current_dir == current_dir_full):
-                q_menu_parent.addAction(os.path.basename(current_dir))
+                # if we're running the tool name
+                q_new_menu = q_menu_parent.addAction(os.path.basename(current_dir))
                 q_new_menu.folder = current_dir
                 q_new_menu.triggered.connect(partial(load_script_from_path, q_new_menu.folder + "/main.py"))
-            else:
+            elif(current_dir not in list(tool_menus)):
+                # if we're adding a new submenu
                 q_new_menu = q_menu_parent.addMenu(os.path.basename(current_dir))
                 tool_menus[current_dir] = q_new_menu
 
