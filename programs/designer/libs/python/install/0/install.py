@@ -5,70 +5,37 @@ import xml.etree.ElementTree
 
 import tools_library
 
-default_sbsprj_path = tools_library.getConfig("Designer:project_template.sbsprj")
 
-all_sbsprj = {}
-
-
-# loop over all designer asset libraries and create a .sbsprj file
-shelves_path = tools_library.finalizeString("$(AssetLibraryPath)Shelves\\Designer")
-for i in os.listdir(shelves_path):
-    shelf_path = os.path.join(shelves_path, i)
-    if(os.path.isdir(shelf_path)):
-        shelf_name = "tl_" + i
-        
-        config_file_path = os.path.join(shelf_path, "config", shelf_name + ".sbsprj")
-
-        if(not os.path.isdir(os.path.dirname(config_file_path))):
-            os.makedirs(os.path.dirname(config_file_path))
-
-        fin = open(default_sbsprj_path)
-        fout = open(config_file_path, "wt")
-        for line in fin:
-            line = line.replace("$(SHELF_PATH)", shelf_path)
-            line = line.replace("\\\\", "/")
-            line = line.replace("\\", "/")
-            fout.write(line)
-        fin.close()
-        fout.close()
-
-        all_sbsprj[shelf_name] = shelf_path
-
-
-# loop over all designer asset libraries and add them to the designer parent xml
 config_project_path = tools_library.finalizeString("$(LocalAppdata)Allegorithmic\\Substance Designer\\default_configuration.sbscfg")
 
 
-def add_project(name, path):
-    """"""
-    path = path + "\\" + name + ".sbsprj"
+def add_tools_library_sbsprj():
+    """Adds the tools library sbsprj to the designer config"""
+    tools_library_sbsprj = tools_library.getConfig("Designer:tools_library.sbsprj")
 
-    if(os.path.exists(config_project_path)):
-        already_exists = False
+    sbsprj_set = False
 
-        xml_tree = xml.etree.ElementTree.parse(config_project_path)
-        xml_root = xml_tree.getroot()
+    xml_config_tree = xml.etree.ElementTree.parse(config_project_path)
+    xml_config_root = xml_config_tree.getroot()
 
-        xml_key_size = xml_root.find("./projects/projectfiles/size")
-        num_projects = int(xml_key_size.text)
+    xml_config_plugins_size = xml_config_root.find("./projects/projectfiles/size")
+    xml_config_projects = xml_config_root.findall(".//*path")
+    num_projects = int(xml_config_plugins_size.text)
 
-        xml_projects = xml_root.findall(".//*path")
+    for xml_config_project in list(xml_config_projects):
+        if(tools_library_sbsprj.replace("\\", "/") in xml_config_project.text):
+            sbsprj_set = True
 
-        for i in xml_projects:
-            if(path.replace("\\", "/") in i.text):
-                already_exists = True
+    if(not sbsprj_set):
+        xml_config_plugins_size.text = str(num_projects + 1)
+        xml_config_projects_root = xml_config_root.find("./projects/projectfiles")
+        xml_config_project = xml.etree.ElementTree.SubElement(xml_config_projects_root, "_" + str(num_projects + 1))
+        xml_config_project.set("prefix", "_")
+        xml_config_project_path = xml.etree.ElementTree.SubElement(xml_config_project, "path")
+        xml_config_project_path.text = tools_library_sbsprj.replace("\\", "/")
 
-        if(not already_exists):
-            xml_key_size.text = str(num_projects+1)
-            xml_projects_root = xml_root.find("./projects/projectfiles")
-            xml_project = xml.etree.ElementTree.SubElement(xml_projects_root, "_" + str(num_projects+1))
-            xml_project.set("prefix", "_")
-            xml_project_path = xml.etree.ElementTree.SubElement(xml_project, "path")
-            xml_project_path.text = path.replace("\\", "/")
-
-        with open(config_project_path, "w+") as f:
-            f.write(xml.etree.ElementTree.tostring(xml_root, encoding="unicode", method="xml"))
+    with open(config_project_path, "w+") as f:
+        f.write(xml.etree.ElementTree.tostring(xml_config_root, encoding="unicode", method="xml"))
 
 
-for i in all_sbsprj:
-    add_project(i, all_sbsprj[i])
+add_tools_library_sbsprj()

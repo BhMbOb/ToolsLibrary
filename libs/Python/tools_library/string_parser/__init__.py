@@ -1,7 +1,7 @@
 import os
 import winreg
 import json
-from win32com.shell import shell, shellcon
+import ctypes.wintypes
 
 import tools_library
 
@@ -54,7 +54,11 @@ def _parse__assetlibrarypath(params):
 
 def _parse__userdocuments(params):
     """Returns the path to the current users documents"""
-    return shell.SHGetFolderPath(0, shellcon.CSIDL_PERSONAL, None, 0) + "\\"
+    CSIDL_PERSONAL = 5
+    SHGFP_TYPE_CURRENT = 0
+    buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+    ctypes.windll.shell32.SHGetFolderPathW(None, CSIDL_PERSONAL, None, SHGFP_TYPE_CURRENT, buf)
+    return str(buf.value)
 
 
 def _parse__folderpath(params):

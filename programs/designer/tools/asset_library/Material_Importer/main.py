@@ -19,7 +19,7 @@ import sys, os
 import sd
 
 #
-from tools_library import materials
+from tools_library.asset_library.types import materials
 
 
 

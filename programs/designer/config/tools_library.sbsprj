@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<settingsinfo>
+		<version>2</version>
+	</settingsinfo>
+	<preferences>
+		<versioncontrol>
+			<settingsinfo>
+				<version>2</version>
+			</settingsinfo>
+		</versioncontrol>
+		<sbstemplates>
+			<dirs>
+				<size>0</size>
+			</dirs>
+		</sbstemplates>
+		<resources>
+			<urlaliases>
+				<size>0</size>
+			</urlaliases>
+		</resources>
+		<python>
+			<plugin_paths>
+				<size>1</size>
+				<_1 prefix="_">
+					<url>$(PROJECT_DIR):///../plugins</url>
+				</_1>
+			</plugin_paths>
+		</python>
+		<mdl>
+			<iray>
+				<mdl_paths>
+					<size>0</size>
+				</mdl_paths>
+			</iray>
+		</mdl>
+		<library>
+			<watchedpaths>
+				<size>0</size>
+			</watchedpaths>
+			<settingsinfo>
+				<version>2</version>
+			</settingsinfo>
+		</library>
+	</preferences>
+</root>

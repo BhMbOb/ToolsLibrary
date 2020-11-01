@@ -2,7 +2,7 @@ import os
 import shutil
 import winreg
 
-#
+
 def getProjectRoot():
     try:
         reg_path = r"Software\\ToolsLibrary"
