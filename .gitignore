@@ -1,7 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
+bin/Python 3.8/**/*.py[cod]
+bin/Python 2.7/**/*.py[cod]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
