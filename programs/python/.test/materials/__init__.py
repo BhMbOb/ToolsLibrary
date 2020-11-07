@@ -23,7 +23,7 @@ class Texture(object):
 
         texture_type = self.texname().split("_")[-1].lower().replace(".tga", "").upper()
 
-        materials_json = tools_library.getConfig("asset_library\\file_types\\texture\\properties.json")
+        materials_json = tools_library.getConfig("Asset_Library:file_types\\texture\\properties.json")
 
         with open(materials_json, "r") as j:
             json_data = json.load(j)
@@ -149,7 +149,7 @@ class Material(object):
         output = []
 
         target_content_library_path = os.path.join(
-            tools_library.asset_library.content_library.getPath(self.content_library),
+            asset_library.content_library.getPath(self.content_library),
             "Materials"
         )
 
@@ -169,7 +169,7 @@ class Material(object):
 
         material_instance   --  instance id, if instance isn't found will default to the base instance
         material_variant    --  variant id, if variant isn't found will default to the base variant
-        texture_type        --  type of texture to search for as defined in "config/asset_library/file_types/texture/properties.json" (Ie "_DA")
+        texture_type        --  type of texture to search for as defined in "plugins/asset_library/config/file_types/texture/properties.json" (Ie "_DA")
         """
         output = None
 

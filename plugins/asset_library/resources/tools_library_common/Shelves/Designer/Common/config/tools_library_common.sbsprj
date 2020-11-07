@@ -18,7 +18,7 @@
 			<watchedpaths>
 				<size>1</size>
 				<_1 prefix="_">
-					<url>file:///D:/projects/Development/ToolsLibrary/Resources/Asset_Library/tools_library_common/Shelves/Designer/Common/</url>
+					<url>file:///D:/projects/Development/ToolsLibrary/Plugins/Asset_Library/Resources/tools_library_common/Shelves/Designer/Common/</url>
 					<isrecursive>true</isrecursive>
 					<isenabled>true</isenabled>
 				</_1>

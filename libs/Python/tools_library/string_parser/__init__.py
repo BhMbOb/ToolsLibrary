@@ -43,7 +43,7 @@ def _parse__unrealprojectname(params):
 def _parse__assetlibrarypath(params):
     """Returns the path to the currently active asset library project"""
     output = ""
-    active_project_config_path = tools_library.getConfig("asset_library\\active_project.json")
+    active_project_config_path = tools_library.getConfig("Asset_Library:active_project.json")
 
     with open(active_project_config_path) as j:
         json_data = json.load(j)

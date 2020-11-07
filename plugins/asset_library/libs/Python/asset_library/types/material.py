@@ -4,7 +4,7 @@ import json
 import winreg
 
 import tools_library
-import tools_library.asset_library
+import asset_library
 
 
 class Material(object):
@@ -18,7 +18,7 @@ class Material(object):
         """Returns the absolute path to this .material file"""
         content_library = self.path.split(":")[0]
         asset_path = self.path.split(":")[1]
-        return os.path.join(tools_library.asset_library.content_library.getPath(content_library),asset_path)
+        return os.path.join(asset_library.content_library.getPath(content_library),asset_path)
 
     def get_parameter(self, name, instance=None):
         """Returns a parameter if found - None if not

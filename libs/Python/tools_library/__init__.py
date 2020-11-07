@@ -18,6 +18,19 @@ def path():
         return ""
 
 
+valid_program_names = []
+for i in os.listdir(os.path.join(path(), "programs")):
+    path_ = os.path.join(path(), "programs", i)
+    if(os.path.isdir(path_)):
+        valid_program_names.append(i.lower())
+
+valid_plugin_names = []
+for i in os.listdir(os.path.join(path(), "plugins")):
+    plugin = os.path.join(path(), "plugins", i)
+    if(os.path.isdir(plugin)):
+        valid_plugin_names.append(i.lower())
+
+
 def getConfig(name):
     '''Returns a config file from its path
 
@@ -26,7 +39,11 @@ def getConfig(name):
     output = ""
 
     if(len(name.split(":")) == 2):
-        output = os.path.join(path(), "programs", name.split(":")[0], "config", name.split(":")[1])
+        path_context = name.split(":")[0].lower()
+        if(path_context in valid_program_names):
+            output = os.path.join(path(), "programs", name.split(":")[0], "config", name.split(":")[1])
+        elif(path_context in valid_plugin_names):
+            output = os.path.join(path(), "plugins", name.split(":")[0], "config", name.split(":")[1])
     else:
         output = os.path.join(path(), "config", name)
 

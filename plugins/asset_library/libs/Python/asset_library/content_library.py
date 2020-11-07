@@ -36,7 +36,7 @@ def make_content_library(library_name):
     if(os.path.isdir(library_dir)):
         content_library_dir = os.path.join(library_dir, library_name)
         tools_library.filemgr.makedir(content_library_dir)
-        with open(tools_library.getConfig("asset_library\\content_library_structure.json"), "r") as j:
+        with open(tools_library.getConfig("Asset_Library:content_library_structure.json"), "r") as j:
             json_data = json.load(j)
             for i in json_data:
                 tools_library.filemgr.makesubdirs(os.path.join(content_library_dir, i), json_data[i])
