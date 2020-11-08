@@ -5,10 +5,58 @@ from functools import partial
 from PySide2 import QtCore, QtGui, QtWidgets
 
 import tools_library
+import tools_library.utilities.string as string_utils
 
 
 designer_path = tools_library.path() + "programs\\designer"
 designer_tools_path = "D:\\Data\\projects\\Development\\ToolsLibrary\\programs\\designer\\tools\\"
+
+
+#
+branch_menus = {}
+
+
+def add_menu_branch(parent_menu, branch_string, script_path=""):
+    """
+    Adds a new menu branch from a path string (Ie, "a\\b\\c")
+    """
+    branch_string_split = branch_string.split("\\")
+    current_branch_full = ""
+
+    for current_branch_name in branch_string_split:
+        current_branch_full = os.path.join(current_branch_full, current_branch_name)
+        current_branch_upper = os.path.dirname(current_branch_full)
+
+        if(current_branch_upper in list(branch_menus)):
+            q_menu_parent = branch_menus[current_branch_upper]
+        else:
+            q_menu_parent = parent_menu
+
+        if(current_branch_full == branch_string):
+            # if we're adding the final one (the script which will be launched)
+            q_new_menu = q_menu_parent.addAction(string_utils.format.snake_to_name(current_branch_name))
+            q_new_menu.script_path = script_path
+            q_new_menu.triggered.connect(partial(load_script_from_path, q_new_menu.script_path))
+        elif(current_branch_full not in list(branch_menus)):
+            # if we're just adding a submenu
+            q_new_menu = q_menu_parent.addMenu(string_utils.format.snake_to_name(current_branch_name))
+            branch_menus[current_branch_full] = q_new_menu
+
+
+def add_dir_as_branch(path_, parent_menu=None):
+    """
+    Loops over all subdirectories in a path and adds them as menus or actions
+    """
+    possible_tool_dirs = [x[0] for x in os.walk(path_)]
+    tool_paths = []
+    tool_menu_branches = []
+
+    for dir_ in possible_tool_dirs:
+        if(os.path.isfile(os.path.join(dir_, "main.py"))):
+            tool_menu_branches.append(dir_.replace(path_, ""))
+            tool_paths.append(os.path.join(dir_, "main.py"))
+    for i in range(len(tool_menu_branches)):
+        add_menu_branch(parent_menu, tool_menu_branches[i], script_path=tool_paths[i])
 
 
 def load_script_from_path(path):
@@ -34,36 +82,19 @@ def initialize_tools_library_menu(sd_ui_mgr):
 
     q_tools_menu = create_menu(sd_ui_mgr, "tools_library", "Tools Library")
 
-    possible_tool_dirs = [x[0] for x in os.walk(designer_tools_path)]
-    tool_dirs = []
+    # loop over all base designer tools and add them
+    add_dir_as_branch(designer_tools_path, parent_menu=q_tools_menu)
 
-    for dir_ in possible_tool_dirs:
-        if(os.path.isfile(os.path.join(dir_, "main.py"))):
-            tool_dirs.append(dir_.replace(designer_tools_path, ""))
+    # loop over all separate plugins and add them and their branches
+    q_tools_menu.addSeparator()
+    for plugin_dir in tools_library.pluginDirs():
+        plugin_dir_tools_designer_dir = os.path.join(plugin_dir, "programs\\designer\\tools\\")
+        plugin_name = os.path.basename(plugin_dir)
+        plugin_menu_branch = q_tools_menu.addMenu(string_utils.format.snake_to_name(plugin_name))
+        if(os.path.exists(plugin_dir_tools_designer_dir)):
+            add_dir_as_branch(plugin_dir_tools_designer_dir, parent_menu=plugin_menu_branch)
 
-    tool_menus = {}
-
-    for current_dir_full in tool_dirs:
-        current_dir = ""
-        for current_dir_name in current_dir_full.split("\\"):
-            current_dir = os.path.join(current_dir, current_dir_name)
-            upper_dir = os.path.dirname(current_dir)
-
-            if(upper_dir in list(tool_menus)):
-                q_menu_parent = tool_menus[upper_dir]
-            else:
-                q_menu_parent = q_tools_menu
-
-            if(current_dir == current_dir_full):
-                # if we're running the tool name
-                q_new_menu = q_menu_parent.addAction(os.path.basename(current_dir))
-                q_new_menu.folder = current_dir
-                q_new_menu.triggered.connect(partial(load_script_from_path, q_new_menu.folder + "/main.py"))
-            elif(current_dir not in list(tool_menus)):
-                # if we're adding a new submenu
-                q_new_menu = q_menu_parent.addMenu(os.path.basename(current_dir))
-                tool_menus[current_dir] = q_new_menu
-
+    # helper / additional
     q_tools_menu.addSeparator()
     q_tools_menu.addAction("Show In Explorer..")
     q_tools_menu.addAction("Github Repo")

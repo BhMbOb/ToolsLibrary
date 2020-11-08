@@ -31,6 +31,16 @@ for i in os.listdir(os.path.join(path(), "plugins")):
         valid_plugin_names.append(i.lower())
 
 
+def pluginDirs():
+    output = []
+    for i in os.listdir(os.path.join(path(), "plugins")):
+        possible_dir = os.path.join(path(), "plugins", i)
+        if(os.path.isdir(possible_dir)):
+            output.append(possible_dir)
+    return output
+
+
+
 def getConfig(name):
     '''Returns a config file from its path
 
