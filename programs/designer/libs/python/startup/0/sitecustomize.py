@@ -18,3 +18,7 @@ def path():
 sys.path.append(os.path.join(path(), "libs\\Python"))
 sys.path.append(os.path.join(path(), "libs\\External\\Python3.8"))
 sys.path.append(os.path.join(path(), "programs\\designer\\Python"))
+
+# loop over all plugins and add their python libs to sys path
+for i in os.listdir(os.path.join(path(), "plugins")):
+    sys.path.append(os.path.join(path(), "plugins", i, "libs\\Python"))

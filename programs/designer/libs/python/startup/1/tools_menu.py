@@ -8,8 +8,8 @@ import tools_library
 import tools_library.utilities.string as string_utils
 
 
-designer_path = tools_library.path() + "programs\\designer"
-designer_tools_path = "D:\\Data\\projects\\Development\\ToolsLibrary\\programs\\designer\\tools\\"
+designer_path = os.path.join(tools_library.path(), "programs\\designer")
+designer_tools_path = os.path.join(designer_path, "tools\\")
 
 
 #
@@ -61,7 +61,7 @@ def add_dir_as_branch(path_, parent_menu=None):
 
 def load_script_from_path(path):
     """Loads a python script from the input path"""
-    path_ = os.path.join(designer_tools_path, path)
+    path_ = path
     globals_ = {"__file__": path_}
     print(path_)
     exec(open(path_).read(), globals_)
