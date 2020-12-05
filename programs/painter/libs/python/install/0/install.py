@@ -10,8 +10,8 @@ import tools_library
 def copyStartup():
     """copy the "libs/install/tools_library.py" to the users "documents/allegorithmic/substance painter/python/startup" """
     shutil.copyfile(
-        tools_library.finalizeString("$(ToolsLibraryPath)programs\\painter\\libs\\python\\startup\\__init__.py"),
-        tools_library.finalizeString("$(Documents)Allegorithmic\\Substance Painter\\python\\") + "startup\\startup.py"
+        tools_library.finalizeString("$(ToolsLibraryPath)\\programs\\painter\\libs\\python\\startup\\__init__.py"),
+        tools_library.finalizeString("$(Documents)\\Allegorithmic\\Substance Painter\\python\\") + "startup\\startup.py"
     )
 
 

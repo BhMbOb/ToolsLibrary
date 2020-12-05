@@ -1,10 +1,12 @@
 import os
 import sys
-import winreg
 import json
 
 from tools_library import *
 from tools_library import string_parser
+from tools_library import aliases
+
+winreg = aliases.winreg
 
 
 def path():
@@ -16,6 +18,19 @@ def path():
         return value
     except WindowsError:
         return ""
+
+
+def show_in_explorer():
+    """Opens the root to the Tools Library in windows explorer"""
+    os.startfile(path())
+
+
+def open_github_repo():
+    """Opens the Github repo for the Tools Library in the web browser"""
+    with open(getConfig("tools_library.json")) as j:
+        json_data = json.load(j)
+        url = json_data["url"]
+        os.system("start \"\" " + url)
 
 
 valid_program_names = []
@@ -40,7 +55,6 @@ def pluginDirs():
     return output
 
 
-
 def getConfig(name):
     '''Returns a config file from its path
 
@@ -61,6 +75,28 @@ def getConfig(name):
         output = ""
 
     return output
+
+
+def run_file(file_path):
+    """Run a file"""
+    path_ = file_path
+    globals_ = {
+        "__file__": path_,
+        "__package__": os.path.dirname(file_path)
+    }
+    exec(open(path_).read(), globals_)
+
+
+def run_tool(file_path):
+    """Run a tool - adds the tool dir to sys.path temporarily"""
+    path_ = file_path
+    globals_ = {
+        "__file__": path_,
+        "__package__": os.path.dirname(file_path)
+    }
+    sys.path.append(os.path.dirname(file_path))
+    exec(open(path_).read(), globals_)
+    sys.path.remove(os.path.dirname(file_path))
 
 
 finalizeString = string_parser.parse

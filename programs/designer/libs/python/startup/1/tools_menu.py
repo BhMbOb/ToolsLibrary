@@ -3,6 +3,7 @@ import sys
 import sd
 from functools import partial
 from PySide2 import QtCore, QtGui, QtWidgets
+import subprocess
 
 import tools_library
 import tools_library.utilities.string as string_utils
@@ -96,12 +97,13 @@ def initialize_tools_library_menu(sd_ui_mgr):
 
     # helper / additional
     q_tools_menu.addSeparator()
-    q_tools_menu.addAction("Show In Explorer..")
-    q_tools_menu.addAction("Github Repo")
+
+    q_show_in_explorer = q_tools_menu.addAction("Show In Explorer..")
+    q_show_in_explorer.triggered.connect(partial(tools_library.show_in_explorer))
+
+    q_open_git_repo = q_tools_menu.addAction("Github Repo")
+    q_open_git_repo.triggered.connect(partial(tools_library.open_github_repo))
 
 
 sd_ui_mgr = sd.getContext().getSDApplication().getQtForPythonUIMgr()
 initialize_tools_library_menu(sd_ui_mgr)
-
-
-print("tools library startup")

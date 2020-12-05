@@ -4,10 +4,6 @@
 		{
 			"name":"Tools Library",
 			"path": "..\\"
-		},
-		{
-			"name":"Unreal",
-			"path":"..\\programs\\unreal"
 		}
 	],
 
@@ -16,7 +12,9 @@
 			//".vscode/": true,
 			"**/__pycache__": true,
 			"**/.empty": true,
-			"**/**.pycache": true
+			"**/**.pycache": true,
+			"**/**.pyc": true,
+			"**/.vscode":true, 
 		},
 		"files.associations": {
 			"*.material":"json"

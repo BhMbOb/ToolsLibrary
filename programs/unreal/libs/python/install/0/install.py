@@ -45,12 +45,14 @@ with open(default_engine_ini_path) as file:
     ini_file_data = file.read()
 
 with open(default_engine_ini_path, "w") as file:
-    if(
-        (startup_script_string not in ini_file_data) and
-        (python_plugin_start_line_string in ini_file_data)
-    ):
-        ini_file_data = ini_file_data.replace(
-            python_plugin_start_line_string,
-            python_plugin_start_line_string + "\n" + startup_script_string
+    if(python_plugin_start_line_string in ini_file_data):
+        if(startup_script_string not in ini_file_data):
+            ini_file_data = ini_file_data.replace(
+                python_plugin_start_line_string,
+                python_plugin_start_line_string + "\n" + startup_script_string
+            )
+    else:
+        ini_file_data += str(
+            "\n" + python_plugin_start_line_string + "\n" + startup_script_string
         )
     file.write(ini_file_data)

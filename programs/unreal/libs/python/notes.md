@@ -1,0 +1,2 @@
+Unreal tickable Qt window - https://github.com/techartorg/TAO-Wiki/wiki/Tickable-PySide2-Window-BaseClass
+Editor utility widget menus - https://discourse.techart.online/t/editor-utilitty-widget-menus-in-unreal/12923

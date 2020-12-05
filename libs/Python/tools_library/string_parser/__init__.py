@@ -1,5 +1,5 @@
 import os
-import winreg
+import sys
 import json
 import ctypes.wintypes
 

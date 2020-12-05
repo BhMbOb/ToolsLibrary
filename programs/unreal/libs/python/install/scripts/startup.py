@@ -4,7 +4,7 @@ It is in charge of running all sub-startup scripts
 """
 import os
 import sys
-import _winreg as winreg
+import winreg
 import json
 
 this__file__ = __file__
@@ -21,9 +21,9 @@ def path():
 
 
 def run_file(file_path):
-    __file__ = file_path
-    exec(open(file_path).read())
-    __file__ = this__file__
+    path_ = file_path
+    globals_ = {"__file__": path_}
+    exec(open(path_).read(), globals_)
 
 
 run_file(path() + "\\programs\\unreal\\libs\\python\\startup\\__init__.py")

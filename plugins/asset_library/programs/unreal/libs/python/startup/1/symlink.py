@@ -20,10 +20,13 @@ def symlink(src, dest):
             target_is_directory=True
         )
     except:
-        print("Could not create symlink: ")
-        print(src)
-        print(dest)
-        print("---")
+        print(
+            "[Asset Library][Symlink] Could not create link for directories: " +
+            "\nSource: " +
+            src +
+            "\nDestination: " +
+            dest
+        )
 
 
 # add the whole asset library to the content folder
@@ -46,3 +49,5 @@ for shelf_name in (asset_library.shelf_library.getNames("Unreal")):
 
     if(os.path.exists(shelf_path_source_public)):
         symlink(shelf_path_source_public, shelf_path_destination_public)
+
+print("Tools Library: Symlink Complete")

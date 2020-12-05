@@ -1,6 +1,6 @@
 import os
 import sys
-import _winreg as winreg
+import winreg
 import json
 
 
@@ -15,7 +15,7 @@ def path():
         return ""
 
 sys.path.append(os.path.join(path(), "libs\\Python"))
-sys.path.append(os.path.join(path(), "libs\\External\\Python2.7"))
+sys.path.append(os.path.join(path(), "libs\\External\\Python3.8"))
 sys.path.append(os.path.join(path(), "programs\\unreal\\Python"))
 
 # loop over all plugins and add their python libs to sys path
