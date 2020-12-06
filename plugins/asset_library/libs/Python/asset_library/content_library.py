@@ -18,6 +18,7 @@ def getPath(name, raw_string=False):
 
     return output
 
+
 def absPath(relative_path):
     """Returns an absolute path from a content library relative path (Ie, "Common:Path/To/File.abc") """
     output = ""

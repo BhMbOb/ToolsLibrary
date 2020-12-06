@@ -1,5 +1,3 @@
-global unreal
-global tools_library
 import unreal
 
 import tools_library
@@ -29,14 +27,14 @@ def add_menu_branch(parent_menu, branch_string, script_path="", section_context=
 
         if(current_branch_full == branch_string):
             # if we're adding the final one (the script which will be launched)
-            ui_new_item = unreal.ToolMenuEntry(name=string_utils.format.snake_to_name(current_branch_name), type=unreal.MultiBlockType.MENU_ENTRY, insert_position=unreal.ToolMenuInsert("", unreal.ToolMenuInsertType.FIRST))
+            ui_new_item = unreal.ToolMenuEntry(name=branch_string, type=unreal.MultiBlockType.MENU_ENTRY, insert_position=unreal.ToolMenuInsert("", unreal.ToolMenuInsertType.FIRST))
             ui_new_item.set_label(string_utils.format.snake_to_name(current_branch_name))
             ui_new_item.set_string_command(unreal.ToolMenuStringCommandType.PYTHON, "None", string=str("import tools_library; tools_library.run_tool(\"" + script_path.replace("\\", "/") + "\")"))
             ui_menu_parent.add_menu_entry(section_context, ui_new_item)
         elif(current_branch_full not in list(branch_menus)):
             # if we're just adding a submenu
             name_formatted = string_utils.format.snake_to_name(current_branch_name)
-            ui_new_menu = ui_menu_parent.add_sub_menu(section_context, name_formatted, name_formatted, name_formatted)
+            ui_new_menu = ui_menu_parent.add_sub_menu(section_context, branch_string, name_formatted, name_formatted)
             branch_menus[current_branch_full] = ui_new_menu
 
 
@@ -50,6 +48,10 @@ def add_dir_as_branch(path_, parent_menu=None, section_context="Tools"):
         if(os.path.isfile(os.path.join(dir_, "main.py"))):
             tool_menu_branches.append(dir_.replace(path_, ""))
             tool_paths.append(os.path.join(dir_, "main.py"))
+        for dir_child in os.listdir(dir_):
+            if(dir_child.endswith(".toolptr")):
+                tool_menu_branches.append(os.path.join(dir_, dir_child.split(".")[0]).replace(path_, ""))
+                tool_paths.append(os.path.join(dir_, dir_child))
     for i in range(len(tool_menu_branches)):
         add_menu_branch(parent_menu, tool_menu_branches[i], script_path=tool_paths[i], section_context=section_context)
 
@@ -62,10 +64,11 @@ def load_script_from_path(path):
 
 
 def initialize_tools_library_menu():
+    """Creates the tools library menu structure"""
     # create the base menu
     menus = unreal.ToolMenus.get()
     main_menu = menus.find_menu("LevelEditor.MainMenu")
-    tools_library_menu = main_menu.add_sub_menu(main_menu.get_name(), "ToolsLibrary", "ToolsLibrary", "ToolsLibrary")
+    tools_library_menu = main_menu.add_sub_menu(main_menu.get_name(), "Tools Library", "Tools Library", "Tools Library")
     tools_library_menu.searchable = True
 
     # loop over all base unreal tools and add them
@@ -83,13 +86,13 @@ def initialize_tools_library_menu():
 
     # helper / additional
     ui_show_in_explorer = unreal.ToolMenuEntry(name="ShowInExplorer", type=unreal.MultiBlockType.MENU_ENTRY, insert_position=unreal.ToolMenuInsert("", unreal.ToolMenuInsertType.FIRST))
-    ui_show_in_explorer.set_label("Show In Explorer..")
-    ui_show_in_explorer.set_string_command(unreal.ToolMenuStringCommandType.PYTHON, "None", string=("import tools_library;tools_library.show_in_explorer()"))
+    ui_show_in_explorer.set_label("Show In Explorer")
+    ui_show_in_explorer.set_string_command(unreal.ToolMenuStringCommandType.PYTHON, "None", string=("import tools_library;tools_library.run_tool(\"programs\\python\\scripts\\show_in_explorer.py\")"))
     tools_library_menu.add_menu_entry("Info", ui_show_in_explorer)
 
     ui_open_git_repo = unreal.ToolMenuEntry(name="OpenGithubRepo", type=unreal.MultiBlockType.MENU_ENTRY, insert_position=unreal.ToolMenuInsert("", unreal.ToolMenuInsertType.FIRST))
     ui_open_git_repo.set_label("Github Repo")
-    ui_open_git_repo.set_string_command(unreal.ToolMenuStringCommandType.PYTHON, "None", string=("import tools_library;tools_library.open_github_repo()"))
+    ui_open_git_repo.set_string_command(unreal.ToolMenuStringCommandType.PYTHON, "None", string=("import tools_library;tools_library.run_tool(\"programs\\python\\scripts\\open_git_repo.py\")"))
     tools_library_menu.add_menu_entry("Info", ui_open_git_repo)
 
 
@@ -98,7 +101,3 @@ def initialize_tools_library_menu():
 
 
 initialize_tools_library_menu()
-
-# https://docs.unrealengine.com/en-US/PythonAPI/class/ToolMenus.html?highlight=find_menu#unreal.ToolMenus.find_menu
-# Registers a menu by name
-# unreal.ToolMenus.get().register_menu(name, parent="None", type=MultiBoxType.MENU, warn_if_already_registered=True)

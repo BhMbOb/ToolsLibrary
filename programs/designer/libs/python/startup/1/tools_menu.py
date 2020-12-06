@@ -37,7 +37,7 @@ def add_menu_branch(parent_menu, branch_string, script_path=""):
             # if we're adding the final one (the script which will be launched)
             q_new_menu = q_menu_parent.addAction(string_utils.format.snake_to_name(current_branch_name))
             q_new_menu.script_path = script_path
-            q_new_menu.triggered.connect(partial(load_script_from_path, q_new_menu.script_path))
+            q_new_menu.triggered.connect(partial(tools_library.run_tool, q_new_menu.script_path))
         elif(current_branch_full not in list(branch_menus)):
             # if we're just adding a submenu
             q_new_menu = q_menu_parent.addMenu(string_utils.format.snake_to_name(current_branch_name))
@@ -56,6 +56,10 @@ def add_dir_as_branch(path_, parent_menu=None):
         if(os.path.isfile(os.path.join(dir_, "main.py"))):
             tool_menu_branches.append(dir_.replace(path_, ""))
             tool_paths.append(os.path.join(dir_, "main.py"))
+        for dir_child in os.listdir(dir_):
+            if(dir_child.endswith(".toolptr")):
+                tool_menu_branches.append(os.path.join(dir_, dir_child.split(".")[0]).replace(path_, ""))
+                tool_paths.append(os.path.join(dir_, dir_child))
     for i in range(len(tool_menu_branches)):
         add_menu_branch(parent_menu, tool_menu_branches[i], script_path=tool_paths[i])
 
@@ -98,11 +102,11 @@ def initialize_tools_library_menu(sd_ui_mgr):
     # helper / additional
     q_tools_menu.addSeparator()
 
-    q_show_in_explorer = q_tools_menu.addAction("Show In Explorer..")
-    q_show_in_explorer.triggered.connect(partial(tools_library.show_in_explorer))
+    q_show_in_explorer = q_tools_menu.addAction("Show In Explorer")
+    q_show_in_explorer.triggered.connect(partial(tools_library.run_tool, "programs\\python\\scripts\\show_in_explorer.py"))
 
     q_open_git_repo = q_tools_menu.addAction("Github Repo")
-    q_open_git_repo.triggered.connect(partial(tools_library.open_github_repo))
+    q_open_git_repo.triggered.connect(partial(tools_library.run_tool, "programs\\python\\scripts\\open_git_repo.py"))
 
 
 sd_ui_mgr = sd.getContext().getSDApplication().getQtForPythonUIMgr()
