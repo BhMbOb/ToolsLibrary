@@ -28,19 +28,41 @@ except WindowsError:
     pass
 
 
-# Initialize all programs
-for i in os.listdir(root_folder + "\\programs"):
-    initialize_tool_script_path = os.path.join(root_folder, "programs", i, "libs\\python\\install\\__init__.py")
+#
+TOOLS_LIBRARY_ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..\\..\\..\\"))
+TOOLS_LIBRARY_PLUGINS_DIR = os.path.join(TOOLS_LIBRARY_ROOT_DIR, "plugins\\")
+install_dirs = []
 
-    install_scripts_dir = os.path.join(root_folder, "programs", i, "libs\\python\\install") + "\\"
+# add base startup dir (in "/programs")
+install_dirs.append(os.path.dirname(__file__).replace("/", "\\"))
 
-    for subfolder_index in range(99):
-        install_scripts_current_dir = install_scripts_dir + str(subfolder_index)
+# add all base programs
+for program_name in os.listdir(os.path.join(TOOLS_LIBRARY_ROOT_DIR, "programs")):
+    program_install_dir = os.path.join(TOOLS_LIBRARY_ROOT_DIR, "programs", program_name, "libs\\python\\install")
+    if(os.path.isdir(program_install_dir)):
+        install_dirs.append(program_install_dir)
 
-        if(os.path.isdir(install_scripts_current_dir)):
-            for file in os.listdir(install_scripts_current_dir):
-                current_script_path = install_scripts_current_dir + "\\" + file
-                __file__ = current_script_path
-                print("Ran Script: " + current_script_path)
-                exec(open(current_script_path).read())
-                __file__ = this__file__
+# add all plugin startup dirs (in "plugins/plugin_name/unreal/libs/python/startup")
+for plugin_name in os.listdir(TOOLS_LIBRARY_PLUGINS_DIR):
+    plugin_dir = os.path.join(TOOLS_LIBRARY_PLUGINS_DIR, plugin_name)
+    install_dirs.append(os.path.join(plugin_dir, "libs\\python\\install"))
+    for plugin_program_name in os.listdir(os.path.join(plugin_dir, "programs")):
+        plugin_program_dir = os.path.join(plugin_dir, "programs", plugin_program_name, "libs\\python\\install")
+        install_dirs.append(plugin_program_dir)
+
+# loop over all of the startup directories in order of their names (Ie, 0..1..2)
+for install_index in range(99):
+    for install_dir in install_dirs:
+        install_folder = install_dir + "/" + str(install_index)
+
+        # run python files
+        if(os.path.isdir(install_folder)):
+            for file in os.listdir(install_folder):
+                if(file.endswith(".py")):
+                    file_path = os.path.join(install_folder, file)
+                    __file__ = file_path
+                    print("Tools Library: Ran Install Script: \"" + file_path + "\".")
+                    exec(open(file_path).read())
+                    __file__ = this__file__
+
+print("Tools Library: All install scripts initialized.")
