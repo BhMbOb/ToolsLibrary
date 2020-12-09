@@ -24,10 +24,15 @@ designer_path = os.path.join(getProjectRoot(), "programs\\designer\\")
 
 def initializeSDPlugin():
 
-    # run the startup script folder
-    path_ = os.path.join(designer_path, "libs\\python\\startup\\__init__.py")
-    globals_ = {"__file__": path_}
-    exec(open(path_).read(), globals_)
+    def run_file_(file_path):
+        path_ = file_path
+        globals_ = globals()
+        globals_["__file__"] = path_
+        globals_["__package__"] = os.path.dirname(file_path)
+        globals_["__program_context__"] = "designer"
+        exec(open(path_).read(), globals_)
+
+    run_file_(getProjectRoot() + "\\libs\\python\\startup\\__init__.py")
 
 
 def uninitializeSDPlugin():

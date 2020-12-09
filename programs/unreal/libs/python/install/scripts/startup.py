@@ -20,10 +20,12 @@ def path():
         return ""
 
 
-def run_file(file_path):
+def run_file_(file_path):
     path_ = file_path
-    globals_ = {"__file__": path_}
+    globals_ = globals()
+    globals_["__file__"] = path_
+    globals_["__package__"] = os.path.dirname(file_path)
+    globals_["__program_context__"] = "unreal"
     exec(open(path_).read(), globals_)
 
-
-run_file(path() + "\\programs\\unreal\\libs\\python\\startup\\__init__.py")
+run_file_(path() + "\\libs\\python\\startup\\__init__.py")

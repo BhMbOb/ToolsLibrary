@@ -4,8 +4,8 @@ import tools_library
 import tools_library.filemgr
 import asset_library
 
-project_content_dir = tools_library.finalizeString("$(UnrealProjectPath)Content")
-project_source_dir = tools_library.finalizeString("$(UnrealProjectPath)Source")
+project_content_dir = tools_library.finalizeString("$(UnrealProjectPath)\\Content")
+project_source_dir = tools_library.finalizeString("$(UnrealProjectPath)\\Source")
 asset_library_dir = tools_library.finalizeString("$(AssetLibraryPath)")
 project_name = tools_library.finalizeString("$(UnrealProjectName)")
 

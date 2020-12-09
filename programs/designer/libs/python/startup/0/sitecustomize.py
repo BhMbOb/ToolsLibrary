@@ -22,3 +22,7 @@ sys.path.append(os.path.join(path(), "programs\\designer\\Python"))
 # loop over all plugins and add their python libs to sys path
 for i in os.listdir(os.path.join(path(), "plugins")):
     sys.path.append(os.path.join(path(), "plugins", i, "libs\\Python"))
+
+# set the program context to unreal
+import tools_library
+tools_library.PROGRAM_CONTEXT = "designer"

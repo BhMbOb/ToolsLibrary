@@ -6,7 +6,7 @@ import xml.etree.ElementTree
 import tools_library
 
 
-config_project_path = tools_library.finalizeString("$(LocalAppdata)Allegorithmic\\Substance Designer\\default_configuration.sbscfg")
+config_project_path = tools_library.finalizeString("$(LocalAppdata)\\Allegorithmic\\Substance Designer\\default_configuration.sbscfg")
 
 
 def add_tools_library_sbsprj():

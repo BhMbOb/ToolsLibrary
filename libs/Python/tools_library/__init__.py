@@ -5,6 +5,7 @@ import json
 from tools_library import *
 from tools_library import string_parser
 from tools_library import aliases
+from tools_library import programs
 
 winreg = aliases.winreg
 
@@ -18,6 +19,13 @@ def path():
         return value
     except WindowsError:
         return ""
+
+
+def programContext():
+    if("PROGRAM_CONTEXT" in globals()):
+        return PROGRAM_CONTEXT
+    else:
+        return "python"
 
 
 def pluginDirs():
@@ -67,10 +75,9 @@ def getConfig(name):
 def run_file(file_path):
     """Run a single file"""
     path_ = file_path
-    globals_ = {
-        "__file__": path_,
-        "__package__": os.path.dirname(file_path)
-    }
+    globals_ = globals()
+    globals_["__file__"] = path_
+    globals_["__package__"] = os.path.dirname(file_path)
     exec(open(path_).read(), globals_)
 
 
@@ -81,10 +88,9 @@ def run_tool(file_path):
     if(not os.path.exists(file_path)):
         file_path = os.path.join(path(), file_path)
     path_ = file_path
-    globals_ = {
-        "__file__": path_,
-        "__package__": os.path.dirname(file_path)
-    }
+    globals_ = globals()
+    globals_["__file__"] = path_
+    globals_["__package__"] = os.path.dirname(file_path)
     if(file_path.endswith(".toolptr")):
         with open(file_path) as j:
             json_data = json.load(j)

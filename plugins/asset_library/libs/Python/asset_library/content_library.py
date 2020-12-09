@@ -33,7 +33,7 @@ def absPath(relative_path):
 
 def make_content_library(library_name):
     """Make a new content library with the default folder structure"""
-    library_dir = tools_library.finalizeString("$(AssetLibraryPath)Content\\")
+    library_dir = tools_library.finalizeString("$(AssetLibraryPath)\\Content\\")
     if(os.path.isdir(library_dir)):
         content_library_dir = os.path.join(library_dir, library_name)
         tools_library.filemgr.makedir(content_library_dir)

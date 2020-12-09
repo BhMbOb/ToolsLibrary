@@ -14,11 +14,14 @@ def path():
     except WindowsError:
         return ""
 
-
 sys.path.append(os.path.join(path(), "libs\\Python"))
 sys.path.append(os.path.join(path(), "libs\\External\\Python3.8"))
-sys.path.append(os.path.join(path(), "programs\\max\\Python"))
+sys.path.append(os.path.join(path(), "programs\\painter\\Python"))
+
+# loop over all plugins and add their python libs to sys path
+for i in os.listdir(os.path.join(path(), "plugins")):
+    sys.path.append(os.path.join(path(), "plugins", i, "libs\\Python"))
 
 # set the program context to unreal
 import tools_library
-tools_library.PROGRAM_CONTEXT = "max"
+tools_library.PROGRAM_CONTEXT = "painter"
