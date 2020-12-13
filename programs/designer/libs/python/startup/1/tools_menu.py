@@ -18,9 +18,7 @@ branch_menus = {}
 
 
 def add_menu_branch(parent_menu, branch_string, script_path=""):
-    """
-    Adds a new menu branch from a path string (Ie, "a\\b\\c")
-    """
+    """Adds a new menu branch from a path string (Ie, "a\\b\\c")"""
     branch_string_split = branch_string.split("\\")
     current_branch_full = ""
 
@@ -45,9 +43,7 @@ def add_menu_branch(parent_menu, branch_string, script_path=""):
 
 
 def add_dir_as_branch(path_, parent_menu=None):
-    """
-    Loops over all subdirectories in a path and adds them as menus or actions
-    """
+    """Loops over all subdirectories in a path and adds them as menus or actions"""
     possible_tool_dirs = [x[0] for x in os.walk(path_)]
     tool_paths = []
     tool_menu_branches = []

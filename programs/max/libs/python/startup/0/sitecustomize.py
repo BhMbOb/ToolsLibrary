@@ -16,7 +16,7 @@ def path():
 
 
 sys.path.append(os.path.join(path(), "libs\\Python"))
-sys.path.append(os.path.join(path(), "libs\\External\\Python3.8"))
+sys.path.append(os.path.join(path(), "libs\\External\\Python3.7"))
 sys.path.append(os.path.join(path(), "programs\\max\\Python"))
 
 # set the program context to unreal

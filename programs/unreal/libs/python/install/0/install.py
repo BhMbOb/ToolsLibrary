@@ -8,6 +8,7 @@ import json
 
 
 def getProjectRoot():
+    """Root to the tools library project"""
     try:
         reg_path = r"Software\\ToolsLibrary"
         registry_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, reg_path, 0, winreg.KEY_READ)
@@ -18,6 +19,7 @@ def getProjectRoot():
 
 
 def getUnrealProjectRoot():
+    """Root to the unreal project"""
     active_project_config_path = os.path.join(getProjectRoot(), "programs\\unreal\\config\\active_project.json")
     with open(active_project_config_path) as j:
         json_data = json.load(j)
