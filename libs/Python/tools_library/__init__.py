@@ -6,6 +6,7 @@ from tools_library import *
 from tools_library import string_parser
 from tools_library import aliases
 from tools_library import programs
+from tools_library import symlink
 
 winreg = aliases.winreg
 
@@ -22,6 +23,7 @@ def path():
 
 
 def programContext():
+    """Returns the current program context name - defaults to "python" """
     if("PROGRAM_CONTEXT" in globals()):
         return PROGRAM_CONTEXT
     else:

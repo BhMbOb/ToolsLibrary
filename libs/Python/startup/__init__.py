@@ -15,7 +15,7 @@ def path():
 
 
 sys.path.append(os.path.join(path(), "libs\\Python"))
-sys.path.append(os.path.join(path(), "libs\\External\\Python3.8"))
+sys.path.append(os.path.join(path(), "libs\\External\\Python3.7"))
 
 # add all plugin dirs to path
 import tools_library
