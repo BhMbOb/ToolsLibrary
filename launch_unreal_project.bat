@@ -2,7 +2,7 @@
 ''' 
 @echo off
 echo batch code
-"bin/python 3.8/python.exe" "%~f0" %*
+"bin/python 3.7/python.exe" "%~f0" %*
 exit /b 0
 '''
 
