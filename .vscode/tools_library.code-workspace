@@ -22,7 +22,8 @@
 		"python.linting.pycodestyleArgs": [
 			"--max-line-length=1000"
 		],
-		"python.pythonPath": "bin\\Python 3.8\\python.exe"
+		"python.pythonPath": "bin\\Python 3.8\\python.exe",
+		"problems.decorations.enabled": false,
 	},
 
 	"todo-tree.highlights.defaultHighlight": {},

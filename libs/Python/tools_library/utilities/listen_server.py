@@ -7,6 +7,16 @@ import os
 import socket
 import select
 
+
+def is_free(port):
+    """Returns true if the port is free"""
+    test_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    loc = ("localhost", port)
+    output = test_socket.connect_ex(loc) is not 0
+    test_socket.close()
+    return output
+
+
 class ListenServer(object):
     def __init__(self, port):
         self.port = port

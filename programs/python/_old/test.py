@@ -1,3 +1,3 @@
-import tools_library.programs.designer
+import tools_library.programs.unreal
 
-tools_library.programs.designer.send_command("print(\"hello there\")")
+tools_library.programs.unreal.send_command("print(\"hello there\")")

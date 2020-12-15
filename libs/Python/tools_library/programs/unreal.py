@@ -3,6 +3,7 @@ import socket
 
 import tools_library
 from tools_library.utilities import json as json_utils
+from tools_library.utilities import listen_server
 
 
 def unreal_project_path():
@@ -21,6 +22,11 @@ def unreal_uproject_path():
 def launch_unreal_project():
     print(unreal_uproject_path())
     os.system("start " + unreal_uproject_path())
+
+
+def is_open():
+    """Check if the program is open by testing if the listen server is hosted"""
+    return not listen_server.is_free(listen_port())
 
 
 def send_command(command):
