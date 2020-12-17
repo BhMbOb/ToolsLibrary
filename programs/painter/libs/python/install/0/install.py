@@ -1,7 +1,7 @@
 import os
 import winreg
 import json
-from win32com.shell import shell, shellcon
+#from win32com.shell import shell, shellcon
 import shutil
 
 import tools_library
@@ -10,7 +10,7 @@ import tools_library
 def copyStartup():
     """copy the "libs/install/tools_library.py" to the users "documents/allegorithmic/substance painter/python/startup" """
     shutil.copyfile(
-        tools_library.finalizeString("$(ToolsLibraryPath)\\programs\\painter\\libs\\python\\startup\\__init__.py"),
+        tools_library.finalizeString("$(ToolsLibraryPath)\\programs\\painter\\libs\\python\\install\\scripts\\startup.py"),
         tools_library.finalizeString("$(Documents)\\Allegorithmic\\Substance Painter\\python\\") + "startup\\startup.py"
     )
 

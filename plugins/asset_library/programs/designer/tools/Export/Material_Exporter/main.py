@@ -1,11 +1,12 @@
 import sys
 import os
+import json
 import sd
 
 import tools_library.programs.designer as program_designer
+import tools_library.filemgr
 import program
 import program.instance
-import program.export
 
 
 def get_graph_output_dir(graph):
@@ -14,6 +15,20 @@ def get_graph_output_dir(graph):
     if(os.path.basename(output) == ".source"):
         # if in a .source dir we export intot the upper directory
         output = os.path.dirname(output)
+    return output
+
+
+def get_graph_name_parameter(graph, parameter_name):
+    """Extracts a material name parameter from a graphs name (Ie, inst=01)"""
+    output = ""
+    graph_name = graph.getIdentifier()
+    graph_name_split = graph_name.split("-")
+    for name_split_value in graph_name_split:
+        if("=" in name_split_value):
+            this_parameter_name = name_split_value.split("=")[0].lower()
+            this_parameter_value = name_split_value.split("=")[1]
+            if(this_parameter_name == parameter_name):
+                output = this_parameter_value
     return output
 
 
@@ -29,14 +44,24 @@ def get_graph_material_name(graph):
     elif(graph_name.lower() == "base"):
         # if a graph is named "base" then it simply takes the package name
         output = package_name
-    elif(graph_name.lower().startswith("inst_")):
-        # "inst_" signifies an instance of another graph
-        output = package_name + "_" + graph_name.replace("inst_", "")
+    elif(graph_name.lower() == "resources"):
+        pass
+    else:
+        name_split = graph_name.lower().split("-")
+        instance_identifier = get_graph_name_parameter(graph, "inst")
+        variant_identifier = get_graph_name_parameter(graph, "var")
+
+        output = package_name
+        if(instance_identifier != ""):
+            output += "_" + instance_identifier
+            if(variant_identifier != ""):
+                output += "_" + variant_identifier
     
     return output
 
 
 def get_package_material_graphs(package):
+    """Returns all of the child graphs in a package which are set up to be validly exportable materials"""
     output = []
     
     for i in list(package.getChildrenResources(isRecursive=False)):
@@ -46,7 +71,10 @@ def get_package_material_graphs(package):
     return output
 
 
-def export_graph(graph):
+def export_graph(graph, create_material=True):
+    """Export a material graphs textures to the asset library"""
+    exported_textures = {}
+
     graph_output_dir = get_graph_output_dir(graph)
     graph_material_name = get_graph_material_name(graph)
 
@@ -70,10 +98,37 @@ def export_graph(graph):
                 "T_" +
                 graph_material_name + 
                 "_" +
-                texture_type +
-                ".tga"
+                texture_type
             )
-            node_property_texture.save(os.path.join(graph_output_dir, texture_name))
+            node_property_texture.save(os.path.join(graph_output_dir, texture_name + ".tga"))
+            exported_textures[texture_type] = texture_name
+
+    if(len(exported_textures) > 0):
+        if(create_material):
+            material_path = os.path.join(graph_output_dir, "M_" + graph_material_name + ".material")
+            material_data = {}
+
+            if(os.path.isfile(material_path)):
+                with open(material_path, "r") as f:
+                    material_data = json.load(f)
+
+            # add textures
+            if(material_data.get("textures") is None):
+                material_data["textures"] = {}
+
+            for key in exported_textures:
+                material_data["textures"][key] = exported_textures[key]
+
+            # add metadata
+            if(material_data.get("metadata") is None):
+                material_data["metadata"] = {}
+
+            material_data["metadata"]["name"] = tools_library.filemgr.filename(graph.getPackage().getFilePath())
+            material_data["metadata"]["instance"] = get_graph_name_parameter(graph, "inst")
+            material_data["metadata"]["variant"] = get_graph_name_parameter(graph, "var")
+
+            with open(material_path, "w") as f:
+                json.dump(material_data, f, indent=4, sort_keys=True)
 
     print("[Asset Library] Exported material \"" + graph_material_name + "\" to \"" + graph_output_dir + "/\"")
 
