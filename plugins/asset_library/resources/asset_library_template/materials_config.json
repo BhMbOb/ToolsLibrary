@@ -1,0 +1,10 @@
+{
+    "material_types":{
+        "All Materials": "",aw
+        "Surface (Standard)":"Surface_",
+        "Surface (Micro)":"Micro_",
+        "Surface (Terrain)": "Terrain_",
+        "Decal Sheet": "Decal_Sheet_",
+        "Decal Single": "Decal_Single_"
+    }
+}

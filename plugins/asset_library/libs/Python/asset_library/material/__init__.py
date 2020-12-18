@@ -38,19 +38,29 @@ class Material(object):
         return os.path.join(os.path.dirname(self.path), ".source", material_name + ".sbs")
 
 
-'''def get_all_materials():
-    output = []
+def get_materials_from_files(module_names=[], prefixes=[]):
+    """Return a list of materials which fit certain criteria"""
+    materials = []
+
+    if(type(module_names) is not tuple):
+        module_names = (module_names)
+
+    if(type(prefixes) is not tuple):
+        prefixes = (prefixes)
 
     material_dirs = []
-    for content_library_path in asset_library.content_library_paths():
-        content_library_materials_dir = os.path.join(content_library_path, "materials")
-        if(os.path.isdir(content_library_materials_dir)):
-            for material_dirname in os.listdir(content_library_materials_dir):
-                if(asset_library.is_valid_directory_name(material_dirname)):
-                    material_dirs.append(os.path.join(content_library_materials_dir, material_dirname))
+    for module in module_names:
+        module_materials_dir = os.path.join(asset_library.path(), "content", module, "materials")
+        if(os.path.isdir(module_materials_dir)):
+            for material_name in os.listdir(module_materials_dir):
+                material_dir = os.path.join(module_materials_dir, material_name)
+                if(os.path.isdir(material_dir) and (material_name.lower().startswith(prefixes))):
+                    material_dirs.append(material_dir)
 
-    for i in material_dirs:
-        print(i)
+    for material_dir in material_dirs:
+        material_dirname = os.path.basename(material_dir)
+        for i in os.listdir(material_dir):
+            if(i.startswith("M_" + material_dirname) and (i.endswith(".material"))):
+                materials.append(Material.from_file(os.path.join(material_dir, i)))
 
-
-get_all_materials()'''
+    return materials

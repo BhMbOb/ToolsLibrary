@@ -68,11 +68,8 @@ class ExampleWindow(QtWidgets.QWidget):
         self.get_materials()
 
     def get_materials(self):
-        output = []
-        material_dirs = []
-
         modules = []
-        material_prefix = self.get_material_type_prefix(self.target_material_types).lower()
+        prefix = self.get_material_type_prefix(self.target_material_types).lower()
 
         if(self.target_module == "All Modules"):
             for i in asset_library.content_library_paths():
@@ -80,26 +77,17 @@ class ExampleWindow(QtWidgets.QWidget):
         else:
             modules = [self.target_module]
 
-        for module in modules:
-            module_materials_dir = os.path.join(asset_library.path(), "content", module, "materials")
-            if(os.path.isdir(module_materials_dir)):
-                for i in os.listdir(module_materials_dir):
-                    material_dir = os.path.join(module_materials_dir, i)
-                    if(os.path.isdir(material_dir) and (i.lower().startswith(material_prefix))):
-                        material_dirs.append(material_dir)
-
-        for material_dir in material_dirs:
-            material_dirname = os.path.basename(material_dir)
-            for i in os.listdir(material_dir):
-                if(i.startswith("M_" + material_dirname) and (i.endswith(".material"))):
-                    output.append(os.path.join(material_dir, i))
-
+        materials = asset_library.material.get_materials_from_files(
+            module_names=tuple(modules),
+            prefixes=prefix
+        )
 
         self.q_materials_list.clear()
         self.q_materials_list.paths = {}
-        for i in output:
-            self.q_materials_list.addItem(os.path.basename(i))
-            self.q_materials_list.paths[os.path.basename(i)] = i
+        for material in materials:
+            material_path = material.path
+            self.q_materials_list.addItem(os.path.basename(material_path))
+            self.q_materials_list.paths[os.path.basename(material_path)] = material_path
             self.q_materials_list.itemDoubleClicked.connect(self.select_material)
 
 

@@ -1,4 +1,4 @@
-import os
+'''import os
 import json
 
 import tools_library
@@ -46,4 +46,4 @@ def absPath(relative_path):
 
     output = tools_library.string_parser.parse(output)
 
-    return output
+    return output'''
