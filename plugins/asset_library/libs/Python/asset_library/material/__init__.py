@@ -2,6 +2,7 @@ import os
 import json
 
 import asset_library
+import tools_library.utilities.json as json_utils
 
 
 class Material(object):
@@ -32,10 +33,35 @@ class Material(object):
 
     def get_source_sbs(self):
         """Returns the path to the parent ".sbs" file for this material (as stored in the .material file)"""
-        with open(self.path, "r") as f:
-            json_data = json.load(f)
-            material_name = json_data["metadata"]["name"]
+        material_name = json_utils.get_property(self.path, "metadata.name")
         return os.path.join(os.path.dirname(self.path), ".source", material_name + ".sbs")
+
+    def get_outer_name(self):
+        """Returns the name of the outer material (as stored in the .material file)"""
+        return json_utils.get_property(self.path, "metadata.name")
+
+    def get_instance(self):
+        """Returns the name of the materials instance (as stored in the .material file)"""
+        return json_utils.get_property(self.path, "metadata.instance")
+
+    def get_variant(self):
+        """Returns the name of the materials variant (as stored in the .material file)"""
+        return json_utils.get_property(self.path, "metadata.variant")
+
+    def get_name(self):
+        """Returns the name of this material"""
+        output = ""
+        name = self.get_outer_name()
+        instance = self.get_instance()
+        variant = self.get_variant()
+
+        output = name
+        output += ("_" * int(len(instance) > 0)) + instance
+        output += ("_" * int(len(variant)> 0)) + variant
+        return output
+
+
+
 
 
 def get_materials_from_files(module_names=[], prefixes=[]):

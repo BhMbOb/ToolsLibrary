@@ -85,7 +85,7 @@ def addShelf(shelf_name, shelf_path, shelf_status):
 
 def initializeShelves():
     """Add all shelves stored in the shelf_libraries config"""
-    shelves_path = tools_library.finalizeString("$(AssetLibraryPath)\\Shelves\\Painter")
+    shelves_path = tools_library.finalizeString("$(AssetLibraryDir)\\Shelves\\Painter")
     for i in os.listdir(shelves_path):
         shelf_path = os.path.join(shelves_path, i)
         if(os.path.isdir(shelf_path)):

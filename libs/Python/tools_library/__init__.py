@@ -93,11 +93,20 @@ def run_tool(file_path):
     globals_ = globals()
     globals_["__file__"] = path_
     globals_["__package__"] = os.path.dirname(file_path)
+
     if(file_path.endswith(".toolptr")):
         with open(file_path) as j:
             json_data = json.load(j)
             url = os.path.join(path(), json_data["path"])
             exec(open(url).read(), globals_)
+
+    elif(file_path.endswith(".ms")):
+        if(programContext() == "max"):
+            import pymxs
+            with open(file_path) as file:
+                file_lines = file.read()
+                pymxs.runtime.execute(file_lines)
+
     else:
         sys.path.append(os.path.dirname(file_path))
         exec(open(path_).read(), globals_)

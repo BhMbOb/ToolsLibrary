@@ -79,3 +79,15 @@ for i in range(99):
             if(file.endswith(".py")):
                 tools_library.run_file(os.path.join(startup_dir, file))
                 print("[Tools Library][Startup] Ran script -" + os.path.join(startup_dir, file))
+        
+        # additional startup/libs for maxscript when in 3DS Max
+        dir_as_maxscript = startup_dir.replace("\\python", "\\maxscript")
+        if(os.path.isdir(dir_as_maxscript)):
+            for file in os.listdir(dir_as_maxscript):
+                if(file.endswith(".ms")):
+                    import pymxs
+                    file_path = os.path.join(dir_as_maxscript, file)
+                    with open(file_path) as file:
+                        file_lines = file.read()
+                    pymxs.runtime.execute(file_lines)
+                    print("[Tools Library][Startup] Ran maxscript - " + file_path)

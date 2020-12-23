@@ -9,7 +9,7 @@ from tools_library.utilities import listen_server
 
 
 def listen_port():
-    return json_utils.getProperty(tools_library.getConfig("designer:program.json"), "listen_port")
+    return json_utils.get_property(tools_library.getConfig("designer:program.json"), "listen_port")
 
 
 def send_command(command):

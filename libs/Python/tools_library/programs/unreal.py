@@ -7,11 +7,11 @@ from tools_library.utilities import listen_server
 
 
 def unreal_project_path():
-    return json_utils.getProperty(tools_library.getConfig("unreal:active_project.json"), "path")
+    return json_utils.get_property(tools_library.getConfig("client_settings.json"), "programs.unreal.project_dir")
 
 
 def listen_port():
-    return json_utils.getProperty(tools_library.getConfig("unreal:active_project.json"), "listen_port")
+    return json_utils.get_property(tools_library.getConfig("Unreal:program.json"), "listen_port")
 
 
 def unreal_uproject_path():

@@ -8,6 +8,7 @@ import pymxs
 # class used to store all maxscript modules
 class tools_library(object):
     def add_library(self, mxs_module):
+        """Takes an input maxscript struct and adds it as a new module"""
         setattr(self, mxs_module.module_name, mxs_module)
 
     @staticmethod
@@ -22,7 +23,7 @@ tools_library.create()
 # loop over all files in the "python/startup/x" folders and run them
 for i in range(99):
 
-    modules_folder_ms = os.path.dirname(__file__) + "/" + str(i)
+    modules_folder_ms = os.path.dirname(__file__) + "\\..\\" + str(i)
     modules_folder_ms = modules_folder_ms.replace("python", "maxscript")
     modules_folder_ms = modules_folder_ms.replace("startup", "modules")
 

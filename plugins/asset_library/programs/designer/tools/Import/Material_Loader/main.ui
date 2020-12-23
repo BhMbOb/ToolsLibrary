@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Material Loader</string>
+   <string>Asset Library: Material Loader</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -58,6 +58,23 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="q_chk_show_instances">
+      <property name="text">
+       <string>Show Instances / Variants?</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QListWidget" name="q_materials_list"/>

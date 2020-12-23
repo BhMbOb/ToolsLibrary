@@ -49,4 +49,4 @@ def get_current_package_name():
 def load_sbs(path):
     """Opens an SBS in Designer from an input path"""
     if((os.path.isfile(path)) and (path.endswith(".sbs"))):
-        package_manager.loadUserPackage(path)
+        package_manager.loadUserPackage(path.replace("\\", "/"))

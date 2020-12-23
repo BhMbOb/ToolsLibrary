@@ -22,6 +22,7 @@ class ExampleWindow(QtWidgets.QWidget):
 
         self.q_combo_module.activated.connect(self.switch_module)
         self.q_combo_type.activated.connect(self.switch_material_type)
+        self.q_chk_show_instances.stateChanged.connect(self.get_materials)
 
         # add an entry to the combo box for each module
         self.q_combo_module.addItem("All Modules")
@@ -41,6 +42,9 @@ class ExampleWindow(QtWidgets.QWidget):
 
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.show()
+
+    def should_show_instances(self):
+        return self.q_chk_show_instances.isChecked()
 
     def get_material_types(self):
         output = []
@@ -83,19 +87,27 @@ class ExampleWindow(QtWidgets.QWidget):
         )
 
         self.q_materials_list.clear()
-        self.q_materials_list.paths = {}
+        self.q_materials_list.materials = {}
+        added_material_sbs_list = []
         for material in materials:
             material_path = material.path
-            self.q_materials_list.addItem(os.path.basename(material_path))
-            self.q_materials_list.paths[os.path.basename(material_path)] = material_path
-            self.q_materials_list.itemDoubleClicked.connect(self.select_material)
+            material_name = os.path.basename(material_path)
+
+            if(os.path.isfile(material.path)):
+                if(self.should_show_instances()):
+                    self.q_materials_list.addItem(material.get_name())
+                    self.q_materials_list.materials[material.get_name()] = material
+                    self.q_materials_list.itemDoubleClicked.connect(self.select_material)
+                else:
+                    if(material.get_source_sbs() not in added_material_sbs_list):
+                        added_material_sbs_list.append(material.get_source_sbs())
+                        self.q_materials_list.addItem(material.get_outer_name())
+                        self.q_materials_list.materials[material.get_outer_name()] = material
+                        self.q_materials_list.itemDoubleClicked.connect(self.select_material)
 
 
     def select_material(self, material_list_index):
-        material = asset_library.material.Material.from_file(
-            self.q_materials_list.paths[material_list_index.text()]
-        )
-        program.instance.load_sbs(material.get_source_sbs())
+        program.instance.load_sbs(self.q_materials_list.materials[material_list_index.text()].get_source_sbs())
 
 
 win = ExampleWindow()

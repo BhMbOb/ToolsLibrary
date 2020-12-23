@@ -7,7 +7,7 @@ import tools_library.filemgr
 
 '''def getPath(name, raw_string=False):
     """Returns the content library path from a given identifier"""
-    output = "$(AssetLibraryPath)Content\\" + name + "\\"
+    output = "$(AssetLibraryDir)Content\\" + name + "\\"
     output_abs = tools_library.finalizeString(output)
 
     if(not raw_string):
@@ -33,7 +33,7 @@ import tools_library.filemgr
 
 '''def make_content_library(library_name):
     """Make a new content library with the default folder structure"""
-    library_dir = tools_library.finalizeString("$(AssetLibraryPath)\\Content\\")
+    library_dir = tools_library.finalizeString("$(AssetLibraryDir)\\Content\\")
     if(os.path.isdir(library_dir)):
         content_library_dir = os.path.join(library_dir, library_name)
         tools_library.filemgr.makedir(content_library_dir)

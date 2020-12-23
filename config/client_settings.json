@@ -1,0 +1,12 @@
+{
+ "plugins": {
+  "asset_library": {
+   "path": "X:\\asset_library.assetlibrary"
+  }
+ },
+ "programs": {
+  "unreal": {
+   "project_dir": "Y:\\Development\\UnrealProject\\Project"
+  }
+ }
+}

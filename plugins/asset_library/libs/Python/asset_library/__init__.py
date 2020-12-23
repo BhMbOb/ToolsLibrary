@@ -3,11 +3,10 @@ import sys
 import json
 
 import tools_library
-#from asset_library import content_library, shelf_library
 
 
 def path():
-    return tools_library.finalizeString("$(AssetLibraryPath)\\")
+    return tools_library.finalizeString("$(AssetLibraryDir)")
 
 
 def content_library_paths():

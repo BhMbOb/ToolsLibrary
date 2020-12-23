@@ -135,3 +135,12 @@ def export_graph(graph, create_material=True):
 
 for i in get_package_material_graphs(program.instance.get_current_package()):
     export_graph(i)
+
+# export the current package as a .sbsar
+sbsar_exporter_instance = None
+sbsar_exporter_instance = sd.api.sbs.sdsbsarexporter.SDSBSARExporter(program.instance.context, sbsar_exporter_instance)
+sbsar_exporter_instance = sbsar_exporter_instance.sNew()
+sbsar_exporter_instance.exportPackageToSBSAR(
+    program.instance.get_current_package(),
+    program.instance.get_current_package().getFilePath().replace(".sbs", ".sbsar")
+)

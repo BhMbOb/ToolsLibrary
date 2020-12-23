@@ -9,7 +9,7 @@ def getNames(context):
     context - the program context to search for (Ie, "unreal")
     """
     output = []
-    shelf_root = "$(AssetLibraryPath)\\Shelves\\" + context + "\\"
+    shelf_root = "$(AssetLibraryDir)\\Shelves\\" + context + "\\"
     shelf_root = tools_library.finalizeString(shelf_root)
     for i in os.listdir(shelf_root):
         if(os.path.isdir(os.path.join(shelf_root, i))):
@@ -20,7 +20,7 @@ def getNames(context):
 def getPath(shelf_name, program_name, raw_string=False):
     """Returns the shelf library path from a given identifier"""
     output = ""
-    output = "$(AssetLibraryPath)\\Shelves\\" + program_name + "\\" + shelf_name + "\\"
+    output = "$(AssetLibraryDir)\\Shelves\\" + program_name + "\\" + shelf_name + "\\"
     output_abs = tools_library.finalizeString(output)
 
     if(not raw_string):
