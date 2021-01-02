@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 bin/Python 3.8/**/*.pyc
+bin/Python 3.7/**/*.pyc
 bin/Python 2.7/**/*.pyc
 *$py.class
 *.pyc

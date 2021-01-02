@@ -1,2 +1,2 @@
-"Python 3.7/python.exe" "../libs/python/install/install.py"
+"Python 3.8/python.exe" "../libs/python/install/install.py"
 pause

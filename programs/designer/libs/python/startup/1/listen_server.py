@@ -18,4 +18,4 @@ if(QtWidgets.QApplication.instance()):
 
 	timer_ = QtCore.QTimer()
 	timer_.timeout.connect(listen_server.tick)
-	timer_.start(200)
+	#timer_.start(2)
