@@ -24,7 +24,7 @@ class ListenServer(object):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind(("localhost", port))
-        self.server_socket.listen(5)
+        self.server_socket.listen(0)
         self.server_socket.setblocking(0)
         self.read_list = [self.server_socket]
 
