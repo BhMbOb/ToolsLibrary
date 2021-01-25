@@ -1,0 +1,4 @@
+from tools_library.utilities.qt.widgets import q_collapsible_widget, q_v_scroll_layout
+
+QCollapsibleWidget = q_collapsible_widget.QCollapsibleWidget
+QVScrollLayout = q_v_scroll_layout.QVScrollLayout

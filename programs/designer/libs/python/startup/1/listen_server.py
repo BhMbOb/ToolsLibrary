@@ -1,7 +1,6 @@
 """
 Listen server bound to a Qt timer used to recieve commands from external python instances
 """
-
 import socket
 import select
 import sys

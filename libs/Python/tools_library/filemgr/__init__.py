@@ -1,3 +1,6 @@
+"""
+Library containing filesystem based functions
+"""
 import os
 
 from qtpy import QtWidgets

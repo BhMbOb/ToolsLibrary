@@ -1,5 +1,5 @@
 """
-This file is copied to the unreal project directory and ran on startup
+This file is copied to the max startup directory and ran on startup
 It is in charge of running all sub-startup scripts
 """
 import os

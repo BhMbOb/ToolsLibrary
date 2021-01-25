@@ -1,3 +1,6 @@
+"""
+Library of json utility functions
+"""
 import os
 import json
 

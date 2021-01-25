@@ -15,6 +15,7 @@ def path():
         return ""
 
 
+# add sys paths
 sys.path.append(os.path.join(path(), "libs\\Python"))
 sys.path.append(os.path.join(path(), "libs\\External\\Python3.7"))
 sys.path.append(os.path.join(path(), "programs\\designer\\Python"))

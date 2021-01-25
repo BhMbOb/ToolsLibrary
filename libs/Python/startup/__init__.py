@@ -4,7 +4,7 @@ import winreg
 
 # append the tools_library to sys.path
 def path():
-    '''Returns the stored tools library root path as stored in the registry'''
+    """Returns the stored tools library root path as stored in the registry"""
     try:
         reg_path = r"Software\\ToolsLibrary"
         registry_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, reg_path, 0, winreg.KEY_READ)
@@ -13,12 +13,15 @@ def path():
     except WindowsError:
         return ""
 
-
+# base libs
 sys.path.append(os.path.join(path(), "libs\\Python"))
 sys.path.append(os.path.join(path(), "libs\\External\\Python3.7"))
 
 # add all plugin dirs to path
 import tools_library
+
+# global value stores the current program that this python instance is ran within
+# (Ie, "unreal", "max", "python")
 tools_library.PROGRAM_CONTEXT = __program_context__
 program_context = tools_library.programContext()
 
@@ -44,7 +47,6 @@ for plugin_dir in tools_library.pluginDirs():
             "libs\\python"
         )
     )
-
 
 # loop / run all of the startup scripts in the order:
 # Python -> Plugins -> Core Program -> Plugin Program

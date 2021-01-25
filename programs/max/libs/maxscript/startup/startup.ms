@@ -1,3 +1,6 @@
+/*
+This file is responsible for running the main python entrypoint for the Tools Library in 3DS Max
+*/
 (
     RegPath = @"SOFTWARE\ToolsLibrary"
     EvalKey = ((DotNetClass "Microsoft.Win32.Registry").CurrentUser).OpenSubKey RegPath

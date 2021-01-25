@@ -1,14 +1,18 @@
+"""
+Used for simple string based function calling
+"""
 import os
 import sys
 import json
 import ctypes.wintypes
 
-import tools_library
+import tools_library.paths
+import tools_library.utilities.json
 
 
 def _parse__toolslibrarypath(params):
     """Returns the path to the tools library root folder"""
-    return tools_library.path() + "\\"
+    return tools_library.paths.root() + "\\"
 
 
 def _parse__localappdata(params):
@@ -35,12 +39,14 @@ def _parse__unrealprojectname(params):
 
 def _parse__assetlibrarydir(params):
     """Returns the path to the currently active asset library project"""
-    return os.path.dirname(
+    output = os.path.dirname(
         tools_library.utilities.json.get_property(
             tools_library.getConfig("client_settings.json"),
             "plugins.asset_library.path"
         )
     )
+    output = output.rstrip("\\")
+    return output.lower()
 
 
 def _parse__userdocuments(params):
@@ -60,6 +66,7 @@ def _parse__folderpath(params):
 
 
 def _parse__foldername(params):
+    """"""
     if(params["file_context"]):
         return os.path.basename(os.path.dirname(params["file_context"]))
     return "$(FolderName)"

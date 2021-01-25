@@ -9,6 +9,7 @@ from tools_library.utilities import listen_server
 
 
 def listen_port():
+    """Returns the port the designer listen server is hosted on"""
     return json_utils.get_property(tools_library.getConfig("designer:program.json"), "listen_port")
 
 

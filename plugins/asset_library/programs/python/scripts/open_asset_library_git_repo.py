@@ -1,9 +1,12 @@
+"""
+Open the current AssetLibrary git repo in web browser
+"""
 import os
 import json
 
 import asset_library
 
-asset_library_path = asset_library.path()
+asset_library_path = asset_library.paths.root()
 asset_library_config_path = os.path.join(asset_library_path, "config.json")
 
 if(os.path.exists(asset_library_config_path)):

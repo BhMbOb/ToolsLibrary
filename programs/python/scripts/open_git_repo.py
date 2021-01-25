@@ -1,3 +1,6 @@
+"""
+Open the current ToolsLibrary git repo in the browser
+"""
 import os
 import json
 

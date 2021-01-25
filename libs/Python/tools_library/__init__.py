@@ -7,19 +7,12 @@ from tools_library import string_parser
 from tools_library import aliases
 from tools_library import programs
 from tools_library import symlink
+from tools_library import paths
 
 winreg = aliases.winreg
 
 
-def path():
-    """Returns the stored tools library root path as stored in the registry"""
-    try:
-        reg_path = r"Software\\ToolsLibrary"
-        registry_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, reg_path, 0, winreg.KEY_READ)
-        value, regtype = winreg.QueryValueEx(registry_key, "path")
-        return value
-    except WindowsError:
-        return ""
+path = paths.root
 
 
 def programContext():
@@ -80,6 +73,7 @@ def run_file(file_path):
     globals_ = globals()
     globals_["__file__"] = path_
     globals_["__package__"] = os.path.dirname(file_path)
+    globals_["__name__"] = "__main__"
     exec(open(path_).read(), globals_)
 
 
@@ -93,6 +87,7 @@ def run_tool(file_path):
     globals_ = globals()
     globals_["__file__"] = path_
     globals_["__package__"] = os.path.dirname(file_path)
+    globals_["__name__"] = "__main__"
 
     if(file_path.endswith(".toolptr")):
         with open(file_path) as j:

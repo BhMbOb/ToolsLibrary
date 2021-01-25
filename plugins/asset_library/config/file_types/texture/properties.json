@@ -5,31 +5,37 @@
             "r":"roughness",
             "g":"ambient_occlusion",
             "b":"height",
-            "a":"metallic"
+            "a":"metallic",
+            "unreal_compression_method":"TC_MASKS"
         },
         "F":{
             "identifier":"foliage_surface",
             "r":"roughness",
             "g":"ambient_occlusion",
             "b":"height",
-            "a":"thickness"
+            "a":"thickness",
+            "unreal_compression_method":"TC_MASKS"
         },
         "D":{
             "identifier":"albedo",
-            "rgb":"albedo"
+            "rgb":"albedo",
+            "unreal_compression_method":"TC_DEFAULT"
         },
         "DA":{
             "identifier":"albedo-alpha",
             "rgb":"albedo",
-            "a":"alpha"
+            "a":"alpha",
+            "unreal_compression_method":"TC_DEFAULT"
         },
         "M":{
             "identifier":"alpha",
-            "rgba":"mask"
+            "rgba":"mask",
+            "unreal_compression_method":"TC_MASKS"
         },
         "N":{
             "identifier":"normals",
-            "rgb":"normal"
+            "rgb":"normal",
+            "unreal_compression_method":"TC_NORMALMAP"
         }
     }
 }

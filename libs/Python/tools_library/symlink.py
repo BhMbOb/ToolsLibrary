@@ -4,6 +4,7 @@ import tools_library.filemgr
 
 
 def link(src, dest):
+    """Create a symlink"""
     try:
         tools_library.filemgr.makedir(os.path.dirname(dest))
 

@@ -7,3 +7,7 @@ TODO: Audio Importer
 TODO: Animation / Skeleton Importer
 '''
 import asset_types
+
+import program.importers.textures
+
+print(program.importers.textures)

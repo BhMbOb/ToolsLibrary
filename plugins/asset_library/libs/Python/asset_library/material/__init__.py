@@ -76,7 +76,7 @@ def get_materials_from_files(module_names=[], prefixes=[]):
 
     material_dirs = []
     for module in module_names:
-        module_materials_dir = os.path.join(asset_library.path(), "content", module, "materials")
+        module_materials_dir = os.path.join(asset_library.paths.root(), "content", module, "materials")
         if(os.path.isdir(module_materials_dir)):
             for material_name in os.listdir(module_materials_dir):
                 material_dir = os.path.join(module_materials_dir, material_name)

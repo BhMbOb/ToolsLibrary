@@ -16,9 +16,11 @@ listen_server = tools_library.utilities.listen_server.ListenServer(listen_port)
 
 
 def slate_tick(delta_seconds):
+    """Function bound to unreal's slate tick"""
     listen_server.tick()
 
 def engine_shutdown():
+    """Called when unreal shuts down"""
     unreal.unregister_slate_post_tick_callback(slate_tick_handle)
     unreal.unregister_python_shutdown_callback(engine_shutdown_handle)
 

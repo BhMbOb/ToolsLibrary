@@ -1,9 +1,6 @@
-#
-# Python 3
-# Runs all "initialize_tools.py" files in "programs/program_name/bin/" folders
-#
-
-
+"""
+Runs all "initialize_tools.py" files in "programs/program_name/bin/" folders
+"""
 import os
 import sys
 import shutil
@@ -13,7 +10,6 @@ import glob
 import winreg
 
 this__file__ = __file__
-
 root_folder = os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + "\\..\\..\\..")
 
 # Add tools_library path to registry
@@ -50,7 +46,7 @@ for plugin_name in os.listdir(TOOLS_LIBRARY_PLUGINS_DIR):
         plugin_program_dir = os.path.join(plugin_dir, "programs", plugin_program_name, "libs\\python\\install")
         install_dirs.append(plugin_program_dir)
 
-# loop over all of the startup directories in order of their names (Ie, 0..1..2)
+# loop over all of the install directories in order of their names (Ie, 0..1..2)
 for install_index in range(99):
     for install_dir in install_dirs:
         install_folder = install_dir + "/" + str(install_index)
