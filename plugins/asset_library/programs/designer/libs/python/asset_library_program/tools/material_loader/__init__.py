@@ -9,7 +9,7 @@ import tools_library.filemgr
 import program.instance
 
 import asset_library
-import asset_library.material
+import asset_library.asset_types.material
 
 
 class QMaterialLoader(QtWidgets.QWidget):
@@ -81,7 +81,7 @@ class QMaterialLoader(QtWidgets.QWidget):
         else:
             modules = [self.target_module]
 
-        materials = asset_library.material.get_materials_from_files(
+        materials = asset_library.asset_types.material.MaterialManager.get_materials(
             module_names=tuple(modules),
             prefixes=prefix
         )
@@ -91,20 +91,20 @@ class QMaterialLoader(QtWidgets.QWidget):
         added_material_sbs_list = []
         for material in materials:
             material_path = material.path
-            material_name = os.path.basename(material_path)
+            material_name = material.name
 
             if(os.path.isfile(material.path)):
                 if(self.should_show_instances()):
-                    self.q_materials_list.addItem(material.get_name())
-                    self.q_materials_list.materials[material.get_name()] = material
+                    self.q_materials_list.addItem(material.name)
+                    self.q_materials_list.materials[material.name] = material
                     self.q_materials_list.itemDoubleClicked.connect(self.select_material)
                 else:
-                    if(material.get_source_sbs() not in added_material_sbs_list):
-                        added_material_sbs_list.append(material.get_source_sbs())
-                        self.q_materials_list.addItem(material.get_outer_name())
-                        self.q_materials_list.materials[material.get_outer_name()] = material
+                    if(material.source_sbs not in added_material_sbs_list):
+                        added_material_sbs_list.append(material.source_sbs)
+                        self.q_materials_list.addItem(material.outer_name)
+                        self.q_materials_list.materials[material.outer_name] = material
                         self.q_materials_list.itemDoubleClicked.connect(self.select_material)
 
 
     def select_material(self, material_list_index):
-        program.instance.load_sbs(self.q_materials_list.materials[material_list_index.text()].get_source_sbs())
+        program.instance.load_sbs(self.q_materials_list.materials[material_list_index.text()].source_sbs)

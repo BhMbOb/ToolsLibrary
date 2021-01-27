@@ -1,7 +1,9 @@
 import sys
 
-# TODO: Fix for Py2 - replace when Unreal is on Py3
+# Python 3 Imports
 if(sys.version_info >= (3, 0)):
     import winreg
+
+# Python 2 Imports
 else:
     import _winreg as winreg

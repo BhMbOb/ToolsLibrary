@@ -1,9 +1,42 @@
 import os
 import json
 
+import tools_library.utilities.json as json_utils
+
 import asset_library
 from asset_library.asset_types._asset import Asset
 from asset_library.asset_types.texture import Texture
+
+
+class MaterialManager(object):
+    @staticmethod
+    def get_materials(module_names=[], prefixes=[]):
+        """Returns a list of materials fitting certain criteria"""
+        output = []
+
+        if(type(module_names) is not tuple):
+            module_names = (module_names)
+
+        if(type(prefixes) is not tuple):
+            prefixes = (prefixes)
+
+        material_dirs = []
+
+        for module in module_names:
+            module_materials_dir = os.path.join(asset_library.paths.root(), "content", module, "materials")
+            if(os.path.isdir(module_materials_dir)):
+                for material_name in os.listdir(module_materials_dir):
+                    material_dir = os.path.join(module_materials_dir, material_name)
+                    if(os.path.isdir(material_dir) and (material_name.lower().startswith(prefixes))):
+                        material_dirs.append(material_dir)
+
+        for material_dir in material_dirs:
+            material_dirname = os.path.basename(material_dir)
+            for i in os.listdir(material_dir):
+                if(i.startswith("M_" + material_dirname) and (i.endswith(".material"))):
+                    output.append(Material(os.path.join(material_dir, i)))
+
+        return output
 
 
 class Material(Asset):
@@ -15,9 +48,45 @@ class Material(Asset):
         self.textures = self.get_textures()
 
     @property
+    def source_sbs(self):
+        """Returns the path to the source .sbs for this material"""
+        mat_name = json_utils.get_property(self.path, "metadata.name")
+        sbs_path = os.path.join(os.path.dirname(self.path), ".source", mat_name + ".sbs")
+        return sbs_path
+
+    @property
+    def outer_name(self):
+        """Outer name is the name of the parent material - with instance/variant identifiers removed"""
+        output = json_utils.get_property(self.path, "metadata.name")
+        return output
+
+    @property
+    def instance(self):
+        """Gets the instance part of the material name (Ie, moss_01_a -> 01)"""
+        output = json_utils.get_property(self.path, "metadata.instance")
+        return output
+
+    @property
+    def variant(self):
+        """Gets the variant part of the material name (Ie, moss_01_a -> a)"""
+        output = json_utils.get_property(self.path, "metadata.variant")
+        return output
+
+    @property
     def unreal_path(self):
         """Returns the unreal project relative path to this material"""
         return ""
+
+    @property
+    def name(self):
+        output = ""
+        name = self.outer_name
+        instance = self.instance
+        variant = self.variant
+        output = name
+        output += ("_" * int(len(instance) > 0)) + instance
+        output += ("_" * int(len(variant)> 0)) + variant
+        return output
 
     def import_to_unreal(self):
         """Import the current material to unreal"""

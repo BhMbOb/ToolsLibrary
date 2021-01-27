@@ -9,7 +9,6 @@ import tools_library.filemgr
 import program.instance
 
 import asset_library
-import asset_library.material
 
 
 class ExportHelpers(object):

@@ -2,11 +2,10 @@ import os
 import sys
 import json
 
-from tools_library import *
+#from tools_library import *
 from tools_library import string_parser
 from tools_library import aliases
 from tools_library import programs
-from tools_library import symlink
 from tools_library import paths
 
 winreg = aliases.winreg
