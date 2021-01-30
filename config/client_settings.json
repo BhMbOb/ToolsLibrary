@@ -1,12 +1,19 @@
 {
- "plugins": {
-  "asset_library": {
-   "path": "X:\\asset_library.assetlibrary"
-  }
- },
- "programs": {
-  "unreal": {
-   "project_dir": "Y:\\Development\\UnrealProject\\Project"
-  }
- }
+    "plugins": {
+        "asset_library": {
+            "enabled":true,
+            "path": "X:\\asset_library.assetlibrary"
+        }
+    },
+    "programs": {
+        "unreal": {
+            "enabled":true,
+            "python_version":3.7,
+            "project_dir": "Y:\\Development\\UnrealProject\\Project"
+        },
+        "designer": {
+            "enabled":true,
+            "python_version":3.7
+        }
+    }
 }

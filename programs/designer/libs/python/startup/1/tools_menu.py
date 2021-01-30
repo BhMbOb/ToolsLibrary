@@ -7,6 +7,7 @@ import subprocess
 
 import tools_library
 import tools_library.utilities.string as string_utils
+from tools_library.types.framework.module import PluginData, ProgramData
 
 
 designer_path = os.path.join(tools_library.path(), "programs\\designer")
@@ -91,9 +92,10 @@ def initialize_tools_library_menu(sd_ui_mgr):
     for plugin_dir in tools_library.pluginDirs():
         plugin_dir_tools_designer_dir = os.path.join(plugin_dir, "programs\\designer\\tools\\")
         plugin_name = os.path.basename(plugin_dir)
-        plugin_menu_branch = q_tools_menu.addMenu(string_utils.format.snake_to_name(plugin_name))
-        if(os.path.exists(plugin_dir_tools_designer_dir)):
-            add_dir_as_branch(plugin_dir_tools_designer_dir, parent_menu=plugin_menu_branch)
+        if(PluginData(plugin_name).is_enabled):
+            plugin_menu_branch = q_tools_menu.addMenu(string_utils.format.snake_to_name(plugin_name))
+            if(os.path.exists(plugin_dir_tools_designer_dir)):
+                add_dir_as_branch(plugin_dir_tools_designer_dir, parent_menu=plugin_menu_branch)
 
     # helper / additional
     q_tools_menu.addSeparator()

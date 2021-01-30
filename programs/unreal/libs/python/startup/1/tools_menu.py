@@ -2,6 +2,7 @@ import unreal
 
 import tools_library
 import tools_library.utilities.string as string_utils
+from tools_library.types.framework.module import PluginData, ProgramData
 
 
 unreal_path = os.path.join(tools_library.path(), "programs\\unreal")
@@ -79,10 +80,11 @@ def initialize_tools_library_menu():
     for plugin_dir in tools_library.pluginDirs():
         plugin_dir_tools_unreal_dir = os.path.join(plugin_dir, "programs\\unreal\\tools\\")
         plugin_name = os.path.basename(plugin_dir)
-        plugin_name_formatted = string_utils.format.snake_to_name(plugin_name)
-        ui_plugin_menu_branch = tools_library_menu.add_sub_menu("Plugins", plugin_name_formatted, plugin_name_formatted, plugin_name_formatted)
-        if(os.path.exists(plugin_dir_tools_unreal_dir)):
-            add_dir_as_branch(plugin_dir_tools_unreal_dir, parent_menu=ui_plugin_menu_branch, section_context="Plugins")
+        if(PluginData(plugin_name).is_enabled):
+            plugin_name_formatted = string_utils.format.snake_to_name(plugin_name)
+            ui_plugin_menu_branch = tools_library_menu.add_sub_menu("Plugins", plugin_name_formatted, plugin_name_formatted, plugin_name_formatted)
+            if(os.path.exists(plugin_dir_tools_unreal_dir)):
+                add_dir_as_branch(plugin_dir_tools_unreal_dir, parent_menu=ui_plugin_menu_branch, section_context="Plugins")
 
     # helper / additional
     ui_show_in_explorer = unreal.ToolMenuEntry(name="ShowInExplorer", type=unreal.MultiBlockType.MENU_ENTRY, insert_position=unreal.ToolMenuInsert("", unreal.ToolMenuInsertType.FIRST))

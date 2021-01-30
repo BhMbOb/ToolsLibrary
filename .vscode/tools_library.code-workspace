@@ -17,7 +17,8 @@
 			"**/.vscode":true, 
 		},
 		"files.associations": {
-			"*.material":"json"
+			"*.material":"json",
+			"*.assetlibrary":"json",
 		},
 		"python.linting.pycodestyleArgs": [
 			"--max-line-length=1000"

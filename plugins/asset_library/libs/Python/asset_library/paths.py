@@ -20,6 +20,14 @@ def root():
     return format_path(tools_library.finalizeString("$(AssetLibraryDir)"))
 
 
+def path():
+    """Returns the path to the current Asset Library .assetlibrary file"""
+    return tools_library.utilities.json.get_property(
+        tools_library.getConfig("client_settings.json"),
+        "plugins.asset_library.path"
+    )
+
+
 def get_content_modules():
     """Returns paths to all content modules (Ie, "asset_library/content/common" """
     output = []

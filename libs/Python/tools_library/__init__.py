@@ -7,6 +7,7 @@ from tools_library import string_parser
 from tools_library import aliases
 from tools_library import programs
 from tools_library import paths
+from tools_library.utilities import json as json_utils
 
 winreg = aliases.winreg
 
@@ -105,6 +106,17 @@ def run_tool(file_path):
         sys.path.append(os.path.dirname(file_path))
         exec(open(path_).read(), globals_)
         sys.path.remove(os.path.dirname(file_path))
+
+
+def is_module_enabled(module_name, module_outer_dir="programs"):
+    output = True
+    client_settings_path = os.path.join(path(), "config\\client_settings.json")
+    if(os.path.isfile(client_settings_path)):
+        if(module_name != "python"):
+            enabled = json_utils.get_property(client_settings_path, module_outer_dir + "." + module_name + ".enabled")
+            if(enabled == False):
+                output = False
+    return output
 
 
 finalizeString = string_parser.parse

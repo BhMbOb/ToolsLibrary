@@ -4,13 +4,14 @@ Open the current AssetLibrary git repo in web browser
 import os
 import json
 
+import tools_library
+
 import asset_library
 
-asset_library_path = asset_library.paths.root()
-asset_library_config_path = os.path.join(asset_library_path, "config.json")
 
-if(os.path.exists(asset_library_config_path)):
-    with open(asset_library_config_path) as j:
-        json_data = json.load(j)
-        url = json_data["git-url"]
-        os.system("start \"\" " + url)
+repo_path = tools_library.utilities.json.get_property(
+    asset_library.paths.path(),
+    "info.git_url"
+)
+
+os.system("start \"\" " + repo_path)
