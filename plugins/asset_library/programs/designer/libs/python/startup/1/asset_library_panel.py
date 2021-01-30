@@ -9,6 +9,7 @@ import tools_library.utilities.qt.widgets as QToolsLibraryWidgets
 
 from asset_library_program.tools import material_loader
 from asset_library_program.tools import material_exporter
+from asset_library.tools import material_property_editor
 
 
 app = sd.getContext().getSDApplication()
@@ -19,14 +20,14 @@ dock_layout = QToolsLibraryWidgets.QVScrollLayout()
 dock.setLayout(dock_layout)
 
 
-# Material Loader
-p = QToolsLibraryWidgets.QCollapsibleWidget(title="<b>MATERIAL LOADER</b>")
-dock_layout.addWidget(p)
-p.addWidget(material_loader.QMaterialLoader())
+target_dock_tool_classes = {
+    "Material Loader": material_loader.TMaterialLoader,
+    "Material Exporter": material_exporter.TMaterialExporter,
+}
 
-# Material Exporter
-p = QToolsLibraryWidgets.QCollapsibleWidget(title="<b>MATERIAL EXPORTER</b>")
-dock_layout.addWidget(p)
-p.addWidget(material_exporter.QMaterialExporter())
+for i in target_dock_tool_classes:
+    p = QToolsLibraryWidgets.QCollapsibleWidget(title=("<b>" + i.upper() + "</b>"))
+    dock_layout.addWidget(p)
+    p.addWidget(target_dock_tool_classes[i]())
 
 dock_layout.addStretch()

@@ -5,10 +5,12 @@ import sd
 from qtpy import QtWidgets, QtCore, uic, QtGui
 
 import tools_library
+from tools_library.templates import tool_window
 import tools_library.filemgr
 import program.instance
 
 import asset_library
+from asset_library.tools import material_property_editor
 
 
 class ExportHelpers(object):
@@ -154,17 +156,19 @@ class ExportHelpers(object):
             )
 
 
-class QMaterialExporter(QtWidgets.QWidget):
+class TMaterialExporter(tool_window.ToolWindow):
     def __init__(self):
-        super(QMaterialExporter, self).__init__()
-        uic.loadUi(os.path.join(os.path.dirname(__file__), "main.ui"), self)
+        super(TMaterialExporter, self).__init__()
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.show()
+
+        # reference to the current instance of the material editor
+        self.material_editor_tool_instance = None
 
         self.q_btn_export.clicked.connect(ExportHelpers.export_current_package)
 
         self.q_btn_temp_update.clicked.connect(self.update_widget)
         self.q_btn_show_in_explorer.clicked.connect(self.show_current_material_in_explorer)
+        self.finalize()
 
 
     def update_widget(self):
@@ -181,8 +185,11 @@ class QMaterialExporter(QtWidgets.QWidget):
                     self.q_materials_list.itemDoubleClicked.connect(self.set_material_parameters)
 
     def set_material_parameters(self, mat_path_list_wgt):
-        print(mat_path_list_wgt.text())
-        print("TODO:")
+        if(self.material_editor_tool_instance != None):
+            self.material_editor_tool_instance.setParent(None)
+            self.material_editor_tool_instance.deleteLater()
+            self.material_editor_tool_instance = None
+        self.material_editor_tool_instance = material_property_editor.TMaterialPropertyEditor()
 
     def show_current_material_in_explorer(self):
         if(program.instance.get_current_package()):

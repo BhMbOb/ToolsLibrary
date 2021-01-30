@@ -52,3 +52,10 @@ def load_sbs(path):
         sd_package = package_manager.loadUserPackage(path.replace("\\", "/"), True, True)
         return sd_package
     return None
+
+
+
+def get_main_qt_window():
+    app = sd.getContext().getSDApplication()
+    uiMgr = app.getQtForPythonUIMgr()
+    return uiMgr.getMainWindow()

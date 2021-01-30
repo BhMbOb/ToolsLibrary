@@ -5,6 +5,7 @@ import sd
 from qtpy import QtWidgets, QtCore, uic, QtGui
 
 import tools_library
+from tools_library.templates import tool_window
 import tools_library.filemgr
 import program.instance
 
@@ -12,10 +13,9 @@ import asset_library
 import asset_library.asset_types.material
 
 
-class QMaterialLoader(QtWidgets.QWidget):
+class TMaterialLoader(tool_window.ToolWindow):
     def __init__(self):
-        super(QMaterialLoader, self).__init__()
-        uic.loadUi(os.path.join(os.path.dirname(__file__), "main.ui"), self)
+        super(TMaterialLoader, self).__init__()
 
         self.target_module = ""
         self.target_material_types = ""
@@ -41,7 +41,7 @@ class QMaterialLoader(QtWidgets.QWidget):
         self.switch_module()
 
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.show()
+        self.finalize()
 
     def should_show_instances(self):
         return self.q_chk_show_instances.isChecked()
