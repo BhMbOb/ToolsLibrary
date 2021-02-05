@@ -19,6 +19,7 @@
 		"files.associations": {
 			"*.material":"json",
 			"*.assetlibrary":"json",
+			"*.shader":"json"
 		},
 		"python.linting.pycodestyleArgs": [
 			"--max-line-length=1000"

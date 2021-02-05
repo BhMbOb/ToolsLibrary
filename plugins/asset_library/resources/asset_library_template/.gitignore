@@ -3,6 +3,9 @@
 _source/
 /Content/**/*.uasset
 
+# exclude all imported content
+Shelves/Unreal/**/Content/**/Imported/*
+
 # Visual Studio 2015 user specific files
 .vs/
 

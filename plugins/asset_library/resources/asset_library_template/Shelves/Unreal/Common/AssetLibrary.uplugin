@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Asset Library",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Bailey3D",
+	"CreatedByURL": "Bailey3D.com",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "AssetLibrary",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

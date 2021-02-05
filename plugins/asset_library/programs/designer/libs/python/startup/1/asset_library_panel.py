@@ -7,8 +7,8 @@ from qtpy import QtWidgets, QtCore, uic
 
 import tools_library.utilities.qt.widgets as QToolsLibraryWidgets
 
-from asset_library_program.tools import material_loader
-from asset_library_program.tools import material_exporter
+from asset_library_designer.tools import material_loader
+from asset_library_designer.tools import material_exporter
 from asset_library.tools import material_property_editor
 
 

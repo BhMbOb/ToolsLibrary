@@ -12,6 +12,7 @@ from tools_library.utilities import json as json_utils
 winreg = aliases.winreg
 
 
+current_tool_path = ""
 path = paths.root
 
 
@@ -89,10 +90,16 @@ def run_tool(file_path):
     globals_["__package__"] = os.path.dirname(file_path)
     globals_["__name__"] = "__main__"
 
+    global current_tool_path
+    current_tool_path = file_path
+
     if(file_path.endswith(".toolptr")):
         with open(file_path) as j:
             json_data = json.load(j)
             url = os.path.join(path(), json_data["path"])
+            globals_["__file__"] = url
+            globals_["__package__"] = os.path.dirname(url)
+            current_tool_path = url
             exec(open(url).read(), globals_)
 
     elif(file_path.endswith(".ms")):
@@ -106,6 +113,8 @@ def run_tool(file_path):
         sys.path.append(os.path.dirname(file_path))
         exec(open(path_).read(), globals_)
         sys.path.remove(os.path.dirname(file_path))
+
+    current_tool_path = ""
 
 
 def is_module_enabled(module_name, module_outer_dir="programs"):

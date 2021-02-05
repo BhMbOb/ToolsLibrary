@@ -38,8 +38,15 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="q_ddl_shaders"/>
        </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="q_main_layout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
       </layout>
      </item>
      <item>
@@ -58,12 +65,12 @@
         </spacer>
        </item>
        <item>
-        <widget class="QDialogButtonBox" name="buttonBox">
+        <widget class="QDialogButtonBox" name="q_save_cancel">
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
          </property>
          <property name="standardButtons">
-          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
          </property>
         </widget>
        </item>

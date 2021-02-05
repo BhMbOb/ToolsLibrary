@@ -1,0 +1,12 @@
+{
+    "metadata": {
+        "instance": "",
+        "name": "Micro_Metal",
+        "variant": ""
+    },
+    "textures": {
+        "D": "T_Micro_Metal_D",
+        "N": "T_Micro_Metal_N",
+        "S": "T_Micro_Metal_S"
+    }
+}

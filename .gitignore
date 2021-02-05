@@ -5,6 +5,7 @@ bin/Python 3.7/**/*.pyc
 bin/Python 2.7/**/*.pyc
 *$py.class
 *.pyc
+.temp/
 
 # C extensions
 *.so

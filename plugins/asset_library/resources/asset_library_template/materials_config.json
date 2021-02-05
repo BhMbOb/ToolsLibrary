@@ -1,6 +1,6 @@
 {
     "material_types":{
-        "All Materials": "",aw
+        "All Materials": "",
         "Surface (Standard)":"Surface_",
         "Surface (Micro)":"Micro_",
         "Surface (Terrain)": "Terrain_",

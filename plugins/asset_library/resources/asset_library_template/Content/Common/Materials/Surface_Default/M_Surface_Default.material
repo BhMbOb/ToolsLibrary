@@ -1,0 +1,12 @@
+{
+    "metadata": {
+        "instance": "",
+        "name": "Surface_Default",
+        "variant": ""
+    },
+    "textures": {
+        "DA": "T_Surface_Default_DA",
+        "N": "T_Surface_Default_N",
+        "S": "T_Surface_Default_S"
+    }
+}

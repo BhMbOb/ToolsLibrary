@@ -1,6 +1,7 @@
 import os
 import shutil
 import winreg
+import getpass
 
 
 def getProjectRoot():
@@ -15,7 +16,7 @@ def getProjectRoot():
 
 tools_library_path = getProjectRoot()
 if(os.path.exists(tools_library_path)):
-    startup_folder = "C:\\Users\\bhmbo\\AppData\\Local\\Autodesk\\3dsMax\\2021 - 64bit\\ENU\\scripts\\startup"
+    startup_folder = "C:\\Users\\" + getpass.getuser() + "\\AppData\\Local\\Autodesk\\3dsMax\\2021 - 64bit\\ENU\\scripts\\startup"
     startup_script = os.path.join(tools_library_path, "programs\\max\\libs\\maxscript\\startup\\startup.ms")
     if(not os.path.isdir(startup_folder)):
         os.mkdir(startup_folder)
