@@ -1,6 +1,7 @@
 import os
 import datetime
 import json
+import unreal
 
 import tools_library
 import tools_library.programs.unreal
@@ -31,7 +32,6 @@ class TextureManager(object):
             import unreal
             return eval("unreal.TextureCompressionSettings." + method_string)
         return None
-
 
 
 class Texture(Asset):
@@ -77,10 +77,19 @@ class Texture(Asset):
         return None
 
     @property
+    def use_srgb(self):
+        """Should this texture use SRGB?"""
+        if(self.unreal_texture_compression_settings == unreal.TextureCompressionSettings.TC_MASKS):
+            return False
+        return True
+        
+            
+
+    @property
     def unreal_path(self):
         """Absolute path to the current .uasset file"""
         output = (
-            tools_library.programs.unreal.unreal_project_path() +
+            tools_library.programs.unreal.unreal_project_dir() +
             "\\Plugins\\Common\\Content\\" +
             self.unreal_relative_path.split("/", 2)[2] + "\\" +
             self.name + ".uasset"
@@ -103,6 +112,8 @@ class Texture(Asset):
             import_task.set_editor_property("replace_existing", True)
             import_task.set_editor_property("replace_existing_settings", True)
             import_task.set_editor_property("automated", True)
+
+
             unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([import_task])
 
             for i in import_task.imported_object_paths:
@@ -110,6 +121,9 @@ class Texture(Asset):
                 t = unreal.AssetRegistryHelpers.get_asset(a)
                 if(self.unreal_texture_compression_settings):
                     t.compression_settings = self.unreal_texture_compression_settings
+
+            if(not self.use_srgb):
+                t.srgb = False
             
             # create the metadata file
             metadata = {

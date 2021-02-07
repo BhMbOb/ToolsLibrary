@@ -24,7 +24,17 @@ def _parse__unrealprojectpath(params):
     """Returns the path to the currently active unreal project"""
     return tools_library.utilities.json.get_property(
         tools_library.getConfig("client_settings.json"),
-        "programs.unreal.project_dir"
+        "programs.unreal.project_path"
+    )
+
+
+def _parse__unrealprojectdir(params):
+    """Returns the pat to the currently active unreal project directory"""
+    return os.path.dirname(
+        tools_library.utilities.json.get_property(
+            tools_library.getConfig("client_settings.json"),
+            "programs.unreal.project_path"
+        )
     )
 
 
@@ -32,9 +42,9 @@ def _parse__unrealprojectname(params):
     """Returns the path to the currently active unreal projects name"""
     output = tools_library.utilities.json.get_property(
         tools_library.getConfig("client_settings.json"),
-        "programs.unreal.project_dir"
+        "programs.unreal.project_path"
     )
-    return os.path.basename(os.path.dirname(output))
+    return os.path.basename(output).split(".")[0]
 
 
 def _parse__assetlibrarydir(params):

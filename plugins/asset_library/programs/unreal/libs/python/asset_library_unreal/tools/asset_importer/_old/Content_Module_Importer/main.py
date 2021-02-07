@@ -13,7 +13,7 @@ class TAssetLibraryImporter(tool_window.ToolWindow):
 
 tool = TAssetLibraryImporter()
 
-'''import os
+import os
 import sys
 import json
 import datetime
@@ -131,4 +131,4 @@ if(__name__ == "__main__"):
         app = QtWidgets.QApplication(sys.argv)
 
     win = Tool()
-    print("Module Importer")'''
+    print("Module Importer")

@@ -9,6 +9,9 @@ class QCollapsibleWidget(QtWidgets.QWidget):
     def __init__(self, parent=None, title=None):
         super(QCollapsibleWidget, self).__init__()
 
+        if(parent is not None):
+            parent.addWidget(self)
+
         self._is_collasped = True
         self._title_frame = None
         self._content, self._content_layout = (None, None)
