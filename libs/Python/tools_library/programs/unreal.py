@@ -8,11 +8,11 @@ from tools_library.utilities import listen_server
 
 def unreal_project_path():
     """Returns the path to the current unreal project .uproject"""
-    return json_utils.get_property(tools_library.getConfig("client_settings.json"), "programs.unreal.project_path")
+    return json_utils.get_property(tools_library.getConfig("client_settings.json"), "programs.unreal.project_path").lower()
 
 def unreal_project_dir():
     """Returns the path to the current unreal project directory"""
-    return os.path.dirname(unreal_project_path())
+    return os.path.dirname(unreal_project_path()).lower()
 
 
 def listen_port():

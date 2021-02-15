@@ -81,9 +81,7 @@ class Texture(Asset):
         """Should this texture use SRGB?"""
         if(self.unreal_texture_compression_settings == unreal.TextureCompressionSettings.TC_MASKS):
             return False
-        return True
-        
-            
+        return True 
 
     @property
     def unreal_path(self):
