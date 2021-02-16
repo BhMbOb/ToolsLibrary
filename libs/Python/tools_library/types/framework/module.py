@@ -1,5 +1,6 @@
 import os
 import sys
+import imp
 
 import tools_library
 from tools_library.utilities import json as json_utils
@@ -64,6 +65,12 @@ class ProgramData(object):
         if(self.is_current):
             sys.path.append(os.path.join(self.directory, "libs\\python"))
 
+            # adds the current program as a module to the tools library (Ie, "tools_library.unreal")
+            program_module_dir = os.path.join(tools_library.paths.root(), "programs", self.program_name, "libs\\python\\", self.program_name)
+            if(os.path.isdir(program_module_dir)):
+                module = imp.load_source("tools_library." + self.program_name, os.path.join(program_module_dir, "__init__.py"))
+                exec("sys.modules[\"tools_library\"]." + self.program_name + " = module")
+
 
 class PluginData(object):
     def __init__(self, plugin_name):
@@ -126,3 +133,10 @@ class PluginData(object):
         if(self.is_enabled):
             sys.path.append(os.path.join(self.directory, "libs\\python"))
             sys.path.append(os.path.join(self.directory, "programs", tools_library.programContext(), "libs\\python"))
+            exec("import " + self.plugin_name)
+
+            # adds the current plugin as a module to the main plugin module (Ie, "asset_library.unreal")
+            plugin_module_dir = os.path.join(tools_library.paths.root(), "plugins", self.plugin_name, "programs", tools_library.programContext(), "libs\\python", tools_library.programContext())
+            if(os.path.isdir(plugin_module_dir)):
+                module = imp.load_source(self.plugin_name + "." + tools_library.programContext(), os.path.join(plugin_module_dir, "__init__.py"))
+                exec("sys.modules[\"" + self.plugin_name + "\"]." + tools_library.programContext() + " = module")

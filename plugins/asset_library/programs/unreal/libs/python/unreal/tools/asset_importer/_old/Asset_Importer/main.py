@@ -15,6 +15,6 @@ TODO: Animation / Skeleton Importer
 '''
 import asset_types
 
-import tools_library_unreal.importers.textures
+import tools_library.unreal.importers.textures
 
 print(program.importers.textures)

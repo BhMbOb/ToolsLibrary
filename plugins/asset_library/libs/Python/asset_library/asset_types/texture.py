@@ -1,7 +1,11 @@
 import os
 import datetime
 import json
-import unreal
+
+try:
+    import unreal
+except:
+    pass
 
 import tools_library
 import tools_library.programs.unreal

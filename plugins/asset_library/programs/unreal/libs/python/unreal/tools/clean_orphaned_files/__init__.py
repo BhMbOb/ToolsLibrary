@@ -12,7 +12,6 @@ import tools_library.programs.unreal
 
 import asset_library.paths
 from asset_library.types.uasset import Uasset
-from asset_library.asset_manager import AssetManager
 
 
 def find_orphaned_uassets():

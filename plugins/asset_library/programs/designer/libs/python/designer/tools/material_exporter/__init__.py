@@ -7,7 +7,7 @@ from qtpy import QtWidgets, QtCore, uic, QtGui
 import tools_library
 from tools_library.templates import tool_window
 import tools_library.filemgr
-import tools_library_designer.instance
+import tools_library.designer.instance
 
 import asset_library
 from asset_library.tools import material_property_editor
@@ -43,7 +43,7 @@ class ExportHelpers(object):
         """Returns the final asset library legal name for an input graph"""
         output = ""
         graph_name = graph.getIdentifier()
-        package_name = tools_library_designer.instance.get_package_name(graph.getPackage())
+        package_name = tools_library.designer.instance.get_package_name(graph.getPackage())
 
         if(graph_name.lower().endswith("_abs")):
             # if a graph ends with "_abs" it's considered abstract and should not be exported
@@ -142,17 +142,17 @@ class ExportHelpers(object):
 
     @staticmethod
     def export_current_package():
-        for i in ExportHelpers.get_package_material_graphs(tools_library_designer.instance.get_current_package()):
+        for i in ExportHelpers.get_package_material_graphs(tools_library.designer.instance.get_current_package()):
             ExportHelpers.export_graph(i)
 
         # export the current package as a .sbsar
-        if(tools_library_designer.instance.get_current_package()):
+        if(tools_library.designer.instance.get_current_package()):
             sbsar_exporter_instance = None
-            sbsar_exporter_instance = sd.api.sbs.sdsbsarexporter.SDSBSARExporter(tools_library_designer.instance.context, sbsar_exporter_instance)
+            sbsar_exporter_instance = sd.api.sbs.sdsbsarexporter.SDSBSARExporter(tools_library.designer.instance.context, sbsar_exporter_instance)
             sbsar_exporter_instance = sbsar_exporter_instance.sNew()
             sbsar_exporter_instance.exportPackageToSBSAR(
-                tools_library_designer.instance.get_current_package(),
-                tools_library_designer.instance.get_current_package().getFilePath().replace(".sbs", ".sbsar")
+                tools_library.designer.instance.get_current_package(),
+                tools_library.designer.instance.get_current_package().getFilePath().replace(".sbs", ".sbsar")
             )
 
 
@@ -170,14 +170,13 @@ class TMaterialExporter(tool_window.ToolWindow):
         self.q_btn_show_in_explorer.clicked.connect(self.show_current_material_in_explorer)
         self.finalize()
 
-
     def update_widget(self):
         self.q_materials_list.clear()
         self.q_materials_list.materials = {}
         added_material_sbs_list = []
 
-        if(tools_library_designer.instance.get_current_package()):
-            material_dir = os.path.dirname(tools_library_designer.instance.get_current_package().getFilePath()) + "\\..\\"
+        if(tools_library.designer.instance.get_current_package()):
+            material_dir = os.path.dirname(tools_library.designer.instance.get_current_package().getFilePath()) + "\\..\\"
             for material in os.listdir(material_dir):
                 print(material)
                 if(material.endswith(".material")):
@@ -192,8 +191,8 @@ class TMaterialExporter(tool_window.ToolWindow):
         #self.material_editor_tool_instance = material_property_editor.TMaterialPropertyEditor()
 
     def show_current_material_in_explorer(self):
-        if(tools_library_designer.instance.get_current_package()):
-            os.startfile(os.path.dirname(tools_library_designer.instance.get_current_package().getFilePath()) + "\\..\\")
+        if(tools_library.designer.instance.get_current_package()):
+            os.startfile(os.path.dirname(tools_library.designer.instance.get_current_package().getFilePath()) + "\\..\\")
 
 
 if __name__ == "__main__":

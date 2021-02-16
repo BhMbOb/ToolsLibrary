@@ -4,7 +4,7 @@ from qtpy import QtWidgets, QtCore, uic, QtGui
 
 import tools_library
 from tools_library.templates import tool_window
-import tools_library_designer.instance
+import tools_library.designer.instance
 
 import asset_library
 import asset_library.asset_types.material
@@ -104,7 +104,7 @@ class TMaterialLoader(tool_window.ToolWindow):
 
 
     def select_material(self, material_list_index):
-        tools_library_designer.instance.load_sbs(self.q_materials_list.materials[material_list_index.text()].source_sbs)
+        tools_library.designer.instance.load_sbs(self.q_materials_list.materials[material_list_index.text()].source_sbs)
 
 
 if __name__ == "__main__":

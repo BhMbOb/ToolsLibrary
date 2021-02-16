@@ -1,5 +1,7 @@
 import os
 import sys
+import importlib
+import imp
 import json
 import winreg
 
@@ -64,6 +66,14 @@ if(is_module_enabled(__program_context__.lower(), module_outer_dir="programs")):
     tools_library.PROGRAM_CONTEXT = __program_context__
     program_context = tools_library.programContext()
 
+    # Add all of the individual programs to their parent plugins
+    #program_module_dir = os.path.join(path(), "programs", __program_context__, "libs\\python\\", __program_context__)
+    #if(os.path.isdir(program_module_dir)):
+    #    module = imp.load_source("tools_library." + __program_context__, os.path.join(program_module_dir, "__init__.py"))
+    #    exec("sys.modules[\"tools_library\"]." + __program_context__ + " = module")
+
+
+
     from tools_library.types.framework.module import ProgramData, PythonFrameworkData, PluginData
 
     program = ProgramData(program_context)
@@ -73,6 +83,7 @@ if(is_module_enabled(__program_context__.lower(), module_outer_dir="programs")):
     plugins = [PluginData(os.path.basename(plugin_dir)) for plugin_dir in tools_library.pluginDirs()]
     for plugin in plugins:
         plugin.initialize_paths()
+
 
 
     # loop / run all of the startup scripts in the order:
