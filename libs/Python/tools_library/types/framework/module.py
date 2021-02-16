@@ -134,6 +134,8 @@ class PluginData(object):
             sys.path.append(os.path.join(self.directory, "libs\\python"))
             sys.path.append(os.path.join(self.directory, "programs", tools_library.programContext(), "libs\\python"))
             exec("import " + self.plugin_name)
+            module = imp.load_source(self.plugin_name, os.path.join(tools_library.paths.root(), "plugins", self.plugin_name, "libs\\python", self.plugin_name, "__init__.py"))
+            exec("sys.modules[\"tools_library." + self.plugin_name + "\"] = module")
 
             # adds the current plugin as a module to the main plugin module (Ie, "asset_library.unreal")
             plugin_module_dir = os.path.join(tools_library.paths.root(), "plugins", self.plugin_name, "programs", tools_library.programContext(), "libs\\python", tools_library.programContext())

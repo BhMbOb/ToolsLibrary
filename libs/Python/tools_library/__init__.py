@@ -4,7 +4,7 @@ import json
 
 #from tools_library import *
 from tools_library import string_parser
-from tools_library import aliases
+from tools_library.utilities import aliases
 from tools_library import programs
 from tools_library import paths
 from tools_library.utilities import json as json_utils

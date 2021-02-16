@@ -6,7 +6,7 @@ from qtpy import QtWidgets, QtCore, uic, QtGui
 
 import tools_library
 from tools_library.templates import tool_window
-import tools_library.filemgr
+import tools_library.utilities.filemgr
 import tools_library.designer.instance
 
 import asset_library
@@ -131,7 +131,7 @@ class ExportHelpers(object):
                 if(material_data.get("metadata") is None):
                     material_data["metadata"] = {}
 
-                material_data["metadata"]["name"] = tools_library.filemgr.filename(graph.getPackage().getFilePath())
+                material_data["metadata"]["name"] = tools_library.utilities.filemgr.filename(graph.getPackage().getFilePath())
                 material_data["metadata"]["instance"] = ExportHelpers.get_graph_name_parameter(graph, "inst")
                 material_data["metadata"]["variant"] = ExportHelpers.get_graph_name_parameter(graph, "var")
 
