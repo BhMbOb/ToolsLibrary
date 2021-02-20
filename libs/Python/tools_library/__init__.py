@@ -2,7 +2,6 @@ import os
 import sys
 import json
 
-#from tools_library import *
 from tools_library import string_parser
 from tools_library.utilities import aliases
 from tools_library import programs
@@ -16,7 +15,7 @@ current_tool_path = ""
 path = paths.root
 
 
-def programContext():
+def program_context():
     """Returns the current program context name - defaults to "python" """
     if("PROGRAM_CONTEXT" in globals()):
         return PROGRAM_CONTEXT
@@ -24,7 +23,7 @@ def programContext():
         return "python"
 
 
-def pluginDirs():
+def plugin_dirs():
     """Returns the absolute paths to all plugin directories for the tools library"""
     output = []
     for i in os.listdir(os.path.join(path(), "plugins")):
@@ -34,7 +33,7 @@ def pluginDirs():
     return output
 
 
-def getConfig(name):
+def get_config(name):
     """Returns a config file from its path
 
     name    --  name of the config file to find, formatted "program:config/file/path.type" or ("config/file/path.type" for common)
@@ -103,7 +102,7 @@ def run_tool(file_path):
             exec(open(url).read(), globals_)
 
     elif(file_path.endswith(".ms")):
-        if(programContext() == "max"):
+        if(program_context() == "max"):
             import pymxs
             with open(file_path) as file:
                 file_lines = file.read()

@@ -23,7 +23,7 @@ def root():
 def path():
     """Returns the path to the current Asset Library .assetlibrary file"""
     return tools_library.utilities.json.get_property(
-        tools_library.getConfig("client_settings.json"),
+        tools_library.get_config("client_settings.json"),
         "plugins.asset_library.path"
     )
 

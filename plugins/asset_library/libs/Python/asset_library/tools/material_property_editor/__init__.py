@@ -6,13 +6,13 @@ from qtpy import QtWidgets, QtCore, uic, QtGui
 import tools_library
 import tools_library.utilities.json as json_utils
 from tools_library.utilities.qt.widgets import QCollapsibleWidget
-from tools_library.templates import tool_window
+from tools_library.types import _tool_window
 
 import asset_library
 import asset_library.asset_types.shader as shader
 
 
-class TMaterialPropertyEditor(tool_window.ToolWindow):
+class TMaterialPropertyEditor(_tool_window.ToolWindow):
     def __init__(self, material):
         super(TMaterialPropertyEditor, self).__init__()
         self.material = material
@@ -72,4 +72,4 @@ class TMaterialPropertyEditor(tool_window.ToolWindow):
             self.deleteLater()
 
 
-#a = TMaterialPropertyEditor("X:\\Content\\Common\\Materials\\Micro_Rope\\M_Micro_Rope_01.material")
+#a = TMaterialPropertyEditor("X:\\Content\\Core\\Materials\\Micro_Rope\\M_Micro_Rope_01.material")

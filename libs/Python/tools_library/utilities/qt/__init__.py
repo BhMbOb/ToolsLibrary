@@ -9,5 +9,5 @@ def get_application():
     output = QtWidgets.QApplication.instance()
     if(not output):
         output = QtWidgets.QApplication(sys.argv)
-        output.setStyleSheet(open(tools_library.getConfig("styles/standalone.css")).read())
+        output.setStyleSheet(open(tools_library.get_config("styles/standalone.css")).read())
     return output

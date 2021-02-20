@@ -31,7 +31,7 @@ def addShelf(shelf_name, shelf_path, shelf_status):
 
 
     # load the key "reg_name" and build the shelf registry path
-    painter_config = tools_library.getConfig("Painter:program.json")
+    painter_config = tools_library.get_config("Painter:program.json")
     painter_reg_name = ""
 
     with open(painter_config) as j:

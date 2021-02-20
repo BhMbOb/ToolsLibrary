@@ -62,9 +62,9 @@ if(is_module_enabled(__program_context__.lower(), module_outer_dir="programs")):
     import tools_library
 
     # global value stores the current program that this python instance is ran within
-    # (Ie, "unreal", "max", "python")
+    # (Ie, "ue4", "max", "python")
     tools_library.PROGRAM_CONTEXT = __program_context__
-    program_context = tools_library.programContext()
+    program_context = tools_library.program_context()
 
     # Add all of the individual programs to their parent plugins
     #program_module_dir = os.path.join(path(), "programs", __program_context__, "libs\\python\\", __program_context__)
@@ -74,13 +74,13 @@ if(is_module_enabled(__program_context__.lower(), module_outer_dir="programs")):
 
 
 
-    from tools_library.types.framework.module import ProgramData, PythonFrameworkData, PluginData
+    from tools_library.framework.module import ProgramData, PythonFrameworkData, PluginData
 
     program = ProgramData(program_context)
     python_framework = PythonFrameworkData()
     program.initialize_paths()
 
-    plugins = [PluginData(os.path.basename(plugin_dir)) for plugin_dir in tools_library.pluginDirs()]
+    plugins = [PluginData(os.path.basename(plugin_dir)) for plugin_dir in tools_library.plugin_dirs()]
     for plugin in plugins:
         plugin.initialize_paths()
 

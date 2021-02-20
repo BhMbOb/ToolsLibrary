@@ -10,7 +10,7 @@
    "enabled": true,
    "python_version": 3.7
   },
-  "unreal": {
+  "ue4": {
    "enabled": true,
    "project_path": "Y:\\Development\\UnrealProject\\Project\\Project.uproject",
    "python_version": 3.7

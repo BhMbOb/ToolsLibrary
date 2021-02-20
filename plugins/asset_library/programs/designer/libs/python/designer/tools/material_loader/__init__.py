@@ -3,14 +3,14 @@ import json
 from qtpy import QtWidgets, QtCore, uic, QtGui
 
 import tools_library
-from tools_library.templates import tool_window
+from tools_library.types import _tool_window
 import tools_library.designer.instance
 
 import asset_library
 import asset_library.asset_types.material
 
 
-class TMaterialLoader(tool_window.ToolWindow):
+class TMaterialLoader(_tool_window.ToolWindow):
     def __init__(self):
         super(TMaterialLoader, self).__init__()
 
@@ -45,19 +45,19 @@ class TMaterialLoader(tool_window.ToolWindow):
 
     def get_material_types(self):
         output = []
-        materials_config = os.path.join(asset_library.paths.root(), "materials_config.json")
+        materials_config = os.path.join(asset_library.paths.root(), "content\\core\\materials\\.config\\material_types.json")
         with open(materials_config, "r") as f:
             json_data = json.load(f)
-            for t in json_data["material_types"]:
+            for t in json_data:
                 output.append(t)
         return output
 
     def get_material_type_prefix(self, material_type):
         output = ""
-        materials_config = os.path.join(asset_library.paths.root(), "materials_config.json")
+        materials_config = os.path.join(asset_library.paths.root(), "content\\core\\materials\\.config\\material_types.json")
         with open(materials_config, "r") as f:
             json_data = json.load(f)
-            output = json_data["material_types"][material_type]
+            output = json_data[material_type]["prefix"]
         return output
 
     def switch_module(self):

@@ -7,7 +7,7 @@ import subprocess
 
 import tools_library
 import tools_library.utilities.string as string_utils
-from tools_library.types.framework.module import PluginData, ProgramData
+from tools_library.framework.module import PluginData, ProgramData
 
 
 designer_path = os.path.join(tools_library.path(), "programs\\designer")
@@ -89,7 +89,7 @@ def initialize_tools_library_menu(sd_ui_mgr):
 
     # loop over all separate plugins and add them and their branches
     q_tools_menu.addSeparator()
-    for plugin_dir in tools_library.pluginDirs():
+    for plugin_dir in tools_library.plugin_dirs():
         plugin_dir_tools_designer_dir = os.path.join(plugin_dir, "programs\\designer\\tools\\")
         plugin_name = os.path.basename(plugin_dir)
         if(PluginData(plugin_name).is_enabled):

@@ -89,7 +89,7 @@ def initialize_tools_library_menu():
 
     # loop over all separate plugins and add them and their branches
     q_tools_menu.addSeparator()
-    for plugin_dir in tools_library.pluginDirs():
+    for plugin_dir in tools_library.plugin_dirs():
         plugin_dir_tools_max_dir = os.path.join(plugin_dir, "programs\\max\\tools\\")
         plugin_name = os.path.basename(plugin_dir)
         plugin_menu_branch = q_tools_menu.addMenu(string_utils.format.snake_to_name(plugin_name))

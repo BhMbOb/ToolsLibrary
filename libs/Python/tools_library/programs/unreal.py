@@ -8,7 +8,7 @@ from tools_library.utilities import listen_server
 
 def unreal_project_path():
     """Returns the path to the current unreal project .uproject"""
-    return json_utils.get_property(tools_library.getConfig("client_settings.json"), "programs.unreal.project_path").lower()
+    return json_utils.get_property(tools_library.get_config("client_settings.json"), "programs.ue4.project_path").lower()
 
 def unreal_project_dir():
     """Returns the path to the current unreal project directory"""
@@ -17,7 +17,7 @@ def unreal_project_dir():
 
 def listen_port():
     """Returns the server port that the unreal listen server is hosted on"""
-    return json_utils.get_property(tools_library.getConfig("Unreal:program.json"), "listen_port")
+    return json_utils.get_property(tools_library.get_config("Ue4:program.json"), "listen_port")
 
 
 def launch_unreal_project():

@@ -1,4 +1,5 @@
 import os
+import functools
 import glob
 import datetime
 import json
@@ -36,6 +37,17 @@ class ShaderManager(object):
         return output
 
     @staticmethod
+    def get_shader_paths_uproject(ignore_abstract=False):
+        """Returns the .uasset path to all shaders in the unreal project"""
+        output = []
+        all_shaders = []
+        for i in glob.glob(asset_library.paths.root() + "\\**\\*.uasset", recursive=True):
+            if(os.path.basename(i).lower().startswith("shd_")):
+                if(not (ignore_abstract and "shd_abs" in i.lower())):
+                    all_shaders.append(i)
+        return all_shaders
+
+    @staticmethod
     def get_shader_path(shader_name):
         """returns the path to a shader given an input name"""
         shader_paths = ShaderManager.get_shader_paths(ignore_abstract=False)
@@ -46,7 +58,7 @@ class ShaderManager(object):
         return ""
 
     @staticmethod
-    def get_shader_names(ignore_abstract=True):
+    def get_shader_names(ignore_abstract=False):
         """Returns the names of all .shader files"""
         return [(os.path.basename(i).split(".")[0]) for i in ShaderManager.get_shader_paths()]
 
@@ -81,5 +93,24 @@ class Shader(Asset):
         return ShaderManager.get_property(self.name, property_)
 
     @property
+    @functools.lru_cache()
     def unreal_path(self):
-        return ShaderManager.get_property(self.name, "unreal.path")
+        return ShaderManager.get_property(self.name, "ue4.path")
+
+    @property
+    @functools.lru_cache()
+    def unreal_path(self):
+        unreal_shader_paths = ShaderManager.get_shader_paths_uproject()
+        for i in unreal_shader_paths:
+            i_name = os.path.basename(i).split(".")[0].lower()
+            if(i_name == self.name):
+                return i
+        return ""
+
+    @property
+    @functools.lru_cache()
+    def unreal_relative_path(self):
+        output = "/AssetLibrary/" + self.asset_library_path
+        output = output.split(".", 1)[0]
+        output = output.replace("\\", "/")
+        return output

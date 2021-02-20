@@ -39,7 +39,7 @@
         "MetallicPurity": 0.0
     },
 
-    "unreal":{
+    "ue4":{
         "path": "common/manual/shaders/object/shd_abs_object"
     }
 }

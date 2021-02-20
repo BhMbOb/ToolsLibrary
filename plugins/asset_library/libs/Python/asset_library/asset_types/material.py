@@ -1,11 +1,19 @@
 import os
 import json
+import glob
+
+try:
+    import unreal
+except:
+    pass
 
 import tools_library.utilities.json as json_utils
+import tools_library.utilities.pathing
 
 import asset_library
 from asset_library.asset_types._asset import Asset
 from asset_library.asset_types.texture import Texture
+from asset_library.asset_types.shader import Shader
 
 
 class MaterialManager(object):
@@ -37,6 +45,19 @@ class MaterialManager(object):
                     output.append(Material(os.path.join(material_dir, i)))
 
         return output
+
+    @staticmethod
+    def import_to_unreal():
+        """Import all of the materials to unreal"""
+        target_module_dirs = asset_library.paths.get_content_modules()
+        for target_module_dir in target_module_dirs:
+            target_module_materials_dir = os.path.join(target_module_dir, "materials")
+            module_materials = glob.glob(target_module_materials_dir + "/**/*.material", recursive=True)
+            for i in module_materials[:1]:
+                is_valid = "." not in os.path.dirname(i)
+                if(is_valid):
+                    mat = Material(i)
+                    mat.import_to_unreal()
 
 
 class Material(Asset):
@@ -73,9 +94,19 @@ class Material(Asset):
         return output
 
     @property
+    def unreal_relative_path(self):
+        """Path to the .uasset relative to the unreal project"""
+        output = "/AssetLibrary/" + self.asset_library_path
+        output = output.split(".", 1)[0]
+        output = output.replace("\\", "/")
+        return output
+
+    @property
     def unreal_path(self):
-        """Returns the unreal project relative path to this material"""
-        return ""
+        """Absolute path to the current .uasset file"""
+        output = os.path.join(asset_library.paths.root(), "shelves\\unreal\\common\\content", self.unreal_relative_path.replace("/AssetLibrary/", "") + ".uasset")
+        output = output.replace("/", "\\")
+        return output
 
     @property
     def name(self):
@@ -90,9 +121,30 @@ class Material(Asset):
 
     def import_to_unreal(self):
         """Import the current material to unreal"""
-        print("TODO: Import Material")
+        textures = self.textures
         for tex in self.textures:
             tex.import_to_unreal()
+        
+        # create unreal material
+        mat_unreal_path = self.unreal_relative_path
+        mi_name = os.path.basename(mat_unreal_path)
+        mi_dir = os.path.dirname(mat_unreal_path)
+        if(unreal.EditorAssetLibrary.does_asset_exist(mat_unreal_path)):
+            new_mi = unreal.EditorAssetLibrary.find_asset_data(mat_unreal_path).get_asset()
+        else:
+            asset_tools = unreal.AssetToolsHelpers.get_asset_tools()
+            new_mi = asset_tools.create_asset(mi_name, mi_dir, unreal.MaterialInstanceConstant, unreal.MaterialInstanceConstantFactoryNew())
+        target_shader = Shader("X:\\Shaders\\Surface_Object\\SHD_ABS_Surface_Object.shader")
+        upath = target_shader.unreal_relative_path
+        parent_mat = unreal.EditorAssetLibrary.find_asset_data(upath)
+        unreal.MaterialEditingLibrary.set_material_instance_parent(new_mi, parent_mat.get_asset())
+        for i in textures:
+    
+            if(i.texture_type == "D"):
+                pass
+
+        #MaterialEditingLibary.set_material_instance_parent(mi_asset, base_mtl.get_asset())
+        #MaterialEditingLibrary.set_material_instance_scalar_parameter_value(mi_instance, "Desaturation", 0.3)
 
     def get_data_dict(self):
         """Returns this .material (json) file as a python dict"""

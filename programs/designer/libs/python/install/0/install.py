@@ -7,4 +7,4 @@ import tools_library
 import tools_library.programs.designer
 
 
-tools_library.programs.designer.add_sbsprj(tools_library.getConfig("Designer:tools_library.sbsprj"))
+tools_library.programs.designer.add_sbsprj(tools_library.get_config("Designer:tools_library.sbsprj"))

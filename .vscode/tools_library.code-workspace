@@ -24,7 +24,7 @@
 		"python.linting.pycodestyleArgs": [
 			"--max-line-length=1000"
 		],
-		"python.pythonPath": "bin\\Python 3.8\\python.exe",
+		"python.pythonPath": "Y:\\Development\\ToolsLibrary\\bin\\Python 3.8\\python.exe",
 		"problems.decorations.enabled": false,
 	},
 

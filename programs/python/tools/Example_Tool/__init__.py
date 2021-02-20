@@ -3,11 +3,11 @@ import json
 from qtpy import QtWidgets, QtCore, uic, QtGui
 
 import tools_library
-from tools_library.templates import tool_window
+from tools_library.types import _tool_window
 import tools_library.utilities.qt
 
 
-class TExampleTool(tool_window.ToolWindow):
+class TExampleTool(_tool_window.ToolWindow):
     def __init__(self):
         super(TExampleTool, self).__init__()
         self.finalize()
@@ -15,4 +15,3 @@ class TExampleTool(tool_window.ToolWindow):
 
 if __name__ == "__main__":
     TExampleTool()
-    #tool_window.run_standalone(TExampleTool)

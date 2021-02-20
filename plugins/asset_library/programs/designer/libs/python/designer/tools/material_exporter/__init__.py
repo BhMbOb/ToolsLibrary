@@ -5,7 +5,7 @@ import sd
 from qtpy import QtWidgets, QtCore, uic, QtGui
 
 import tools_library
-from tools_library.templates import tool_window
+from tools_library.types import _tool_window
 import tools_library.utilities.filemgr
 import tools_library.designer.instance
 
@@ -156,7 +156,7 @@ class ExportHelpers(object):
             )
 
 
-class TMaterialExporter(tool_window.ToolWindow):
+class TMaterialExporter(_tool_window.ToolWindow):
     def __init__(self):
         super(TMaterialExporter, self).__init__()
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)

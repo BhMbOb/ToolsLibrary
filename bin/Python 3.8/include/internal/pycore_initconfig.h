@@ -128,7 +128,7 @@ extern PyStatus _PyPreConfig_InitFromPreConfig(
     PyPreConfig *preconfig,
     const PyPreConfig *config2);
 extern PyObject* _PyPreConfig_AsDict(const PyPreConfig *preconfig);
-extern void _PyPreConfig_GetConfig(PyPreConfig *preconfig,
+extern void _PyPreConfig_get_config(PyPreConfig *preconfig,
     const PyConfig *config);
 extern PyStatus _PyPreConfig_Read(PyPreConfig *preconfig,
     const _PyArgv *args);

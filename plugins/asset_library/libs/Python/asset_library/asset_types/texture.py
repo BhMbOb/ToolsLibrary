@@ -1,6 +1,8 @@
 import os
+import stat
 import datetime
 import json
+import glob
 
 try:
     import unreal
@@ -24,18 +26,32 @@ class TextureManager(object):
     @staticmethod
     def get_texture_types_map():
         """"""
-        textures_config_path = tools_library.getConfig("asset_library:file_types/texture/properties.json")
-        json_texture_types = json_utils.get_property(textures_config_path, "texture_types")
+        textures_config_path = os.path.join(asset_library.paths.root(), "content\\core\\textures\\.config\\texture_types.json")
+        with open(textures_config_path, "r") as f:
+            return json.load(f)
         return json_texture_types
 
     @staticmethod
     def get_unreal_compression_method(method_string):
         """Takes an Unreal Compression method string and returns the matchingunreal object
         Ie, "TC_MASKS" -> unreal.TextureCompressionSettings.TC_NORMALMAP"""
-        if(tools_library.programContext() == "unreal"):
+        if(tools_library.program_context() == "ue4"):
             import unreal
             return eval("unreal.TextureCompressionSettings." + method_string)
         return None
+
+    @staticmethod
+    def import_to_unreal():
+        """Import all of the textures to unreal"""
+        target_module_dirs = asset_library.paths.get_content_modules()
+        for target_module_dir in target_module_dirs:
+            target_module_textures_dir = os.path.join(target_module_dir, "textures")
+            module_textures = glob.glob(target_module_textures_dir + "/**/*.tga", recursive=True)
+            for i in module_textures:
+                is_valid = "." not in os.path.dirname(i)
+                if(is_valid):
+                    tex = Texture(i)
+                    tex.import_to_unreal()
 
 
 class Texture(Asset):
@@ -43,11 +59,9 @@ class Texture(Asset):
     @property
     def unreal_relative_path(self):
         """Path to the .uasset relative to the unreal project"""
-        output = "/AssetLibrary/"
-        output += asset_library.paths.module_name_from_path(self.asset_library_path) + "\\Imported\\"
-        output += self.asset_library_path.split("\\", 2)[2]
+        output = "/AssetLibrary/" + self.asset_library_path
+        output = output.split(".", 1)[0]
         output = output.replace("\\", "/")
-        output = os.path.dirname(output)
         return output
 
     @property
@@ -90,13 +104,9 @@ class Texture(Asset):
     @property
     def unreal_path(self):
         """Absolute path to the current .uasset file"""
-        output = (
-            tools_library.programs.unreal.unreal_project_dir() +
-            "\\Plugins\\Common\\Content\\" +
-            self.unreal_relative_path.split("/", 2)[2] + "\\" +
-            self.name + ".uasset"
-        )
-        return output.replace("/", "\\")
+        output = os.path.join(asset_library.paths.root(), "shelves\\unreal\\common\\content", self.unreal_relative_path.replace("/AssetLibrary/", "") + ".uasset")
+        output = output.replace("/", "\\")
+        return output
 
     @property
     def unreal_meta_path(self):
@@ -105,11 +115,15 @@ class Texture(Asset):
 
     def import_to_unreal(self):
         """Import this texture to unreal"""
-        if(tools_library.programContext() == "unreal"):
+        unreal_path = self.unreal_path
+        if(os.path.isfile(unreal_path)):
+            os.chmod(unreal_path, stat.S_IWRITE)
+
+        if(tools_library.program_context() == "ue4"):
             import unreal
             import_task = unreal.AssetImportTask()
             import_task.set_editor_property("filename", self.real_path)
-            import_task.set_editor_property("destination_path", self.unreal_relative_path)
+            import_task.set_editor_property("destination_path", os.path.dirname(self.unreal_relative_path))
             import_task.set_editor_property("save", True)
             import_task.set_editor_property("replace_existing", True)
             import_task.set_editor_property("replace_existing_settings", True)
@@ -133,9 +147,13 @@ class Texture(Asset):
                 "source_path":self.asset_library_path
             }
 
-            with open(self.unreal_meta_path, "w") as f:
-                json.dump(metadata, f)
+            os.chmod(unreal_path, stat.S_IREAD)
+
+
+
+            #with open(self.unreal_meta_path, "w") as f:
+            #    json.dump(metadata, f)
 
         else:
             print("Not in unreal!")
-            print(tools_library.programContext())
+            print(tools_library.program_context())

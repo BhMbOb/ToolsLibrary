@@ -23,8 +23,8 @@ def _parse__localappdata(params):
 def _parse__unrealprojectpath(params):
     """Returns the path to the currently active unreal project"""
     return tools_library.utilities.json.get_property(
-        tools_library.getConfig("client_settings.json"),
-        "programs.unreal.project_path"
+        tools_library.get_config("client_settings.json"),
+        "programs.ue4.project_path"
     )
 
 
@@ -32,8 +32,8 @@ def _parse__unrealprojectdir(params):
     """Returns the pat to the currently active unreal project directory"""
     return os.path.dirname(
         tools_library.utilities.json.get_property(
-            tools_library.getConfig("client_settings.json"),
-            "programs.unreal.project_path"
+            tools_library.get_config("client_settings.json"),
+            "programs.ue4.project_path"
         )
     )
 
@@ -41,8 +41,8 @@ def _parse__unrealprojectdir(params):
 def _parse__unrealprojectname(params):
     """Returns the path to the currently active unreal projects name"""
     output = tools_library.utilities.json.get_property(
-        tools_library.getConfig("client_settings.json"),
-        "programs.unreal.project_path"
+        tools_library.get_config("client_settings.json"),
+        "programs.ue4.project_path"
     )
     return os.path.basename(output).split(".")[0]
 
@@ -51,7 +51,7 @@ def _parse__assetlibrarydir(params):
     """Returns the path to the currently active asset library project"""
     output = os.path.dirname(
         tools_library.utilities.json.get_property(
-            tools_library.getConfig("client_settings.json"),
+            tools_library.get_config("client_settings.json"),
             "plugins.asset_library.path"
         )
     )
@@ -90,7 +90,7 @@ def parse(input_, file_context=None):
         "file_context": file_context
     }
 
-    string_parser_mappings_path = tools_library.getConfig("string_parser_mappings.json")
+    string_parser_mappings_path = tools_library.get_config("string_parser_mappings.json")
 
     with open(string_parser_mappings_path) as j:
         json_data = json.load(j)

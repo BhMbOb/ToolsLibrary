@@ -35,5 +35,4 @@ class Uasset(object):
     def source_file(self):
         file_path_assetlibrary = self.real_path.replace(self._unreal_plugin_content_dir, self._asset_library_content_dir)
         output = file_path_assetlibrary.replace(".uasset", "." + self.source_file_type)
-        output = output.replace("\\imported\\", "\\")
         return output
