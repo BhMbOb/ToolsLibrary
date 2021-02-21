@@ -1,66 +1,27 @@
 import os
-import json
+import functools
 import glob
+import datetime
+import json
+import program_context
 
-try:
-    import unreal
-except:
-    pass
-
+import tools_library
+import tools_library.framework.asset_management.types.parameter as parameter
+import tools_library.programs.unreal
 import tools_library.utilities.json as json_utils
-import tools_library.utilities.pathing
+import tools_library.utilities.pathing as pathing_utils
 
 import asset_library
-from asset_library.asset_types._asset import Asset
-from asset_library.asset_types.texture import Texture
-from asset_library.asset_types.shader import Shader
+from asset_library.framework.asset_types._asset import _Asset
+from asset_library.framework.asset_types.texture import Texture
+from asset_library.framework.asset_types.shader import Shader
+
+if(program_context == "ue4"):
+    import unreal
+    import tools_library.ue4.materials.material_instance
 
 
-class MaterialManager(object):
-    @staticmethod
-    def get_materials(module_names=[], prefixes=[]):
-        """Returns a list of materials fitting certain criteria"""
-        output = []
-
-        if(type(module_names) is not tuple):
-            module_names = (module_names)
-
-        if(type(prefixes) is not tuple):
-            prefixes = (prefixes)
-
-        material_dirs = []
-
-        for module in module_names:
-            module_materials_dir = os.path.join(asset_library.paths.root(), "content", module, "materials")
-            if(os.path.isdir(module_materials_dir)):
-                for material_name in os.listdir(module_materials_dir):
-                    material_dir = os.path.join(module_materials_dir, material_name)
-                    if(os.path.isdir(material_dir) and (material_name.lower().startswith(prefixes))):
-                        material_dirs.append(material_dir)
-
-        for material_dir in material_dirs:
-            material_dirname = os.path.basename(material_dir)
-            for i in os.listdir(material_dir):
-                if(i.startswith("M_" + material_dirname) and (i.endswith(".material"))):
-                    output.append(Material(os.path.join(material_dir, i)))
-
-        return output
-
-    @staticmethod
-    def import_to_unreal():
-        """Import all of the materials to unreal"""
-        target_module_dirs = asset_library.paths.get_content_modules()
-        for target_module_dir in target_module_dirs:
-            target_module_materials_dir = os.path.join(target_module_dir, "materials")
-            module_materials = glob.glob(target_module_materials_dir + "/**/*.material", recursive=True)
-            for i in module_materials[:1]:
-                is_valid = "." not in os.path.dirname(i)
-                if(is_valid):
-                    mat = Material(i)
-                    mat.import_to_unreal()
-
-
-class Material(Asset):
+class Material(_Asset):
     """Base class for AssetLibrary Material Assets"""
     def __init__(self, real_path):
         super().__init__(real_path)
@@ -139,12 +100,15 @@ class Material(Asset):
         parent_mat = unreal.EditorAssetLibrary.find_asset_data(upath)
         unreal.MaterialEditingLibrary.set_material_instance_parent(new_mi, parent_mat.get_asset())
         for i in textures:
-    
-            if(i.texture_type == "D"):
-                pass
-
-        #MaterialEditingLibary.set_material_instance_parent(mi_asset, base_mtl.get_asset())
-        #MaterialEditingLibrary.set_material_instance_scalar_parameter_value(mi_instance, "Desaturation", 0.3)
+            param_name = ""
+            if(i.texture_type in ("D", "DA")):
+                param_name = "AlbedoMap"
+            if(i.texture_type == "S"):
+                param_name = "SurfaceMap"
+            if(i.texture_type == "N"):
+                param_name = "NormalMap"
+            if(param_name != ""):
+                tools_library.ue4.materials.material_instance.set_texture(new_mi, param_name, i.unreal_relative_path)
 
     def get_data_dict(self):
         """Returns this .material (json) file as a python dict"""

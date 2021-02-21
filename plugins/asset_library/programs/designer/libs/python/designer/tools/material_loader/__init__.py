@@ -7,7 +7,7 @@ from tools_library.types import _tool_window
 import tools_library.designer.instance
 
 import asset_library
-import asset_library.asset_types.material
+import asset_library.framework.asset_types.material
 
 
 class TMaterialLoader(_tool_window.ToolWindow):
@@ -78,7 +78,7 @@ class TMaterialLoader(_tool_window.ToolWindow):
         else:
             modules = [self.target_module]
 
-        materials = asset_library.asset_types.material.MaterialManager.get_materials(
+        materials = asset_library.framework.asset_types.material.MaterialManager.get_materials(
             module_names=tuple(modules),
             prefixes=prefix
         )

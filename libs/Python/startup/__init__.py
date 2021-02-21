@@ -65,6 +65,7 @@ if(is_module_enabled(__program_context__.lower(), module_outer_dir="programs")):
     # (Ie, "ue4", "max", "python")
     tools_library.PROGRAM_CONTEXT = __program_context__
     program_context = tools_library.program_context()
+    sys.modules["program_context"] = program_context
 
     # Add all of the individual programs to their parent plugins
     #program_module_dir = os.path.join(path(), "programs", __program_context__, "libs\\python\\", __program_context__)

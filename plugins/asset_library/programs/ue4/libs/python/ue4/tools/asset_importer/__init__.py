@@ -9,7 +9,7 @@ import unreal
 import tools_library
 
 import asset_library
-from asset_library.asset_types import texture, material, shader
+from asset_library.framework.asset_types import texture, material, shader
 
 imp.reload(material)
 imp.reload(texture)

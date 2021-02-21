@@ -1,3 +1,6 @@
+import os
+
+
 def set_path_file_type(filepath, filetype):
     """Replace the file type of an input filepath"""
     return (filepath.split(".")[0] + "." + filetype.replace(".", ""))
@@ -5,3 +8,6 @@ def set_path_file_type(filepath, filetype):
 
 def remove_file_type(filepath):
     return filepath.rsplit(".", 1)[0]
+
+def get_filename_only(filepath):
+    return os.path.splitext(os.path.basename(filepath))[0]

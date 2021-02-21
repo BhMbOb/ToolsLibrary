@@ -23,7 +23,7 @@ import unreal
 from qtpy import QtWidgets, QtCore, uic
 
 import asset_library
-from asset_library.asset_types import texture, material
+from asset_library.framework.asset_types import texture, material
 
 from importlib import reload
 reload(texture)

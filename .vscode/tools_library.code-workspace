@@ -26,6 +26,7 @@
 		],
 		"python.pythonPath": "Y:\\Development\\ToolsLibrary\\bin\\Python 3.8\\python.exe",
 		"problems.decorations.enabled": false,
+		"workbench.editor.tabSizing": "shrink",
 	},
 
 	"todo-tree.highlights.defaultHighlight": {},

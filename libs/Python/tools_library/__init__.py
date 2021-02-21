@@ -128,3 +128,4 @@ def is_module_enabled(module_name, module_outer_dir="programs"):
 
 
 finalizeString = string_parser.parse
+sys.modules["program_context"] = program_context()

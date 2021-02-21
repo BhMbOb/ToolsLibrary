@@ -9,7 +9,7 @@ from tools_library.utilities.qt.widgets import QCollapsibleWidget
 from tools_library.types import _tool_window
 
 import asset_library
-import asset_library.asset_types.shader as shader
+import asset_library.framework.asset_types.shader as shader
 
 
 class TMaterialPropertyEditor(_tool_window.ToolWindow):
