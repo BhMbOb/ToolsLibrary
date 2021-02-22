@@ -3,7 +3,6 @@ import functools
 import glob
 import datetime
 import json
-import program_context
 
 import tools_library
 import tools_library.framework.asset_management.types.parameter as parameter
@@ -16,7 +15,7 @@ from asset_library.framework.asset_types._asset import _Asset
 from asset_library.framework.asset_types.texture import Texture
 from asset_library.framework.asset_types.shader import Shader
 
-if(program_context == "ue4"):
+if(tools_library.program_context() == "ue4"):
     import unreal
     import tools_library.ue4.materials.material_instance
 

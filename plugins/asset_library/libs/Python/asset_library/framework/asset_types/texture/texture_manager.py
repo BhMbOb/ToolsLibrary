@@ -8,6 +8,9 @@ import tools_library.utilities.json as json_utils
 
 import asset_library
 
+if(tools_library.program_context() == "ue4"):
+    import unreal
+    
 
 class __TextureManager(object):
     __instance__ = None
@@ -17,13 +20,11 @@ class __TextureManager(object):
         textures_config_path = os.path.join(asset_library.paths.root(), "content\\core\\textures\\.config\\texture_types.json")
         with open(textures_config_path, "r") as f:
             return json.load(f)
-        return json_texture_types
 
     def get_unreal_compression_method(self, method_string):
         """Takes an Unreal Compression method string and returns the matchingunreal object
         Ie, "TC_MASKS" -> unreal.TextureCompressionSettings.TC_NORMALMAP"""
         if(tools_library.program_context() == "ue4"):
-            import unreal
             return eval("unreal.TextureCompressionSettings." + method_string)
         return None
 

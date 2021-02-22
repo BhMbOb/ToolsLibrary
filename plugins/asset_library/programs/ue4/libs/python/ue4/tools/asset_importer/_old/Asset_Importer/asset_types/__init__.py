@@ -1,2 +1,0 @@
-class Texture(object):
-    pass

@@ -29,8 +29,8 @@ class TAssetImporter(object):
         else:
             target_module_dirs = asset_library.paths.get_content_module(self.target_module_name)
 
-        material.MaterialManager.import_to_unreal()
-        #texture.TextureManager.import_to_unreal()
+        #material.MaterialManager.import_to_unreal()
+        texture.TextureManager.import_to_unreal()
 
 
 importer = TAssetImporter()

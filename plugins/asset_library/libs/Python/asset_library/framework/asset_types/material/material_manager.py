@@ -57,6 +57,17 @@ class __MaterialManager(object):
         materials_hierachy = []
         shader_hierachy = []
 
+    def get_parent_shader_name(self, mat):
+        """Return the name of the parent shader for this material"""
+        self_shader = json_utils.get_property(mat.real_path, "metadata.shader")
+        if(self_shader is not ""):
+            return self_shader
+        
+
+    def get_parent_material_name(self, mat):
+        """Return the name of the parent material for this material if it is an instance"""
+        return json_utils.get_property(mat.real_path, "metadata.parent")
+
 
 if(__MaterialManager.__instance__ is None):
     __MaterialManager.__instance__ = __MaterialManager()

@@ -4,7 +4,6 @@ import glob
 import datetime
 import json
 import stat
-import program_context
 
 import tools_library
 import tools_library.framework.asset_management.types.parameter as parameter
@@ -17,7 +16,7 @@ import asset_library
 from asset_library.framework.asset_types._asset import _Asset
 from asset_library.framework.asset_types.texture.texture_manager import TextureManager
 
-if(program_context == "ue4"):
+if(tools_library.program_context() == "ue4"):
     import unreal
 
 
@@ -115,8 +114,6 @@ class Texture(_Asset):
             }
 
             os.chmod(unreal_path, stat.S_IREAD)
-
-
 
             #with open(self.unreal_meta_path, "w") as f:
             #    json.dump(metadata, f)
