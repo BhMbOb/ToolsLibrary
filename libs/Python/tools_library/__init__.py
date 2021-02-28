@@ -16,7 +16,9 @@ path = paths.root
 
 
 def program_context():
-    """Returns the current program context name - defaults to "python" """
+    """Gets the current program context (Ie, "designer" or "python")\n
+    :return <str:context> Program context as set in the startup scripts - defaults to "python"\n
+    """
     if("PROGRAM_CONTEXT" in globals()):
         return PROGRAM_CONTEXT
     else:
@@ -24,7 +26,9 @@ def program_context():
 
 
 def plugin_dirs():
-    """Returns the absolute paths to all plugin directories for the tools library"""
+    """Returns a list containing paths to all Tools Library plugin directories\n
+    :return <[str]:path> List of paths to the plugin roots\n
+    """
     output = []
     for i in os.listdir(os.path.join(path(), "plugins")):
         possible_dir = os.path.join(path(), "plugins", i)
@@ -34,9 +38,9 @@ def plugin_dirs():
 
 
 def get_config(name):
-    """Returns a config file from its path
-
-    name    --  name of the config file to find, formatted "program:config/file/path.type" or ("config/file/path.type" for common)
+    """Returns the path to a config from a Tools Library relative path string\n
+    :param <str:name> Name of the config file to find - formatted 'program:config/file/path.type' or 'config/file/path.type'\n
+    :return <str:path> Absolute path to the config\n
     """
     output = ""
 
@@ -68,7 +72,9 @@ def get_config(name):
 
 
 def run_file(file_path):
-    """Run a single file"""
+    """Run a single file\n
+    :param <str:file_path> Absolute pat to the file to run\n
+    """
     path_ = file_path
     globals_ = globals()
     globals_["__file__"] = path_
@@ -78,9 +84,9 @@ def run_file(file_path):
 
 
 def run_tool(file_path):
+    """Run a tool, this can be from a direct script or a .toolptr filepath\n
+    :param <str:file_path> Path to the script or toolptr to run\n
     """
-    Run a tool, adds the tool dir to sys.path temporarily
-    If the input is a ".toolptr" then the stored tool will be ran instead"""
     if(not os.path.exists(file_path)):
         file_path = os.path.join(path(), file_path)
     path_ = file_path
@@ -116,12 +122,17 @@ def run_tool(file_path):
     current_tool_path = ""
 
 
-def is_module_enabled(module_name, module_outer_dir="programs"):
+def is_module_enabled(module_name, module_type="programs"):
+    """Returns whether a "module" is enabled, modules are either Tools Library Plugins or Programs\n
+    :param <str:module_name> Name of the module to check\n
+    :param <str:module_type> Either "plugins" or "programs"\n
+    :return <bool:enabled> True if the module is enabled, false if not\n
+    """
     output = True
     client_settings_path = os.path.join(path(), "config\\client_settings.json")
     if(os.path.isfile(client_settings_path)):
         if(module_name != "python"):
-            enabled = json_utils.get_property(client_settings_path, module_outer_dir + "." + module_name + ".enabled")
+            enabled = json_utils.get_property(client_settings_path, module_type + "." + module_name + ".enabled")
             if(enabled == False):
                 output = False
     return output

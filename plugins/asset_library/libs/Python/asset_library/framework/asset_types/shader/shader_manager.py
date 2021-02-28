@@ -37,7 +37,7 @@ class __ShaderManager(object):
     def get_unreal_shader_paths(self, ignore_abstract=False):
         """Return the path to the .uasset files matching to all .shader files"""
         output = []
-        for i in glob.glob(self.shaders_unreal_dir() + "/**/SHD_*.uasset"):
+        for i in glob.glob(self.shaders_unreal_dir + "/**/SHD_*.uasset"):
             if(not ("SHD_ABS" in i and ignore_abstract)):
                 output.append(i.lower())
         return output

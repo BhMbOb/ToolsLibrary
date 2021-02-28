@@ -9,6 +9,7 @@ import tools_library.utilities.qt.widgets as QToolsLibraryWidgets
 
 from asset_library.designer.tools import material_loader
 from asset_library.designer.tools import material_exporter
+from asset_library.designer.tools import material_properties
 from asset_library.tools import material_property_editor
 
 
@@ -23,6 +24,7 @@ dock.setLayout(dock_layout)
 target_dock_tool_classes = {
     "Material Loader": material_loader.TMaterialLoader,
     "Material Exporter": material_exporter.TMaterialExporter,
+    "Material Properties": material_properties.TMaterialProperties
 }
 
 for i in target_dock_tool_classes:

@@ -68,6 +68,19 @@ class __MaterialManager(object):
         """Return the name of the parent material for this material if it is an instance"""
         return json_utils.get_property(mat.real_path, "metadata.parent")
 
+    @property
+    @functools.lru_cache()
+    def material_types(self):
+        """Returns a dict containing the data stored in "material_types.json" which
+        is responsible for all different naming methods of materials
+        :return <dict:types> List of dicts containing all material types
+        """
+        materials_config = os.path.join(asset_library.paths.root(), "content\\core\\materials\\.config\\material_types.json")
+        with open(materials_config, "r") as f:
+            json_data = json.load(f)
+            return json_data
+        return {}
+
 
 if(__MaterialManager.__instance__ is None):
     __MaterialManager.__instance__ = __MaterialManager()

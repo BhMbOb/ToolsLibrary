@@ -1,21 +1,22 @@
 import os
 import json
-from qtpy import QtWidgets, QtCore, uic, QtGui
+from qtpy import QtCore
 
 import tools_library
 from tools_library.types import _tool_window
 import tools_library.designer.instance
+import tools_library.designer.package
 
 import asset_library
 import asset_library.framework.asset_types.material
 
+MaterialManager = asset_library.framework.asset_types.material.material_manager.MaterialManager
+
 
 class TMaterialLoader(_tool_window.ToolWindow):
+    """Tool widget used for loading in Asset Library materials to Designer directly"""
     def __init__(self):
         super(TMaterialLoader, self).__init__()
-
-        self.target_module = ""
-        self.target_material_types = ""
 
         self.q_combo_module.activated.connect(self.switch_module)
         self.q_combo_type.activated.connect(self.switch_material_type)
@@ -29,48 +30,29 @@ class TMaterialLoader(_tool_window.ToolWindow):
         self.target_module = self.q_combo_module.currentText()
 
         # add all material types to the combo box
-        for i in self.get_material_types():
+        for i in MaterialManager.material_types:
             self.q_combo_type.addItem(i)
         self.target_material_types = self.q_combo_type.currentText()
 
-        #
         self.switch_material_type()
         self.switch_module()
 
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.finalize()
 
-    def should_show_instances(self):
-        return self.q_chk_show_instances.isChecked()
-
-    def get_material_types(self):
-        output = []
-        materials_config = os.path.join(asset_library.paths.root(), "content\\core\\materials\\.config\\material_types.json")
-        with open(materials_config, "r") as f:
-            json_data = json.load(f)
-            for t in json_data:
-                output.append(t)
-        return output
-
-    def get_material_type_prefix(self, material_type):
-        output = ""
-        materials_config = os.path.join(asset_library.paths.root(), "content\\core\\materials\\.config\\material_types.json")
-        with open(materials_config, "r") as f:
-            json_data = json.load(f)
-            output = json_data[material_type]["prefix"]
-        return output
-
     def switch_module(self):
+        """Set the current target module to view materials from"""
         self.target_module = self.q_combo_module.currentText()
         self.get_materials()
 
     def switch_material_type(self):
+        """Set the current target material types to show"""
         self.target_material_types = self.q_combo_type.currentText()
         self.get_materials()
 
     def get_materials(self):
+        """Return a list of materials respecting the current module/type settings"""
         modules = []
-        prefix = self.get_material_type_prefix(self.target_material_types).lower()
+        prefix = MaterialManager.material_types[self.target_material_types]["prefix"].lower()
 
         if(self.target_module == "All Modules"):
             for i in asset_library.paths.get_content_modules():
@@ -91,20 +73,20 @@ class TMaterialLoader(_tool_window.ToolWindow):
             material_name = material.name
 
             if(os.path.isfile(material.path)):
-                if(self.should_show_instances()):
+                if(self.q_chk_show_instances.isChecked()):
                     self.q_materials_list.addItem(material.name)
                     self.q_materials_list.materials[material.name] = material
-                    self.q_materials_list.itemDoubleClicked.connect(self.select_material)
+                    self.q_materials_list.itemDoubleClicked.connect(self.load_material)
                 else:
                     if(material.source_sbs not in added_material_sbs_list):
                         added_material_sbs_list.append(material.source_sbs)
                         self.q_materials_list.addItem(material.outer_name)
                         self.q_materials_list.materials[material.outer_name] = material
-                        self.q_materials_list.itemDoubleClicked.connect(self.select_material)
+                        self.q_materials_list.itemDoubleClicked.connect(self.load_material)
 
-
-    def select_material(self, material_list_index):
-        tools_library.designer.instance.load_sbs(self.q_materials_list.materials[material_list_index.text()].source_sbs)
+    def load_material(self, material_list_index):
+        """Load the currently selected material"""
+        tools_library.designer.package.load(self.q_materials_list.materials[material_list_index.text()].source_sbs)
 
 
 if __name__ == "__main__":

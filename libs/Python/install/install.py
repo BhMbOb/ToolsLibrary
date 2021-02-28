@@ -36,14 +36,14 @@ class Install(object):
         # program install directories
         for program_name in os.listdir(self.tools_library_programs_dir):
             self.enabled_program_names.append(program_name)
-            if(self.is_module_enabled(program_name, module_outer_dir="programs")):
+            if(self.is_module_enabled(program_name, module_type="programs")):
                 program_install_dir = os.path.join(self.tools_library_programs_dir, program_name, "libs\\python\\install")
                 if(os.path.isdir(program_install_dir)):
                     self.install_dirs.append(program_install_dir)
 
         # plugin install directories
         for plugin_name in os.listdir(self.tools_library_plugins_dir):
-            if(self.is_module_enabled(plugin_name, module_outer_dir="plugins")):
+            if(self.is_module_enabled(plugin_name, module_type="plugins")):
                 plugin_install_dir = os.path.join(self.tools_library_plugins_dir, plugin_name, "libs\\python\\install")
                 if(os.path.isdir(plugin_install_dir)):
                     self.install_dirs.append(plugin_install_dir)
@@ -105,13 +105,13 @@ class Install(object):
                     return ""
         return prev_key
 
-    def is_module_enabled(self, module_name, module_outer_dir="programs"):
+    def is_module_enabled(self, module_name, module_type="programs"):
         """Returns whether a module is enabled in the "config\\client_settings.json" file"""
         output = True
         client_settings_path = os.path.join(self.path(), "config\\client_settings.json")
         if(os.path.isfile(client_settings_path)):
             if(module_name != "python"):
-                enabled = self.get_json_property(client_settings_path, module_outer_dir + "." + module_name + ".enabled")
+                enabled = self.get_json_property(client_settings_path, module_type + "." + module_name + ".enabled")
                 if(enabled == False):
                     output = False
         return output

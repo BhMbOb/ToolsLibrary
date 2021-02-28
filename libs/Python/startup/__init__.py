@@ -32,18 +32,18 @@ def path():
         return ""
 
 
-def is_module_enabled(module_name, module_outer_dir="programs"):
+def is_module_enabled(module_name, module_type="programs"):
     output = True
     client_settings_path = os.path.join(path(), "config\\client_settings.json")
     if(os.path.isfile(client_settings_path)):
         if(module_name != "python"):
-            enabled = get_property(client_settings_path, module_outer_dir + "." + module_name + ".enabled")
+            enabled = get_property(client_settings_path, module_type + "." + module_name + ".enabled")
             if(enabled == False):
                 output = False
     return output
 
 
-if(is_module_enabled(__program_context__.lower(), module_outer_dir="programs")):
+if(is_module_enabled(__program_context__.lower(), module_type="programs")):
 
     # base libs
     sys.path.append(os.path.join(path(), "libs\\Python"))

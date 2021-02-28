@@ -1,10 +1,8 @@
-'''
-A scrollable version of QVBoxLayout
-'''
 from qtpy import QtWidgets, QtCore, uic, QtGui
 
 
 class QVScrollLayout(QtWidgets.QVBoxLayout):
+    """A scrollable version of QVBoxLayout"""
     def __init__(self):
         super(QVScrollLayout, self).__init__()
         self.setMargin(0)

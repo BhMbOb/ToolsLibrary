@@ -1,7 +1,3 @@
-"""
-Utility function/class for setting up a basic non-blocking listen server
-"""
-
 import sys
 import os
 import socket
@@ -10,7 +6,10 @@ import contextlib
 
 
 def is_free(port):
-    """Returns true if the port is free"""
+    """Returns whether a port is free\n
+    :param <int:port> Port index\n
+    :return <bool:free> True if free, false if not\n
+    """
     test_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     loc = ("localhost", port)
     output = test_socket.connect_ex(loc) is not 0
@@ -19,6 +18,7 @@ def is_free(port):
 
 
 class ListenServer(object):
+    """Creates a simple non-blocking listen server"""
     def __init__(self, port):
         self.port = port
 
@@ -44,6 +44,7 @@ class ListenServer(object):
             self.initialized = True
     
     def tick(self):
+        """Update the listen server and check for calls"""
         if(self.initialized):
             readable, writable, errored = select.select(self.read_list, [], [])
             for s in readable:
@@ -60,4 +61,5 @@ class ListenServer(object):
                             pass
 
     def close(self):
+        """Close the listen server"""
         self.server_socket.close()

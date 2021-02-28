@@ -7,16 +7,17 @@ from qtpy import QtWidgets
 
 
 def makedir(path):
-    """Creates a folder if it doesn't already exist"""
+    """Creates a folder if it doesn't already exist\n
+    :param <str:path> The path of the directory to make\n
+    """
     if(not os.path.isdir(path)):
         os.makedirs(path)
 
 
 def makesubdirs(folder_dir, *subdirs):
-    """Makes a list of subdirectories within an input directory
-
-    folder_dir - parent folder
-    subdirs - names of all subfolders to create
+    """Makes a list of subdirectories inside an input directory\n
+    :param <str:folder_dir> The parent directory\n
+    :param <[str]:subdirs> Names of the child subdirectories to create\n
     """
     if(not subdirs):
         makedir(folder_dir)
@@ -28,21 +29,13 @@ def makesubdirs(folder_dir, *subdirs):
         makedir(os.path.join(folder_dir, i))
 
 
-def filename(path):
-    """Returns the filename part of an input path - also removes the filetype"""
-    return os.path.basename(path).split(".")[0]
-
-
-def filetype(path):
-    """Returns the filetype part of an input path"""
-    filename = os.path.basename(path)
-    if("." in filename):
-        return filename.split(".")[1]
-    return ""
-
-
 def pick_file(title="Pick File..", start="C:\\", file_types=""):
-    """Pick a file from a dialog"""
+    """Open a basic Qt based file picker dialog\n
+    :param <str:title> Title of the file picker window\n
+    :param <str:start> Starting directory of the file picker\n
+    :param <str:file_types> Standard windows file type constructor (Ie, "Text Files (*.txt), *.txt"\n
+    :return <str:path> The path to the picked file\n
+    """
     file_dialog = QtWidgets.QFileDialog()
     open_file = file_dialog.getOpenFileName(
         None,
@@ -54,7 +47,10 @@ def pick_file(title="Pick File..", start="C:\\", file_types=""):
 
 
 def symlink(src, dest):
-    """Create a symlink"""
+    """Create a symlink between 2 paths\n
+    :param <str:src> Source file path\n
+    :param <str:dest> Destination file path\n
+    """
     try:
         makedir(os.path.dirname(dest))
 

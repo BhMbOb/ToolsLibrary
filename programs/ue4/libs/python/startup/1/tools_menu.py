@@ -29,12 +29,12 @@ def add_menu_branch(parent_menu, branch_string, script_path="", section_context=
         if(current_branch_full == branch_string):
             # if we're adding the final one (the script which will be launched)
             ui_new_item = unreal.ToolMenuEntry(name=branch_string, type=unreal.MultiBlockType.MENU_ENTRY, insert_position=unreal.ToolMenuInsert("", unreal.ToolMenuInsertType.FIRST))
-            ui_new_item.set_label(string_utils.format.snake_to_name(current_branch_name))
+            ui_new_item.set_label(string_utils.snake_to_name(current_branch_name))
             ui_new_item.set_string_command(unreal.ToolMenuStringCommandType.PYTHON, "None", string=str("import tools_library; tools_library.run_tool(\"" + script_path.replace("\\", "/") + "\")"))
             ui_menu_parent.add_menu_entry(section_context, ui_new_item)
         elif(current_branch_full not in list(branch_menus)):
             # if we're just adding a submenu
-            name_formatted = string_utils.format.snake_to_name(current_branch_name)
+            name_formatted = string_utils.snake_to_name(current_branch_name)
             ui_new_menu = ui_menu_parent.add_sub_menu(section_context, branch_string, name_formatted, name_formatted)
             branch_menus[current_branch_full] = ui_new_menu
 
@@ -81,7 +81,7 @@ def initialize_tools_library_menu():
         plugin_dir_tools_unreal_dir = os.path.join(plugin_dir, "programs\\ue4\\tools\\")
         plugin_name = os.path.basename(plugin_dir)
         if(PluginData(plugin_name).is_enabled):
-            plugin_name_formatted = string_utils.format.snake_to_name(plugin_name)
+            plugin_name_formatted = string_utils.snake_to_name(plugin_name)
             ui_plugin_menu_branch = tools_library_menu.add_sub_menu("Plugins", plugin_name_formatted, plugin_name_formatted, plugin_name_formatted)
             if(os.path.exists(plugin_dir_tools_unreal_dir)):
                 add_dir_as_branch(plugin_dir_tools_unreal_dir, parent_menu=ui_plugin_menu_branch, section_context="Plugins")

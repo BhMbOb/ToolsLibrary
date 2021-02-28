@@ -32,12 +32,12 @@ def add_menu_branch(parent_menu, branch_string, script_path=""):
 
         if(current_branch_full == branch_string):
             # if we're adding the final one (the script which will be launched)
-            q_new_menu = q_menu_parent.addAction(string_utils.format.snake_to_name(current_branch_name))
+            q_new_menu = q_menu_parent.addAction(string_utils.snake_to_name(current_branch_name))
             q_new_menu.script_path = script_path
             q_new_menu.triggered.connect(partial(tools_library.run_tool, q_new_menu.script_path))
         elif(current_branch_full not in list(branch_menus)):
             # if we're just adding a submenu
-            q_new_menu = q_menu_parent.addMenu(string_utils.format.snake_to_name(current_branch_name))
+            q_new_menu = q_menu_parent.addMenu(string_utils.snake_to_name(current_branch_name))
             branch_menus[current_branch_full] = q_new_menu
 
 
@@ -92,7 +92,7 @@ def initialize_tools_library_menu():
     for plugin_dir in tools_library.plugin_dirs():
         plugin_dir_tools_max_dir = os.path.join(plugin_dir, "programs\\max\\tools\\")
         plugin_name = os.path.basename(plugin_dir)
-        plugin_menu_branch = q_tools_menu.addMenu(string_utils.format.snake_to_name(plugin_name))
+        plugin_menu_branch = q_tools_menu.addMenu(string_utils.snake_to_name(plugin_name))
         if(os.path.exists(plugin_dir_tools_max_dir)):
             add_dir_as_branch(plugin_dir_tools_max_dir, parent_menu=plugin_menu_branch)
 

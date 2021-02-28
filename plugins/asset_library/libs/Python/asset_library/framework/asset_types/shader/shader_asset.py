@@ -13,11 +13,15 @@ class Shader(_Asset):
         super().__init__(shader_path)
 
     def import_to_unreal(self):
+        """Shaders cannot be imported to unreal - they are considered a sibling asset type"""
         pass
 
     @property
     @functools.lru_cache()
     def unreal_path(self):
+        """Absolute path to the .uasset file for this shader
+        :return <str:path> Absolute file path - Ie, "x:/project/unreal/content/shaders/the_shader.uasset"
+        """
         unreal_shader_paths = ShaderManager.get_unreal_shader_paths()
         for i in unreal_shader_paths:
             i_name = pathing_utils.get_filename_only(i)
@@ -28,6 +32,9 @@ class Shader(_Asset):
     @property
     @functools.lru_cache()
     def unreal_relative_path(self):
+        """Unreal project relative path to the asset
+        :return <str:path> Unreal relative file path - Ie, "/AssetLibrary/shaders/the_shader"
+        """
         output = "/AssetLibrary/" + self.asset_library_path
         output = output.split(".", 1)[0]
         output = output.replace("\\", "/")
@@ -36,11 +43,13 @@ class Shader(_Asset):
     @property
     @functools.lru_cache()
     def parent(self):
-        """Returns the path to the parent shader for this .shader"""
+        """Absolute path to the parent .shader for this shader
+        :return <str:path> Absolute file path - Ie, "x:/shaders/parent_shader.shader"
+        """
         return json_utils.get_property(self.real_path, "properties.parent")
 
     def get_parameter(self, param_name):
+        """Get a parameter object by name for this shader
+        :return <Parameter:param> The parameter reference - None if not found
+        """
         return ShaderManager.get_parameter(self, param_name)
-
-shd = Shader("X:\\Shaders\\Surface_Standard\\SHD_Surface_Standard.shader")
-print(shd.get_parameter("AlbedoMap"))

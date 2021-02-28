@@ -3,6 +3,7 @@ from enum import Enum
 
 
 class ParameterTypes(Enum):
+    """Enum containing the names of all valid parameter types"""
     unknown = 0
     float = 1
     float2 = 2
@@ -17,6 +18,7 @@ class ParameterTypes(Enum):
 
 
 class __ParameterManager(object):
+    """Singleton manager class for parameters"""
     __instance__ = None
 
 
@@ -47,6 +49,7 @@ ParameterManager = __ParameterManager.__instance__
 
 
 class Parameter(object):
+    """Class for a generic parameter type"""
     def __init__(self, name="", description="", value="", default="", min="", max="", group=""):
         self.name = name
         self.value = value
@@ -58,10 +61,12 @@ class Parameter(object):
     @property
     @functools.lru_cache()
     def type(self):
+        """get the type for this parameter fro the rest of its stored data"""
         return ParameterManager.get_parameter_type(self.value)
 
     @staticmethod
     def from_dict(data):
+        """generate a parameter from an input data dict"""
         return Parameter(
             name = data["name"] if "name" in data else "",
             description = data["description"] if "description" in data else "",

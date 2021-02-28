@@ -10,11 +10,13 @@ if(tools_library.program_context() == "max"):
 
 
 class PythonFrameworkData(object):
+    """Class used to initialise the base python framework on startup"""
     def __init__(self):
         self.directory = tools_library.paths.root()
         self.startup_dir = os.path.join(self.directory, "libs\\python\\startup")
 
     def run_startup(self, startup_index):
+        """Run all of the startup scripts in a base python directory index"""
         base_python_startup_dir = os.path.join(self.startup_dir, str(startup_index))
         if(os.path.isdir(base_python_startup_dir)):
             for file in os.listdir(base_python_startup_dir):
@@ -24,6 +26,7 @@ class PythonFrameworkData(object):
 
 
 class ProgramData(object):
+    """Class used to initialise a given program plugin on startup"""
     def __init__(self, program_name):
 
         self.program_name = program_name.lower()
@@ -42,6 +45,7 @@ class ProgramData(object):
         self.startup_dir = os.path.join(self.directory, "libs\\python\\startup")
 
     def run_program_startup(self, startup_index):
+        """Run all of the startup scripts in a program directory index"""
         if(self.is_enabled):
             target_startup_dir = os.path.join(self.startup_dir, str(startup_index))
             if(os.path.isdir(target_startup_dir)):
@@ -73,6 +77,7 @@ class ProgramData(object):
 
 
 class PluginData(object):
+    """Class used to initialise a given Tools Library plugin"""
     def __init__(self, plugin_name):
         
         self.plugin_name = plugin_name.lower()
@@ -90,6 +95,7 @@ class PluginData(object):
         self.current_program_startup_dir = os.path.join(self.current_program_dir, "libs\\python\\startup")
 
     def run_plugin_startup(self, startup_index):
+        """Run all of the startup scripts in a plugin directory index"""
         if(self.is_enabled):
             target_startup_dir = os.path.join(self.startup_dir, str(startup_index))
             if(os.path.isdir(target_startup_dir)):
@@ -110,6 +116,7 @@ class PluginData(object):
                         print("[TOOLS LIBRARY][STARTUP] Ran Maxscript: " + file_path)
 
     def run_program_startup(self, startup_index):
+        """Run all of the startup scripts in a plugin program directory index"""
         if(self.is_enabled):
             target_startup_dir = os.path.join(self.current_program_startup_dir, str(startup_index))
             if(os.path.isdir(target_startup_dir)):

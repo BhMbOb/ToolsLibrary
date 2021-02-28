@@ -1,11 +1,11 @@
-'''
-Based on: https://github.com/By0ute/pyqt-collapsible-widget
-
-'''
 from qtpy import QtWidgets, QtCore, uic, QtGui
 
 
 class QCollapsibleWidget(QtWidgets.QWidget):
+    """A collapsible QWidget
+    
+    Based on: https://github.com/By0ute/pyqt-collapsible-widget
+    """
     def __init__(self, parent=None, title=None):
         super(QCollapsibleWidget, self).__init__()
 

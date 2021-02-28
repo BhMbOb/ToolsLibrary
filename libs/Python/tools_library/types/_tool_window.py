@@ -8,6 +8,7 @@ from tools_library.utilities import qt as qt_utils
 
 
 class ToolWindow(QtWidgets.QWidget):
+    """A template Tool window for use within standalone tools"""
     def __init__(self):
         self.standalone = tools_library.program_context() == "python"
         if(self.standalone):
@@ -35,7 +36,9 @@ class ToolWindow(QtWidgets.QWidget):
         # results in the same behaviour as WindowStaysOnTopHint but only for the parent program
         qt_utils.get_application().focusChanged.connect(self.focus_changed_event)
 
-    def finalize(self):
+    def finalize(self, window_stay_on_top=False):
+        if(window_stay_on_top):
+            self.setWindowFlags(QtCore.Qt.WindowStayOnTopHint)
         self.show()
 
         if(self.standalone):

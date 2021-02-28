@@ -6,7 +6,11 @@ import json
 
 
 def get_property(file_path, value):
-    """Returns a top level property from a config path"""
+    """Gets a property in a json file multi layer deep\n
+    :param <str:file_path> Path to the json file\n
+    :param <str:value> The value to search for (Ie, "parent.child")\n
+    :return <value:out> Value as stored in the json file, "" if not found\n
+    """
     search_list = value.split(".")
     with open(file_path) as j:
         json_data = json.load(j)
@@ -20,7 +24,11 @@ def get_property(file_path, value):
 
 
 def has_property(file_path, value):
-    """Returns true if a config contains a property"""
+    """Returns whether a json file contains a property\n
+    :path <str:file_path> The value to search for (Ie, "parent.child")\n
+    :param <str:value> The value to search for (Ie, "parent.child")\n
+    :return <bool:out> True if found, false if not\n
+    """
     search_list = value.split(".")
     with open(file_path) as j:
         json_data = json.load(j)
@@ -34,7 +42,11 @@ def has_property(file_path, value):
 
 
 def get_property_recursive(file_paths, value):
-    """The same as get_property but searches all files until found or complete"""
+    """The same as get_property() but searches recursively through a list of json files until found or complete\n
+    :param <[str]:file_paths> List of file paths to search\n
+    :param <str:value> The value to search for (Ie, "parent.child")\n
+    :return <value:out> Value as stored in the json file, "" if not found\n
+    """
     for i in file_paths:
         if(has_property(i, value)):
             return get_property(i, value)
@@ -42,7 +54,11 @@ def get_property_recursive(file_paths, value):
 
 
 def set_file_property(file_path, property_name, property_value):
-    """Sets a property in a config path"""
+    """Sets a file property in a json file and saves it out\n
+    :param <str:file_path> The file path to set the property in\n
+    :param <str:property_name> The name of the property to set\n
+    :param <str:property_value> The value to set the property as\n
+    """
     keys_list = property_name.split(".")
 
     with open(file_path) as j:

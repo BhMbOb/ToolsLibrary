@@ -17,6 +17,9 @@ class _Asset(ABC):
         # dict containing extra user defined metadata
         self.metadata = {}
 
+        self.paths = lambda: None
+        setattr(self.paths, "unreal", self.unreal_path)
+
     @property
     def name(self):
         return os.path.basename(self.real_path).split(".")[0]

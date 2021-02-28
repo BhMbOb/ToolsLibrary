@@ -9,12 +9,16 @@ from tools_library.utilities import listen_server
 
 
 def listen_port():
-    """Returns the port the designer listen server is hosted on"""
+    """Returns the port that the designer listen server is hosted on\n
+    :return <int:port> Id of the port\n
+    """
     return json_utils.get_property(tools_library.get_config("designer:program.json"), "listen_port")
 
 
 def send_command(command):
-    """Takes a python string command and sends it as a request to the listen server"""
+    """Takes a python string command and sends it as a request to the listen server
+    :param <str:command> Python command to send
+    """
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(("localhost", listen_port()))
     client.send(str(command).encode("utf-8"))
@@ -22,12 +26,16 @@ def send_command(command):
 
 
 def is_open():
-    """Check if the program is open by testing if the listen server is hosted"""
+    """Check if the program is open by testing if the listen server is hosted\n
+    :return <bool:open> True if open, false if not\n
+    """
     return not listen_server.is_free(listen_port())
 
 
 def add_sbsprj(sbsprj_path):
-    """Adds a new sbsprj to the designer library"""
+    """Adds a new sbsprj to the designer library
+    :param <str:sbsprj_path> Path to the sbsprj to add
+    """
     if(os.path.isfile(sbsprj_path)):
         sbsprj_set = False
         designer_project_config_path = tools_library.finalizeString("$(LocalAppdata)\\Allegorithmic\\Substance Designer\\default_configuration.sbscfg")

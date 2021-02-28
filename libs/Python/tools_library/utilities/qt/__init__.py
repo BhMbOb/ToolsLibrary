@@ -5,7 +5,8 @@ import tools_library
 
 
 def get_application():
-    """Get or create the qapplication instance"""
+    """Returns the QApplication instance - creates it if it has not been initialized
+    :return <QApplication:out> The QApplication instance"""
     output = QtWidgets.QApplication.instance()
     if(not output):
         output = QtWidgets.QApplication(sys.argv)
