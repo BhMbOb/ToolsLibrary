@@ -25,6 +25,19 @@ def program_context():
         return "python"
 
 
+def program_names():
+    """Get a list of all tools library program names\n
+    :return <[str]:names> Listy of all program names\n
+    """
+    output = []
+    programs_dir = os.path.join(path(), "programs")
+    for i in os.listdir(programs_dir):
+        dir_ = os.path.join(programs_dir, i)
+        if("." not in i and os.path.isdir(dir_)):
+            output.append(i.lower())
+    return output
+
+
 def plugin_dirs():
     """Returns a list containing paths to all Tools Library plugin directories\n
     :return <[str]:path> List of paths to the plugin roots\n

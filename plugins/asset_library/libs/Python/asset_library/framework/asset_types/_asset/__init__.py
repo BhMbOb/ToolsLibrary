@@ -3,6 +3,7 @@ import abc
 from abc import ABC
 
 import tools_library.utilities.pathing as pathutils
+import tools_library.decorators
 
 import asset_library
 
@@ -45,6 +46,7 @@ class _Asset(ABC):
         return os.path.isfile(pathutils.set_path_file_type(self.real_path, "meta"))
 
     @abc.abstractmethod
+    @tools_library.decorators.ue4_method
     def import_to_unreal(self):
         """Abstract function for importing the current asset into unreal"""
         pass

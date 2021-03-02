@@ -3,6 +3,7 @@ import functools
 
 import tools_library.utilities.json as json_utils
 import tools_library.utilities.pathing as pathing_utils
+import tools_library.decorators
 
 from asset_library.framework.asset_types._asset import _Asset
 from asset_library.framework.asset_types.shader.shader_manager import ShaderManager
@@ -12,6 +13,7 @@ class Shader(_Asset):
     def __init__(self, shader_path):
         super().__init__(shader_path)
 
+    @tools_library.decorators.ue4_method
     def import_to_unreal(self):
         """Shaders cannot be imported to unreal - they are considered a sibling asset type"""
         pass
