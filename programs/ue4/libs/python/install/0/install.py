@@ -23,7 +23,7 @@ def getUnrealProjectRoot():
     active_project_config_path = os.path.join(getProjectRoot(), "config\\client_settings.json")
     with open(active_project_config_path) as j:
         json_data = json.load(j)
-        return json_data["programs"]["ue4"]["project_dir"]
+        return os.path.dirname(json_data["programs"]["ue4"]["project_path"])
 
 
 tools_library_path = getProjectRoot()
