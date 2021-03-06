@@ -32,7 +32,7 @@ def initializeSDPlugin():
         globals_["__program_context__"] = "designer"
         exec(open(path_).read(), globals_)
 
-    run_file_(getProjectRoot() + "\\libs\\python\\startup\\__init__.py")
+    run_file_(getProjectRoot() + "\\scripts\\startup\\__init__.py")
 
 
 def uninitializeSDPlugin():

@@ -13,7 +13,7 @@ class PythonFrameworkData(object):
     """Class used to initialise the base python framework on startup"""
     def __init__(self):
         self.directory = tools_library.paths.root()
-        self.startup_dir = os.path.join(self.directory, "libs\\python\\startup")
+        self.startup_dir = os.path.join(self.directory, "scripts\\startup")
 
     def run_startup(self, startup_index):
         """Run all of the startup scripts in a base python directory index"""
@@ -42,7 +42,7 @@ class ProgramData(object):
         self.is_current = (program_name.lower() == tools_library.program_context())
 
         self.directory = os.path.join(tools_library.paths.root(), "programs", self.program_name)
-        self.startup_dir = os.path.join(self.directory, "libs\\python\\startup")
+        self.startup_dir = os.path.join(self.directory, "scripts\\startup")
 
     def run_program_startup(self, startup_index):
         """Run all of the startup scripts in a program directory index"""
@@ -90,9 +90,9 @@ class PluginData(object):
         self.is_enabled = not (enabled == False)
 
         self.directory = os.path.join(tools_library.paths.root(), "plugins", self.plugin_name)
-        self.startup_dir = os.path.join(self.directory, "libs\\python\\startup")
+        self.startup_dir = os.path.join(self.directory, "scripts\\startup")
         self.current_program_dir = os.path.join(self.directory, "programs", tools_library.program_context())
-        self.current_program_startup_dir = os.path.join(self.current_program_dir, "libs\\python\\startup")
+        self.current_program_startup_dir = os.path.join(self.current_program_dir, "scripts\\startup")
 
     def run_plugin_startup(self, startup_index):
         """Run all of the startup scripts in a plugin directory index"""

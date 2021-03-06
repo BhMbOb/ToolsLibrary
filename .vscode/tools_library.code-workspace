@@ -15,6 +15,14 @@
 			"**/**.pyc": true,
 			"**/.vscode":true, 
 		},
+		"search.exclude":{
+			"**/node_modules": true,
+			"**/bower_components": true,
+			"**/*.code-search": true,
+			"**/External/**": true,
+			"**/external/**": true,
+			"**/bin/Python**/**":true
+		},
 		"files.associations": {
 			"*.material":"json",
 			"*.assetlibrary":"json",

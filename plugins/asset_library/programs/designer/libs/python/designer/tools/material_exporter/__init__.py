@@ -12,7 +12,7 @@ import tools_library.designer.instance
 
 import asset_library
 import asset_library.designer.scene.export
-from asset_library.tools import material_property_editor
+#from asset_library.tools import material_property_editor
 
 
 class TMaterialExporter(_tool_window.ToolWindow):
