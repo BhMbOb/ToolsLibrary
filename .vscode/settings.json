@@ -1,6 +1,7 @@
 {
     "python.pythonPath": "Y:\\Development\\ToolsLibrary\\bin\\Python 3.7\\python.exe",
     "python.linting.pycodestyleEnabled": false,
-    "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true
 }
